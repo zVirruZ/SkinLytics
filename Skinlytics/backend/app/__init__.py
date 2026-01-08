@@ -2,6 +2,9 @@ from flask import Flask, send_from_directory
 from flask_cors import CORS
 import os
 
+# Import the routes blueprint
+from .routes import main as main_blueprint
+
 def create_app():
     app = Flask(__name__, static_folder='../../frontend', static_url_path='')
     
@@ -12,6 +15,9 @@ def create_app():
     
     # Ensure upload folder exists
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    
+    # Register the blueprint
+    app.register_blueprint(main_blueprint)
     
     # Enable CORS with more permissive settings for development
     CORS(app, resources={
@@ -33,9 +39,5 @@ def create_app():
     @app.route('/<path:path>')
     def serve_static(path):
         return send_from_directory(app.static_folder, path)
-    
-    # Register blueprints
-    from .routes import main
-    app.register_blueprint(main)
     
     return app
