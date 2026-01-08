@@ -1,2 +1,21 @@
-.vercel
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Uploads and models
+uploads/*
+!uploads/.keep
+models/*.h5
+
+# Environment variables
+.env
+.env.local
 .env*.local
+
+# System files
+.DS_Store
+
+# Vercel
+.vercel
