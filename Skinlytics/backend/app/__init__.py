@@ -13,8 +13,16 @@ def create_app():
     # Ensure upload folder exists
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     
-    # Enable CORS
-    CORS(app)
+    # Enable CORS with more permissive settings for development
+    CORS(app, resources={
+        r"/*": {
+            "origins": ["*"],  # Allow all origins for development
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"],
+            "supports_credentials": True,
+            "expose_headers": ["Content-Disposition"]
+        }
+    })
     
     # Serve the main HTML file
     @app.route('/')

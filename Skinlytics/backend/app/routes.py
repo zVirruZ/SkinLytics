@@ -1,10 +1,12 @@
 import os
 import uuid
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app, send_from_directory
+from keras.src.applications.resnet import ResNet50, preprocess_input
 from werkzeug.utils import secure_filename
 import cv2
 import numpy as np
 from .ham10000_model import ham10000_model
+from flask import current_app
 
 # Create blueprint
 main = Blueprint('main', __name__)
@@ -13,6 +15,9 @@ main = Blueprint('main', __name__)
 MODEL = None
 INPUT_SIZE = (224, 224)
 
+# Allowed file extensions
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+
 def load_skin_cancer_model():
     """Lädt das vortrainierte Modell für die Hautkrebserkennung."""
     global MODEL
@@ -20,7 +25,7 @@ def load_skin_cancer_model():
         try:
             # Lade ein vortrainiertes Modell (MobileNetV2 als Beispiel)
             # In einer echten Anwendung würden Sie hier Ihr speziell trainiertes Modell laden
-            MODEL = MobileNetV2(weights='imagenet')
+            MODEL = ResNet50(weights='imagenet')
             current_app.logger.info("Modell erfolgreich geladen")
         except Exception as e:
             current_app.logger.error(f"Fehler beim Laden des Modells: {str(e)}")
@@ -50,40 +55,64 @@ def preprocess_image(image_path):
 def analyze_skin_image(image_path):
     """Analysiert das Hautbild mit dem HAM10000-Modell."""
     try:
-        # Vorhersage mit dem HAM10000-Modell
-        prediction = ham10000_model.predict(image_path)
+        current_app.logger.info(f"Starting analysis of image: {image_path}")
         
-        if 'error' in prediction:
+        # Verify the file exists and has content
+        if not os.path.exists(image_path):
+            error_msg = f"Image file not found: {image_path}"
+            current_app.logger.error(error_msg)
+            raise FileNotFoundError(error_msg)
+            
+        file_size = os.path.getsize(image_path)
+        if file_size == 0:
+            error_msg = f"Image file is empty: {image_path}"
+            current_app.logger.error(error_msg)
+            raise ValueError(error_msg)
+            
+        current_app.logger.info(f"File size: {file_size} bytes")
+        
+        # Make prediction
+        current_app.logger.info("Calling HAM10000 model for prediction...")
+        prediction = ham10000_model.predict(image_path)
+        current_app.logger.info(f"Prediction result: {prediction}")
+        
+        if not prediction.get('success', False):
+            error_msg = prediction.get('error', 'Unbekannter Fehler bei der Analyse')
+            current_app.logger.error(f"Prediction failed: {error_msg}")
             return {
-                'error': prediction['error'],
+                'error': error_msg,
                 'has_cancer': None,
                 'advice': 'Bei der Analyse ist ein Fehler aufgetreten.'
             }
         
-        # Extrahiere die wichtigsten Informationen
-        is_cancer = prediction.get('is_cancer', False)
-        confidence = prediction.get('confidence', 0)
-        class_name = prediction.get('class_name', 'Unbekannt')
+        # Extract and validate prediction data
+        is_suspicious = bool(prediction.get('is_suspicious', False))
+        confidence = float(prediction.get('confidence', 0))
+        class_name = str(prediction.get('class_name', 'Unbekannt'))
+        binary_confidence = float(prediction.get('binary_confidence', 0))
+        top_predictions = prediction.get('top_predictions', [])
         
-        # Erstelle die Antwort
-        advice = (
-            f"Es wurde {class_name} mit einer Wahrscheinlichkeit von {confidence*100:.1f}% erkannt. "
-            "Es wird dringend empfohlen, einen Hautarzt aufzusuchen."
-            if is_cancer else
-            f"Es wurde {class_name} mit einer Wahrscheinlichkeit von {confidence*100:.1f}% erkannt. "
-            "Bei Unsicherheiten konsultieren Sie bitte einen Arzt."
-        )
+        current_app.logger.info(f"Analysis complete. Class: {class_name}, Confidence: {confidence:.2f}, Suspicious: {is_suspicious}")
         
+        # Create response with prediction data
         return {
-            'has_cancer': is_cancer,
-            'confidence': confidence,
-            'class_name': class_name,
-            'predictions': prediction.get('all_predictions', []),
-            'advice': advice
+            'success': True,
+            'prediction': {
+                'class': prediction.get('class'),
+                'class_name': class_name,
+                'confidence': confidence,
+                'is_suspicious': is_suspicious,
+                'binary_confidence': binary_confidence,
+                'top_predictions': top_predictions,
+                'disclaimer': prediction.get('disclaimer', '')
+            },
+            'has_cancer': is_suspicious,
+            'advice': prediction.get('advice', '')
         }
         
     except Exception as e:
-        current_app.logger.error(f"Fehler bei der Analyse: {str(e)}")
+        error_msg = f"Error in analyze_skin_image: {str(e)}"
+        current_app.logger.error(error_msg, exc_info=True)
         return {
             'error': str(e),
             'has_cancer': None,
@@ -93,60 +122,107 @@ def analyze_skin_image(image_path):
 def allowed_file(filename):
     """Überprüft, ob die Dateiendung erlaubt ist."""
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@main.route('/uploads/<filename>')
+def uploaded_file(filename):
+    """Route to serve uploaded files."""
+    try:
+        return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
+    except Exception as e:
+        current_app.logger.error(f"Error serving file {filename}: {str(e)}")
+        return "File not found", 404
 
 @main.route('/api/analyze', methods=['POST'])
 def analyze_image():
     """API-Endpunkt für die Hautbildanalyse."""
+    current_app.logger.info("Received analyze request")
+    
+    # Check if file was uploaded
     if 'file' not in request.files:
+        current_app.logger.error("No file part in the request")
         return jsonify({
             'status': 'error',
             'error': 'Keine Datei hochgeladen'
         }), 400
     
     file = request.files['file']
+    current_app.logger.info(f"Processing file: {file.filename}")
     
+    # Check if file was selected
     if file.filename == '':
+        current_app.logger.error("No file selected")
         return jsonify({
             'status': 'error',
             'error': 'Keine Datei ausgewählt'
         }), 400
     
-    if file and allowed_file(file.filename):
-        filename = f"{uuid.uuid4()}{os.path.splitext(file.filename)[1]}"
-        filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+    # Check file type
+    if not (file and allowed_file(file.filename)):
+        current_app.logger.error(f"Invalid file type: {file.filename}")
+        return jsonify({
+            'status': 'error',
+            'error': 'Ungültiger Dateityp. Bitte laden Sie nur JPG oder PNG Dateien hoch.'
+        }), 400
+    
+    # Generate unique filename and path
+    file_ext = os.path.splitext(file.filename)[1].lower()
+    filename = f"{uuid.uuid4()}{file_ext}"
+    filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+    
+    current_app.logger.info(f"Saving file to: {filepath}")
+    
+    try:
+        # Save the uploaded file
+        file.save(filepath)
+        current_app.logger.info(f"File saved successfully. Size: {os.path.getsize(filepath)} bytes")
         
-        try:
-            file.save(filepath)
-            analysis_result = analyze_skin_image(filepath)
-            
-            # Lösche die temporäre Datei
-            if os.path.exists(filepath):
-                os.remove(filepath)
-            
-            # Erstelle die Antwort
-            response = {
-                'status': 'success',
-                'has_cancer': analysis_result.get('has_cancer', False),
-                'confidence': analysis_result.get('confidence', 0),
-                'predictions': analysis_result.get('predictions', []),
-                'advice': analysis_result.get('advice', ''),
-                'image_url': f'/uploads/{filename}'
-            }
-            
-            return jsonify(response)
-            
-        except Exception as e:
-            if os.path.exists(filepath):
-                os.remove(filepath)
-            current_app.logger.error(f"Fehler: {str(e)}")
+        # Verify file was saved correctly
+        if not os.path.exists(filepath):
+            error_msg = "Die Datei konnte nicht gespeichert werden"
+            current_app.logger.error(error_msg)
             return jsonify({
                 'status': 'error',
-                'error': 'Bei der Analyse ist ein Fehler aufgetreten',
-                'details': str(e)
+                'error': error_msg
             }), 500
-    
-    return jsonify({
-        'status': 'error',
-        'error': 'Ungültiger Dateityp. Bitte laden Sie nur JPG oder PNG Dateien hoch.'
-    }), 400
+        
+        # Analyze the image
+        current_app.logger.info("Starting image analysis...")
+        analysis_result = analyze_skin_image(filepath)
+        
+        # Check for analysis errors
+        if 'error' in analysis_result:
+            current_app.logger.error(f"Analysis error: {analysis_result.get('error')}")
+            return jsonify({
+                'status': 'error',
+                'error': analysis_result.get('error')
+            }), 400
+        
+        current_app.logger.info("Analysis completed successfully")
+        
+        # Return success response with analysis results
+        return jsonify({
+            'status': 'success',
+            'result': analysis_result,
+            'image_url': f"/uploads/{filename}"  # This will be served by the uploaded_file route
+        })
+        
+    except Exception as e:
+        error_msg = f"Error during analysis: {str(e)}"
+        current_app.logger.error(error_msg, exc_info=True)
+        
+        # Clean up the file if it exists
+        if os.path.exists(filepath):
+            try:
+                os.remove(filepath)
+                current_app.logger.info("Temporary file removed after error")
+            except Exception as e:
+                current_app.logger.error(f"Error removing temporary file: {str(e)}")
+        
+        return jsonify({
+            'status': 'error',
+            'error': error_msg,
+            'success': False,
+            'has_cancer': False,
+            'advice': 'Bitte versuchen Sie es mit einem anderen Bild oder wenden Sie sich an den Support.'
+        }), 500

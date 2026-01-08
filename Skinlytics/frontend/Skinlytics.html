@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinLytics - Hautanalyse mit KI</title>
+    <style>
+        /* Grundlegende Stile */
+        :root {
+            --primary-color: #2c7da0;
+            --secondary-color: #468faf;
+            --accent-color: #e63946;
+            --light-color: #f8f9fa;
+            --white-color: #ffffff;
+            --dark-color: #1e3a5f;
+            --text-color: #333333;
+            --light-text: #6c757d;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fdff 0%, #e6f2ff 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .logo img {
+            height: 72px;
+            width: auto;
+            margin-right: 0.75rem;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.8rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,160L48,170.7C96,181,192,203,288,202.7C384,203,480,181,576,165.3C672,149,768,139,864,149.3C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #c1121f;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(230, 57, 70, 0.4);
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background-color: var(--white-color);
+            padding: 4rem 0;
+            margin: 3rem 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--dark-color);
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--light-text);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: var(--border-radius);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            cursor: pointer;
+            background-color: #f8fafc;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: #f0f7ff;
+            transform: translateY(-5px);
+        }
+
+        .upload-area i {
+            font-size: 3.5rem;
+            color: #94a3b8;
+            margin-bottom: 1.2rem;
+        }
+
+        .upload-area p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .file-types {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .image-preview {
+            max-width: 320px;
+            max-height: 320px;
+            margin: 1.5rem auto;
+            display: none;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .analyze-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Instructions Section */
+        .instructions {
+            background-color: var(--white-color);
+            padding: 4rem 0;
+            margin: 3rem 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .instruction-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .step {
+            flex: 0 0 calc(33.333% - 1.5rem);
+            text-align: center;
+            padding: 2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: 1px solid #e2e8f0;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .step-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.2rem;
+            color: white;
+            box-shadow: 0 5px 15px rgba(44, 125, 160, 0.3);
+        }
+
+        .step h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+            font-size: 1.3rem;
+        }
+
+        .step p {
+            color: var(--light-text);
+            line-height: 1.7;
+        }
+
+        /* Results Section */
+        .results-section {
+            background-color: var(--white-color);
+            padding: 0;
+            margin: 3rem 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: none;
+            overflow: hidden;
+        }
+
+        .result-content {
+            text-align: left;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            padding: 2.5rem 3rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f7ff 100%);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .result-icon {
+            font-size: 3.5rem;
+            margin: 0 2rem 0 0;
+            flex-shrink: 0;
+        }
+
+        .positive-result {
+            color: #ef4444;
+        }
+
+        .negative-result {
+            color: #10b981;
+        }
+
+        .result-text {
+            font-size: 1.8rem;
+            margin: 0 0 0.5rem 0;
+            font-weight: 600;
+            color: var(--dark-color);
+            text-align: left;
+        }
+
+        .binary-classification {
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            margin-top: 0.8rem;
+        }
+
+        .binary-label {
+            font-weight: 500;
+            margin-right: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .binary-value {
+            font-weight: 600;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            margin-right: 0.5rem;
+        }
+
+        .binary-value.verdaechtig {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .binary-value.unauffaellig {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .confidence {
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+
+        .result-details {
+            padding: 2.5rem 3rem;
+        }
+
+        .result-description {
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        .predictions-container {
+            margin: 2.5rem 0;
+        }
+
+        .predictions-container h3 {
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .predictions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .prediction-card {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .prediction-card.suspicious {
+            border-left-color: #ef4444;
+        }
+
+        .prediction-card h4 {
+            font-size: 1.1rem;
+            color: var(--dark-color);
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prediction-card .confidence-bar {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            margin: 1rem 0 0.5rem;
+            overflow: hidden;
+        }
+
+        .prediction-card .confidence-level {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .prediction-card.suspicious .confidence-level {
+            background: #ef4444;
+        }
+
+        .prediction-card .confidence-value {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            text-align: right;
+        }
+
+        .disclaimer {
+            background: #f0f7ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.2rem 1.5rem;
+            border-radius: 6px;
+            margin-top: 2.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .disclaimer i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+        }
+
+        .disclaimer p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .result-actions {
+            padding: 0 3rem 2.5rem 3rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .result-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+
+            .result-icon {
+                margin: 0 0 1.5rem 0;
+            }
+
+            .result-text {
+                text-align: center;
+                font-size: 1.6rem;
+            }
+
+            .binary-classification {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .result-details {
+                padding: 2rem 1.5rem;
+            }
+
+            .predictions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-color) 0%, #2c3e50 100%);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-column {
+            flex: 0 0 calc(25% - 1.5rem);
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            color: var(--light-color);
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.7rem;
+        }
+
+        .footer-column a {
+            color: #b0b8c5;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-column i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #3a506b;
+            color: #b0b8c5;
+            font-size: 0.9rem;
+        }
+
+        /* Impressum Section */
+        .impressum-section {
+            background-color: var(--white-color);
+            padding: 4rem 0;
+            margin: 3rem 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: none;
+        }
+
+        .impressum-content {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .impressum-content h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--dark-color);
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .impressum-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .team-list {
+            list-style: none;
+            margin: 2rem 0;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+        }
+
+        .team-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 1.1rem;
+        }
+
+        .team-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Hilfe Section */
+        .hilfe-section {
+            background-color: var(--white-color);
+            padding: 4rem 0;
+            margin: 3rem 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: none;
+        }
+
+        .hilfe-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hilfe-content h2 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--dark-color);
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .hilfe-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .hilfe-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+        }
+
+        .hilfe-step {
+            flex: 0 0 calc(33.333% - 1.5rem);
+            text-align: center;
+            padding: 2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+        }
+
+        .hilfe-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .hilfe-step h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+
+        .hilfe-tipps {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-top: 2.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .hilfe-tipps h3 {
+            margin-bottom: 1.2rem;
+            color: var(--dark-color);
+        }
+
+        .hilfe-tipps ul {
+            list-style: none;
+        }
+
+        .hilfe-tipps li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .hilfe-tipps li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .step, .hilfe-step {
+                flex: 0 0 calc(50% - 1rem);
+            }
+
+            .footer-column {
+                flex: 0 0 calc(50% - 1rem);
+            }
+
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 1rem;
+            }
+
+            .hero {
+                padding: 3rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .step, .hilfe-step {
+                flex: 0 0 100%;
+            }
+
+            .footer-column {
+                flex: 0 0 100%;
+            }
+
+            .logo img {
+                height: 48px;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="/static/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="image.png" alt="SkinLytics Logo">
+                    SkinLytics
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" id="homeLink">Startseite</a></li>
+                    <li><a href="#" id="uploadLink">Analyse</a></li>
+                    <li><a href="#" id="hilfeLink">Anleitung</a></li>
+                    <li><a href="#" id="impressumLink">Impressum</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="homeSection">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Hautanalyse mit KI-Technologie</h1>
+                <p>SkinLytics nutzt fortschrittliche künstliche Intelligenz, um potenziell auffällige Hautveränderungen zu erkennen und Ihnen eine fundierte Ersteinschätzung zu geben.</p>
+                <a href="#" class="btn" id="heroAnalyzeBtn">Jetzt Hautbild analysieren</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="upload-section" id="uploadSection">
+        <div class="container">
+            <h2 class="section-title">Hautbild hochladen und analysieren</h2>
+            <p class="section-subtitle">Laden Sie ein Bild Ihrer Haut hoch und erhalten Sie innerhalb weniger Sekunden eine KI-gestützte Einschätzung.</p>
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Ziehen Sie ein Bild hierher oder klicken Sie, um eines auszuwählen</p>
+                <p class="file-types">Unterstützte Formate: JPG, PNG (max. 5MB)</p>
+                <input type="file" id="fileInput" class="file-input" accept="image/jpeg, image/png">
+            </div>
+            <div class="image-preview" id="imagePreview">
+                <img id="previewImage" src="" alt="Vorschau des hochgeladenen Bildes">
+            </div>
+            <button class="btn analyze-btn" id="analyzeBtn" disabled>Analyse starten</button>
+        </div>
+    </section>
+
+    <!-- Instructions Section -->
+    <section class="instructions" id="instructionsSection">
+        <div class="container">
+            <h2 class="section-title">So machen Sie ein optimales Hautbild</h2>
+            <p class="section-subtitle">Für die beste Analysequalität empfehlen wir folgende Aufnahmetechniken:</p>
+            <div class="instruction-steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3>Optimale Beleuchtung</h3>
+                    <p>Nutzen Sie natürliches Tageslicht oder eine gleichmäßige Beleuchtung ohne harte Schatten für eine klare Darstellung.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-ruler-combined"></i>
+                    </div>
+                    <h3>Richtiger Abstand</h3>
+                    <p>Das Hautareal sollte deutlich sichtbar sein, mit einem Abstand von 10-15 cm für beste Detailerkennung.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h3>Keine Nachbearbeitung</h3>
+                    <p>Verwenden Sie keine Filter oder Bildbearbeitung, um eine authentische und natürliche Darstellung zu gewährleisten.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="resultsSection">
+        <div class="container">
+            <div class="result-content">
+                <div class="result-header">
+                    <div class="result-icon" id="resultIcon">
+                        <i class="fas fa-check-circle negative-result"></i>
+                    </div>
+                    <div>
+                        <h2 class="result-text" id="resultText">Keine Auffälligkeit erkennbar</h2>
+                        <div class="binary-classification" id="binaryClassification">
+                            <span class="binary-label">Bewertung:</span>
+                            <span class="binary-value" id="binaryValue">Unauffällig</span>
+                            <span class="confidence" id="binaryConfidence">(Sicherheit: 95%)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-details">
+                    <div class="result-description" id="resultDescription">
+                        Basierend auf unserer KI-Analyse wurden keine besorgniserregenden Hautveränderungen erkannt.
+                    </div>
+                    
+                    <div class="predictions-container">
+                        <h3>Top-Vorhersagen</h3>
+                        <div class="predictions-grid" id="predictionsGrid">
+                            <!-- Predictions will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="disclaimer" id="disclaimer">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Hinweis: Diese Analyse ist kein Ersatz für eine professionelle ärztliche Diagnose. Bitte konsultieren Sie bei gesundheitlichen Bedenken immer einen Arzt.</p>
+                    </div>
+                </div>
+                
+                <div class="result-actions">
+                    <button class="btn" id="newAnalysisBtn">Neue Analyse starten</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hilfe Section -->
+    <section class="hilfe-section" id="hilfeSection">
+        <div class="container">
+            <div class="hilfe-content">
+                <h2>ANLEITUNG ZUR NUTZUNG</h2>
+                <div class="hilfe-steps">
+                    <div class="hilfe-step">
+                        <h3>1 Fotografieren</h3>
+                        <p>Nehmen Sie ein qualitativ hochwertiges Foto Ihrer Haut auf</p>
+                    </div>
+                    <div class="hilfe-step">
+                        <h3>2 Foto hochladen</h3>
+                        <p>Laden Sie ein gut beleuchtetes Bild hoch, das die zu untersuchende Stelle deutlich zeigt</p>
+                    </div>
+                    <div class="hilfe-step">
+                        <h3>3 Analyse abwarten</h3>
+                        <p>Starten Sie die Analyse und erhalten Sie innerhalb weniger Sekunden Ihr Ergebnis</p>
+                    </div>
+                </div>
+                <div class="hilfe-tipps">
+                    <h3>Optimale Aufnahmetipps</h3>
+                    <ul>
+                        <li>Nutzen Sie eine gute, natürliche Lichtquelle</li>
+                        <li>Halten Sie den Fokus auf die verdächtige Stelle</li>
+                        <li>Vermeiden Sie Schatten auf der Haut</li>
+                        <li>Machen Sie das Bild aus mehreren Perspektiven, falls möglich</li>
+                        <li>Stellen Sie sicher, dass die Haut trocken und sauber ist</li>
+                    </ul>
+                </div>
+                <div style="text-align: center; margin-top: 2.5rem;">
+                    <button class="btn" id="hilfeZurueckBtn">Zurück zur Startseite</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impressum Section -->
+    <section class="impressum-section" id="impressumSection">
+        <div class="container">
+            <div class="impressum-content">
+                <h2>Impressum</h2>
+                <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;"><strong>Schulprojekt - Skinlytics</strong></p>
+
+                <h3 style="margin-top: 1.5rem; color: var(--dark-color);">Projektteam</h3>
+                <ul class="team-list">
+                    <li>Enes Yigit</li>
+                    <li>Fadime Cobanoglu</li>
+                    <li>Esra Sokullu</li>
+                    <li>Pia Sesar</li>
+                </ul>
+
+                <p style="margin-top: 1.5rem; text-align: center; color: var(--light-text);">Dies ist ein fiktives Projekt im Rahmen eines Schulprojekts an der HTL Spengergasse.</p>
+
+                <div style="text-align: center; margin-top: 2.5rem;">
+                    <button class="btn" id="impressumZurueckBtn">Zurück zur Startseite</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SkinLytics</h3>
+                    <p>Ihr Partner für digitale Hautgesundheitsanalyse mit modernster KI-Technologie.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="#" class="footer-home-link">Startseite</a></li>
+                        <li><a href="#" class="footer-upload-link">Hautanalyse</a></li>
+                        <li><a href="#" class="footer-hilfe-link">Anleitung</a></li>
+                        <li><a href="#" class="footer-impressum-link">Impressum</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Rechtliches</h3>
+                    <ul>
+                        <li><a href="datenschutz.html">Datenschutz</a></li>
+                        <li><a href="datenschutz.html#agb">Nutzungsbedingungen</a></li>
+                        <li><a href="datenschutz.html#haftung">Haftungsausschluss</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontakt</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> Skinlytics@outlook.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> HTL Spengergasse, Wien</li>
+                        <li><i class="fas fa-info-circle"></i> Schulprojekt 2025/26</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 SkinLytics. Alle Rechte vorbehalten. | Ein Projekt der HTL Spengergasse</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM-Elemente
+        const homeLink = document.getElementById('homeLink');
+        const uploadLink = document.getElementById('uploadLink');
+        const hilfeLink = document.getElementById('hilfeLink');
+        const impressumLink = document.getElementById('impressumLink');
+        const heroAnalyzeBtn = document.getElementById('heroAnalyzeBtn');
+        const hilfeZurueckBtn = document.getElementById('hilfeZurueckBtn');
+        const impressumZurueckBtn = document.getElementById('impressumZurueckBtn');
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const previewImage = document.getElementById('previewImage');
+        const imagePreview = document.getElementById('imagePreview');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const newAnalysisBtn = document.getElementById('newAnalysisBtn');
+        const resultIcon = document.getElementById('resultIcon');
+        const resultText = document.getElementById('resultText');
+        const resultDescription = document.getElementById('resultDescription');
+        const homeSection = document.getElementById('homeSection');
+        const uploadSection = document.getElementById('uploadSection');
+        const hilfeSection = document.getElementById('hilfeSection');
+        const impressumSection = document.getElementById('impressumSection');
+        const resultsSection = document.getElementById('resultsSection');
+        
+        // Get footer links (use querySelector as fallback if IDs not found)
+        const footerHomeLink = document.getElementById('footerHomeLink') || document.querySelector('.footer-home-link');
+        const footerUploadLink = document.getElementById('footerUploadLink') || document.querySelector('.footer-upload-link');
+        const footerHilfeLink = document.getElementById('footerHilfeLink') || document.querySelector('.footer-hilfe-link');
+        const footerImpressumLink = document.getElementById('footerImpressumLink') || document.querySelector('.footer-impressum-link');
+
+        // Funktion zum Anzeigen eines bestimmten Abschnitts
+        function showSection(section) {
+            // Alle Abschnitte ausblenden
+            homeSection.style.display = 'none';
+            uploadSection.style.display = 'none';
+            instructionsSection.style.display = 'none';
+            resultsSection.style.display = 'none';
+            hilfeSection.style.display = 'none';
+            impressumSection.style.display = 'none';
+
+            // Gewünschten Abschnitt anzeigen
+            section.style.display = 'block';
+
+            // Zum Anfang der Seite scrollen
+            window.scrollTo(0, 0);
+        }
+
+        // Event-Listener für Navigation
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(homeSection);
+        });
+
+        uploadLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(uploadSection);
+        });
+
+        hilfeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(hilfeSection);
+        });
+
+        impressumLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(impressumSection);
+        });
+
+        heroAnalyzeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(uploadSection);
+        });
+
+        hilfeZurueckBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(homeSection);
+        });
+
+        impressumZurueckBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(homeSection);
+        });
+
+        // Footer-Links
+        footerHomeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(homeSection);
+        });
+
+        footerUploadLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(uploadSection);
+        });
+
+        footerHilfeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(hilfeSection);
+        });
+
+        footerImpressumLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(impressumSection);
+        });
+
+        // Event-Listener für Upload-Bereich
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--primary-color)';
+            uploadArea.style.backgroundColor = '#f0f7ff';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#cbd5e1';
+            uploadArea.style.backgroundColor = '#f8fafc';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#cbd5e1';
+            uploadArea.style.backgroundColor = '#f8fafc';
+
+            if (e.dataTransfer.files.length) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        // Event-Listener für Dateiauswahl
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                
+                // Check file type
+                if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                    alert('Bitte laden Sie nur JPG oder PNG Dateien hoch.');
+                    fileInput.value = '';
+                    return;
+                }
+
+                // Check file size (max 10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('Die Datei ist zu groß. Bitte wählen Sie eine Datei unter 10MB.');
+                    fileInput.value = '';
+                    return;
+                }
+
+                // Show preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    analyzeBtn.disabled = false;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Event-Listener für Analyse-Button
+        analyzeBtn.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Bitte wählen Sie ein Bild aus');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                analyzeBtn.disabled = true;
+                analyzeBtn.textContent = 'Analysiere...';
+
+                const response = await fetch('http://localhost:8000/api/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Analyse fehlgeschlagen');
+                }
+
+                const responseData = await response.json();
+                console.log('Raw prediction result:', responseData);
+                
+                // Show results section
+                showSection(resultsSection);
+                
+                // Extract the prediction data from the response
+                // The prediction data can be in different places in the response
+                const result = responseData.result || responseData;
+                const prediction = result.prediction || result;
+                
+                console.log('Raw prediction data:', prediction);
+                
+                // Get the image URL from the response
+                const imageUrl = responseData.image_url || result.image_url;
+                if (imageUrl) {
+                    previewImage.src = imageUrl;
+                }
+                console.log('Processing prediction:', prediction);
+                
+                // Check if we have a valid prediction
+                if (prediction && (prediction.class || prediction.has_cancer !== undefined || prediction.prediction)) {
+                    // If there's a nested prediction, use that
+                    const finalPrediction = prediction.prediction || prediction;
+                    // Ensure we have valid prediction data
+                    // Get prediction data from the appropriate level
+                    const pred = finalPrediction.prediction || finalPrediction;
+                    const isSuspicious = Boolean(
+                        finalPrediction.has_cancer || 
+                        finalPrediction.is_suspicious || 
+                        (pred && (pred.has_cancer || pred.is_suspicious)) || 
+                        false
+                    );
+                    
+                    // Convert binary confidence to percentage (0-100) and ensure it's a number between 0 and 100
+                    const binaryConfidence = Math.min(100, Math.max(0, parseFloat(
+                        finalPrediction.binary_confidence || 
+                        (pred && pred.binary_confidence) || 
+                        (isSuspicious ? 0.95 : 0.05)
+                    ) * 100)).toFixed(1);
+                    
+                    const className = 
+                        (pred && pred.class_name) || 
+                        finalPrediction.class_name || 
+                        (isSuspicious ? 'Verdächtige Läsion' : 'Unauffällige Läsion');
+                        
+                    const confidence = parseFloat(
+                        (pred && pred.confidence) || 
+                        finalPrediction.confidence || 
+                        (isSuspicious ? 0.95 : 0.05)
+                    ).toFixed(2);
+                    
+                    const predictionClass = (pred && pred.class) || finalPrediction.class;
+                    
+                    // Prepare top predictions array
+                    let topPredictions = [];
+                    
+                    // Add the main prediction
+                    topPredictions.push({
+                        class: predictionClass,
+                        name: className || predictionClass || 'Unbekannt',
+                        confidence: parseFloat(confidence),
+                        is_suspicious: isSuspicious
+                    });
+                    
+                    // Add any additional predictions from top_predictions if available
+                    if (prediction.top_predictions && Array.isArray(prediction.top_predictions)) {
+                        prediction.top_predictions.forEach(pred => {
+                            if (pred.class && !topPredictions.some(p => p.class === pred.class)) {
+                                topPredictions.push({
+                                    class: pred.class,
+                                    name: pred.name || pred.class || 'Unbekannt',
+                                    confidence: parseFloat(pred.confidence || 0).toFixed(2),
+                                    is_suspicious: Boolean(pred.is_suspicious || false)
+                                });
+                            }
+                        });
+                    }
+                    
+                    // Ensure we have at least one prediction with valid values
+                    if (topPredictions.length === 0) {
+                        topPredictions.push({
+                            class: predictionClass || 'unknown',
+                            name: className || 'Unbekannt',
+                            confidence: parseFloat(confidence) || 0,
+                            is_suspicious: isSuspicious
+                        });
+                    }
+                    
+                    // Update binary classification
+                    const binaryValue = document.getElementById('binaryValue');
+                    const binaryConfidenceEl = document.getElementById('binaryConfidence');
+                    
+                    console.log('Setting suspicious status to:', isSuspicious);
+                    
+                    // Set icon and text based on suspicious status
+                    if (isSuspicious) {
+                        console.log('Setting UI to suspicious state');
+                        resultIcon.innerHTML = '<i class="fas fa-exclamation-triangle positive-result"></i>';
+                        resultText.textContent = 'Verdächtige Hautveränderung erkannt';
+                        resultDescription.textContent = 'Unsere KI hat potenziell auffällige Hautveränderungen erkannt. Bitte konsultieren Sie einen Hautarzt für eine professionelle Bewertung.';
+                    } else {
+                        console.log('Setting UI to non-suspicious state');
+                        resultIcon.innerHTML = '<i class="fas fa-check-circle negative-result"></i>';
+                        resultText.textContent = 'Keine Auffälligkeit erkennbar';
+                        resultDescription.textContent = 'Basierend auf unserer KI-Analyse wurden keine besorgniserregenden Hautveränderungen erkannt.';
+                    }
+                    
+                    // Always set binary value and confidence
+                    if (binaryValue) {
+                        binaryValue.textContent = isSuspicious ? 'Verdächtig' : 'Unauffällig';
+                        binaryValue.className = `binary-value ${isSuspicious ? 'verdaechtig' : 'unauffaellig'}`;
+                    }
+                    
+                    if (binaryConfidenceEl) {
+                        binaryConfidenceEl.textContent = `(Sicherheit: ${binaryConfidence}%)`;
+                    }
+                    
+                    // Update predictions grid with all 7 classes
+                    const predictionsGrid = document.getElementById('predictionsGrid');
+                    predictionsGrid.innerHTML = ''; // Clear previous predictions
+                    
+                    // Ensure we have all 7 classes
+                    const allClasses = [
+                        { id: 'akiec', name: 'Aktinische Keratose', is_suspicious: true },
+                        { id: 'bcc', name: 'Basalzellkarzinom', is_suspicious: true },
+                        { id: 'bkl', name: 'Gutartige keratotische Läsion', is_suspicious: false },
+                        { id: 'df', name: 'Dermatofibrom', is_suspicious: false },
+                        { id: 'mel', name: 'Melanom', is_suspicious: true },
+                        { id: 'nv', name: 'Melanozytärer Nävus', is_suspicious: false },
+                        { id: 'vasc', name: 'Gefäßläsion', is_suspicious: false }
+                    ];
+                    
+                    // Create a map of the predictions for easy lookup
+                    const predictionMap = {};
+                    topPredictions.forEach(pred => {
+                        if (pred && (pred.class || pred.name)) {
+                            predictionMap[pred.class || ''] = {
+                                confidence: pred.confidence || 0,
+                                name: pred.name || pred.class || 'Unbekannt',
+                                is_suspicious: pred.is_suspicious || false
+                            };
+                        }
+                    });
+                    
+                    // Display all 7 classes with their confidence values
+                    allClasses.forEach(cls => {
+                        const pred = predictionMap[cls.id] || {
+                            confidence: 0,
+                            name: cls.name,
+                            is_suspicious: cls.is_suspicious
+                        };
+                        
+                        const confidence = (parseFloat(pred.confidence) * 100).toFixed(1);
+                        const isSuspiciousClass = pred.is_suspicious ? 'suspicious' : '';
+                        
+                        const predictionCard = document.createElement('div');
+                        predictionCard.className = `prediction-card ${isSuspiciousClass}`.trim();
+                        predictionCard.innerHTML = `
+                            <div class="prediction-name">${cls.name}</div>
+                            <div class="prediction-confidence">${confidence}%</div>
+                        `;
+                        predictionsGrid.appendChild(predictionCard);
+                    });
+                    
+                    // Show disclaimer
+                    document.getElementById('disclaimer').style.display = 'flex';
+                } // End of if (prediction && ...)
+
+            } catch (error) {
+                console.error('Fehler bei der Analyse:', error);
+                
+                // Fallback UI for errors
+                resultIcon.innerHTML = '<i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i>';
+                resultText.textContent = 'Analyse nicht möglich';
+                resultDescription.textContent = 'Die Analyse konnte nicht durchgeführt werden. Bitte versuchen Sie es später erneut oder laden Sie ein anderes Bild hoch.';
+                
+                // Hide prediction elements
+                document.getElementById('binaryClassification').style.display = 'none';
+                document.getElementById('predictionsGrid').innerHTML = '';
+                document.getElementById('disclaimer').style.display = 'flex';
+                
+                showSection(resultsSection);
+            } finally {
+                analyzeBtn.disabled = false;
+                analyzeBtn.textContent = 'Analyse starten';
+            }
+        });
+
+        // Event-Listener für neue Analyse
+        newAnalysisBtn.addEventListener('click', () => {
+            // Reset file input and preview
+            fileInput.value = '';
+            imagePreview.style.display = 'none';
+            analyzeBtn.disabled = true;
+            
+            // Reset results section
+            resultIcon.innerHTML = '<i class="fas fa-check-circle negative-result"></i>';
+            resultText.textContent = 'Keine Auffälligkeit erkennbar';
+            document.getElementById('binaryValue').textContent = 'Unauffällig';
+            document.getElementById('binaryValue').className = 'binary-value unauffaellig';
+            document.getElementById('binaryConfidence').textContent = '(Sicherheit: 0%)';
+            document.getElementById('predictionsGrid').innerHTML = '';
+            document.getElementById('disclaimer').style.display = 'flex';
+            document.getElementById('binaryClassification').style.display = 'flex';
+            
+            // Reset description to default
+            resultDescription.textContent = 'Basierend auf unserer KI-Analyse wurden keine besorgniserregenden Hautveränderungen erkannt.';
+
+            // Switch to upload section
+            showSection(uploadSection);
+        });
+
+        // Standardmäßig die Startseite anzeigen
+        showSection(homeSection);
+    </script>
+</body>
+</html>
