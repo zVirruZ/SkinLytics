@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutzerklärung & AGBs - SkinLytics</title>
+    <style>
+        :root {
+            --primary-color: #2c7da0;
+            --secondary-color: #468faf;
+            --accent-color: #61a5c2;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --text-color: #343a40;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --border-radius: 8px;
+            --box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+            --highlight-bg: #fff9e6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem;
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin: 3rem 0 1.5rem;
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1rem;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: var(--dark-color);
+            margin: 2rem 0 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            position: relative;
+            padding-left: 0.5rem;
+        }
+
+        h3::before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: -0.5rem;
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        li::marker {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--primary-color);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            margin-top: 2.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(44, 125, 160, 0.2);
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(44, 125, 160, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            border: 1px solid #eaeaea;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 8px rgba(97, 165, 194, 0.1);
+        }
+
+        .legal-highlight {
+            background-color: var(--highlight-bg);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .legal-highlight p:last-child {
+            margin-bottom: 0;
+        }
+
+        .last-updated {
+            text-align: center;
+            font-style: italic;
+            color: #6c757d;
+            margin-bottom: 3rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            border: 1px dashed #dee2e6;
+        }
+
+        .contact-box {
+            background: linear-gradient(135deg, #f8fdff 0%, #f0f9ff 100%);
+            border: 2px solid var(--accent-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .contact-box h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .definition {
+            display: inline-block;
+            background-color: #e8f4fc;
+            color: var(--primary-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin: 0 0.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin: 2.5rem 0 1.25rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .back-button {
+                width: 100%;
+                justify-content: center;
+                padding: 0.875rem 1.5rem;
+            }
+        }
+
+        @media print {
+            .back-button {
+                display: none;
+            }
+
+            .container {
+                box-shadow: none;
+                margin: 0;
+                padding: 1rem;
+            }
+
+            body {
+                background: white;
+            }
+        }
+
+        .toc {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .toc h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .toc ul {
+            columns: 2;
+            column-gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .toc ul {
+                columns: 1;
+            }
+        }
+
+        .law-reference {
+            font-size: 0.9em;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        .data-category {
+            display: inline-block;
+            background-color: #e9ecef;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 0.25rem;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Datenschutzerklärung & Allgemeine Geschäftsbedingungen</h1>
+        <p class="last-updated">Stand: 8. Jänner 2026 | SkinLytics, 1050 Wien</p>
+
+        <div class="toc">
+            <h3>Inhaltsübersicht</h3>
+            <ul>
+                <li><a href="#datenschutz">1. Datenschutzerklärung</a></li>
+                <li><a href="#agbs">2. Allgemeine Geschäftsbedingungen</a></li>
+                <li><a href="#cookies">3. Cookies & Tracking</a></li>
+                <li><a href="#rechte">4. Ihre Rechte</a></li>
+                <li><a href="#kontakt">5. Kontakt & Beschwerden</a></li>
+            </ul>
+        </div>
+
+        <div class="section" id="datenschutz">
+            <h2>1. Datenschutzerklärung gemäß DSGVO</h2>
+
+            <h3>1.1 Präambel und Geltungsbereich</h3>
+            <p>Die SkinLytics GmbH („wir“, „uns“, „unser“) bietet unter der Marke SkinLytics eine mobile Anwendung und zugehörige Webdienste zur KI-gestützten Analyse von Hautbildern an. Diese Datenschutzerklärung klärt Nutzer („Sie“, „Ihr“) über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten auf und gilt ergänzend zu unseren Allgemeinen Geschäftsbedingungen. Die Erklärung orientiert sich an den Vorgaben der <span class="definition">Datenschutz-Grundverordnung (DSGVO)</span>, des <span class="definition">österreichischen Datenschutzgesetzes (DSG)</span> sowie der <span class="definition">E-Privacy-Richtlinie</span>.</p>
+
+            <h3>1.2 Verantwortliche Stelle und Datenschutzbeauftragter</h3>
+            <p><strong>Verantwortlicher:</strong> SkinLytics, Spengergasse 20, 1050 Wien, Österreich</p>
+            <p><strong>E-Mail:</strong> Skinlytics@outlook.com</p>
+
+            <h3>1.3 Grundlagen und Zwecke der Datenverarbeitung</h3>
+            <p>Wir verarbeiten personenbezogene Daten nur auf einer gesetzlich zulässigen Grundlage:</p>
+            <ul>
+                <li><strong>Zur Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO):</strong> Verarbeitung der von Ihnen hochgeladenen Hautbilder und der von Ihnen eingegebenen Informationen (z.B. Hauttyp, Beschwerden) zur Bereitstellung der Analysefunktion, die Sie in Anspruch nehmen.</li>
+                <li><strong>Aufgrund Ihrer ausdrücklichen Einwilligung (Art. 6 Abs. 1 lit. a, Art. 9 Abs. 2 lit. a DSGVO):</strong> Für die Nutzung Ihrer anonymisierten Analyseergebnisse zur Verbesserung und Trainierung unserer KI-Algorithmen. Diese Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen.</li>
+                <li><strong>Zur Wahrung berechtigter Interessen (Art. 6 Abs. 1 lit. f DSGVO):</strong> Für Sicherheitsmaßnahmen, Betrugsprävention, die Bereitstellung technischer Unterstützung und (sofern Sie dem nicht widersprochen haben) Marketingmaßnahmen gegenüber Bestandskunden.</li>
+            </ul>
+
+            <h3>1.4 Kategorien der verarbeiteten Daten</h3>
+            <p>Wir verarbeiten folgende Kategorien personenbezogener Daten:</p>
+            <p><span class="data-category">Kontakt- & Account-Daten</span> <span class="data-category">Gesundheitsdaten</span> <span class="data-category">Nutzungsdaten</span> <span class="data-category">Technische Daten</span></p>
+            <ul>
+                <li><strong>Kontaktdaten:</strong> Bei Registrierung oder Kontaktaufnahme (Name, E-Mail-Adresse, gewählter Benutzername).</li>
+                <li><strong>Gesundheitsbezogene Daten (Besondere Kategorie gem. Art. 9 DSGVO):</strong> Die von Ihnen hochgeladenen Fotos Ihrer Haut sowie alle damit in Verbindung stehenden Angaben (Selbsteinschätzung, Symptombeschreibung) und die daraus generierten Analyseergebnisse stellen <strong>besondere Kategorien personenbezogener Daten</strong> dar. Die Verarbeitung erfolgt auf Grundlage Ihrer <strong>ausdrücklichen Einwilligung</strong>.</li>
+                <li><strong>Nutzungsdaten:</strong> Meta-Daten der Uploads (Dateigröße, Zeitstempel), Interaktionen mit der App, gesetzte Präferenzen, Geräteinformationen (Gerätetyp, Betriebssystemversion).</li>
+                <li><strong>Technische Daten (Server-Logfiles):</strong> IP-Adresse (für maximal 7 Tage in anonymisierter Form gespeichert), Browsertyp und -version, Datum/Uhrzeit des Zugriffs, angefragte URL, HTTP-Statuscode, übertragene Datenmenge. Diese Daten werden zur Gewährleistung der Systemsicherheit (z.B. Erkennung von DDoS-Angriffen) für maximal 30 Tage gespeichert.</li>
+            </ul>
+
+            <div class="legal-highlight">
+                <p><strong>Hinweis zu Gesundheitsdaten:</strong> Die Verarbeitung Ihrer Hautbilder und damit verbundener Daten unterliegt besonderen Schutzvorkehrungen gemäß Art. 9 DSGVO. Diese Daten werden ausschließlich in hochsicheren Rechenzentren innerhalb der EU/EWR verarbeitet und für die Dauer Ihrer Account-Existenz bei uns gespeichert, sofern Sie keine vorzeitige Löschung verlangen.</p>
+            </div>
+
+            <h3>1.5 Einsatz von Dienstleistern (Auftragsverarbeiter)</h3>
+            <p>Zur Bereitstellung unserer Dienste nutzen wir spezialisierte Dienstleister (z.B. Cloud-Hosting-Anbieter, KI-Model-Hosting, Payment-Service-Provider). Diese verarbeiten Daten ausschließlich nach unserer Weisung auf Basis strenger <strong>Auftragsverarbeitungsverträge (AVV)</strong> gemäß Art. 28 DSGVO.</p>
+            <p><strong>Datenübertragung in Drittländer:</strong> Eine Datenübertragung in Drittländer (z.B. USA) erfolgt nur, wenn ein <strong>Angemessenheitsbeschluss der EU-Kommission</strong> vorliegt (z.B. für Kanada, Japan) oder wir geeignete Garantien wie <strong>EU-Standardvertragsklauseln (SCCs)</strong> vereinbart und eine Einzelfallprüfung der Datenschutzlage im Empfängerland vorgenommen haben. Auf Anfrage erhalten Sie eine Kopie der jeweiligen Garantien.</p>
+        </div>
+
+        <div class="section" id="agbs">
+            <h2>2. Allgemeine Geschäftsbedingungen (AGB)</h2>
+
+            <h3>2.1 Geltungsbereich</h3>
+            <p>Diese Allgemeinen Geschäftsbedingungen gelten für alle Verträge zwischen der SkinLytics GmbH und den Nutzern der SkinLytics-App und -Webseite. Abweichende Bedingungen des Nutzers erkennen wir nicht an, es sei denn, wir stimmen ihrer Geltung ausdrücklich schriftlich zu.</p>
+            <p class="law-reference">Gemäß §§ 864 ff. Unternehmensgesetzbuch (UGB), §§ 1 Konsumentenschutzgesetz (KSchG).</p>
+
+            <h3>2.2 Vertragsgegenstand & Leistungsbeschreibung</h3>
+            <p>SkinLytics bietet eine automatisierte, KI-gestützte Hautanalyse an. Der Nutzer erhält nach Upload eines Fotos und Beantwortung von Fragen eine algorithmusbasierte Einschätzung zu erkennbaren Hautmerkmalen.</p>
+
+            <div class="legal-highlight">
+                <p><strong>Wichtiger medizinischer Hinweis:</strong> Die von SkinLytics erstellten Analysen und bereitgestellten Informationen ersetzen <strong>nicht</strong> die professionelle Diagnose, Beratung oder Behandlung durch einen approbierten Arzt (Dermatologen) oder medizinisches Fachpersonal. Die Ergebnisse sind <strong>rein informatorischer Natur</strong> und stellen keine medizinische Diagnose dar. Bei konkretem Verdacht auf Hauterkrankungen, bei Veränderungen der Haut oder bei anhaltenden Beschwerden suchen Sie bitte <strong>unverzüglich einen Arzt auf</strong>.</p>
+            </div>
+
+            <h3>2.3 Vertragsschluss</h3>
+            <p>Der Vertrag für kostenpflichtige Premium-Dienste kommt durch die Auswahl des Produkts, die Durchführung des Bestellvorgangs und unsere anschließende Bestellbestätigung per E-Mail zustande. Kostenlose Basisfunktionen können nach Registrierung sofort genutzt werden.</p>
+
+            <h3>2.4 Haftungsausschluss & -begrenzung</h3>
+            <ul>
+                <li>Unsere Haftung für Schäden, die nicht auf Körper- oder Gesundheitsverletzungen beruhen, ist auf die Höhe des für den Nutzer entstandenen, vorhersehbaren, typischen Vertragsschadens begrenzt, sofern nicht Vorsatz oder grobe Fahrlässigkeit vorliegt.</li>
+                <li>Wir haften nicht für Schäden, die auf falschen, unvollständigen oder irreführenden Angaben des Nutzers, auf unsachgemäßer Anwendung der App oder auf Umständen beruhen, die außerhalb unseres Einflussbereichs liegen (z.B. Qualität der Kamera, Lichtverhältnisse beim Foto).</li>
+                <li>Die Haftung für leichte Fahrlässigkeit ist ausgeschlossen, soweit es sich nicht um wesentliche Vertragspflichten (Kardinalpflichten) handelt.</li>
+            </ul>
+            <p class="law-reference">Gemäß §§ 1295 ff. Allgemeines Bürgerliches Gesetzbuch (ABGB).</p>
+
+            <h3>2.5 Urheberrecht & Nutzungsrechte</h3>
+            <p>Die App, die Webseite, die zugrunde liegenden Algorithmen und alle damit verbundenen Texte, Grafiken und Logos sind urheberrechtlich geschützt und Eigentum der SkinLytics GmbH oder ihrer Lizenzgeber. Dem Nutzer wird ein einfaches, nicht übertragbares, nicht exklusives Recht zur Nutzung der Dienste für den persönlichen Gebrauch eingeräumt.</p>
+            <p>Durch das Hochladen von Bildern gewährt der Nutzer SkinLytics das Recht, diese Bilder ausschließlich zur Durchführung der analysierenden Dienstleistung und, sofern separat eingewilligt, in anonymisierter Form zur Verbesserung der KI zu verwenden.</p>
+
+            <h3>2.6 Vertragsdauer & Kündigung</h3>
+            <p>Kostenpflichtige Abonnements laufen für die gewählte Vertragslaufzeit (monatlich/jährlich) und verlängern sich automatisch um dieselbe Laufzeit, wenn sie nicht spätestens 24 Stunden vor Ablauf der aktuellen Laufzeit gekündigt werden. Die Kündigung erfolgt über die Einstellungen in der App oder per E-Mail an support@skinlytics.at.</p>
+        </div>
+
+        <div class="section" id="cookies">
+            <h2>3. Cookies & Tracking-Technologien</h2>
+            <p>Unsere Webseite und App verwenden Technologien zur Analyse des Nutzungsverhaltens, zur Personalisierung und zur technischen Bereitstellung der Dienste.</p>
+
+            <h3>3.1 Essenzielle Cookies & Local Storage</h3>
+            <p>Für die grundlegende Funktionalität notwendige Technologien (Session-Cookies, Local Storage für Login-Token) werden auf Grundlage unseres berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO) eingesetzt. Ohne diese ist die Nutzung der Dienste nicht möglich.</p>
+
+            <h3>3.2 Analyse-Cookies (Google Analytics 4)</h3>
+            <p>Wir nutzen <strong>Google Analytics 4 (GA4)</strong> mit erweiterter Datenschutzkonfiguration:</p>
+            <ul>
+                <li><strong>IP-Anonymisierung:</strong> Ihre IP-Adresse wird gekürzt und nicht im Klartext gespeichert.</li>
+                <li><strong>Keine Personenbeziehbarkeit:</strong> Daten werden nicht mit anderen Google-Daten (wie Ihrem Google-Account) zusammengeführt.</li>
+                <li><strong>Datenaufbewahrung:</strong> Ereignisdaten werden nach 14 Monaten automatisch gelöscht.</li>
+                <li><strong>Rechtsgrundlage:</strong> Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Sie können diese über unser Cookie-Banner verwalten oder widerrufen.</li>
+            </ul>
+
+            <h3>3.3 Marketing-Cookies</h3>
+            <p>Cookies von Drittanbietern (z.B. Meta Pixel, LinkedIn Insight Tag) werden nur mit Ihrer ausdrücklichen Einwilligung gesetzt und dienen der Schaltung von zielgruppengerechter Werbung und der Messung von Kampagnenerfolgen.</p>
+        </div>
+
+        <div class="section" id="rechte">
+            <h2>4. Ihre Rechte gemäß DSGVO</h2>
+            <p>Sie haben umfangreiche Rechte bezüglich Ihrer personenbezogenen Daten:</p>
+            <ul>
+                <li><strong>Auskunftsrecht (Art. 15 DSGVO):</strong> Sie können eine Bestätigung verlangen, ob und welche personenbezogenen Daten wir von Ihnen verarbeiten.</li>
+                <li><strong>Recht auf Berichtigung (Art. 16 DSGVO):</strong> Sie können die Berichtigung unrichtiger oder Vervollständigung unvollständiger Daten verlangen.</li>
+                <li><strong>Recht auf Löschung („Recht auf Vergessenwerden“, Art. 17 DSGVO):</strong> Unter bestimmten Voraussetzungen (z.B. wenn die Daten nicht mehr benötigt werden oder Sie Ihre Einwilligung widerrufen) können Sie die Löschung Ihrer Daten verlangen.</li>
+                <li><strong>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO):</strong> Sie können die Einschränkung der Verarbeitung verlangen, z.B. wenn Sie die Richtigkeit der Daten bestreiten.</li>
+                <li><strong>Recht auf Datenübertragbarkeit (Art. 20 DSGVO):</strong> Sie haben das Recht, die Sie betreffenden Daten, die Sie uns bereitgestellt haben, in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten.</li>
+                <li><strong>Widerrufsrecht (Art. 7 Abs. 3 DSGVO):</strong> Eine erteilte Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen. Die Rechtmäßigkeit der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung wird davon nicht berührt.</li>
+                <li><strong>Widerspruchsrecht (Art. 21 DSGVO):</strong> Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Sie betreffender personenbezogener Daten, die aufgrund von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, Widerspruch einzulegen.</li>
+            </ul>
+            <p>Die Ausübung Ihrer Rechte ist für Sie <strong>kostenfrei</strong>. Bitte richten Sie Ihren Antrag per E-Mail an <a href="mailto:datenschutz@skinlytics.at">datenschutz@skinlytics.at</a> oder postalisch an unsere Geschäftsadresse. Zur Verhinderung von Missbrauch können wir Ihre Identität überprüfen (z.B. durch Abfrage accountbezogener Details).</p>
+        </div>
+
+        <div class="section" id="kontakt">
+            <h2>5. Kontakt & Beschwerdemöglichkeiten</h2>
+
+            <div class="contact-box">
+                <h3>Verantwortliche Stelle</h3>
+                <p>
+                    <strong>HTL-Spengergasse</strong><br>
+                    Spengergasse 20<br>
+                    1050 Wien<br>
+                    Österreich<br>
+                    <strong>E-Mail (Allgemein):</strong> <a href="mailto:Skinlytics@outlook.com">Skinlytics@outlook.com</a><br>
+                </p>
+            </div>
+
+            <h3>Beschwerderecht bei der Aufsichtsbehörde</h3>
+            <p>Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer personenbezogenen Daten gegen die DSGVO verstößt, haben Sie das Recht, eine Beschwerde bei der zuständigen Aufsichtsbehörde einzureichen. Dies ist für Österreich:</p>
+            <p>
+                <strong>Österreichische Datenschutzbehörde</strong><br>
+                Barichgasse 40-42<br>
+                1030 Wien<br>
+                <strong>Telefon:</strong> +43 1 52 152-0<br>
+                <strong>E-Mail:</strong> <a href="mailto:dsb@dsb.gv.at">dsb@dsb.gv.at</a><br>
+                <strong>Webseite:</strong> <a href="https://www.dsb.gv.at" target="_blank">www.dsb.gv.at</a>
+            </p>
+
+            <h3>Änderungen dieser Dokumente</h3>
+            <p>Wir behalten uns vor, diese Datenschutzerklärung und die AGBs anzupassen, um sie an geänderte Rechtslagen, technische Gegebenheiten oder weiterentwickelte Dienstleistungen anzupassen. Die jeweils aktuelle Version finden Sie stets unter <a href="https://www.skinlytics.at/datenschutz">www.skinlytics.at/datenschutz</a>. Über wesentliche Änderungen werden wir Sie, soweit erforderlich, per E-Mail oder über einen Hinweis in der App informieren.</p>
+        </div>
+
+        <a href="Skinlytics.html" class="back-button">← Zurück zur Startseite</a>
+    </div>
+</body>
+</html>
