@@ -1,5 +1,5 @@
 import os
-from app import create_app
+from Skinlytics.backend.app import create_app
 
 # Create the Flask application
 app = create_app()
