@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, render_template_string
 from flask_cors import CORS
 import os
 
@@ -6,7 +6,14 @@ import os
 from .routes import main as main_blueprint
 
 def create_app():
-    app = Flask(__name__, static_folder='../../frontend', static_url_path='')
+    # Get the absolute path to the frontend directory
+    base_dir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+    frontend_dir = os.path.join(base_dir, 'frontend')
+    
+    # Initialize Flask app with static files configuration
+    app = Flask(__name__, 
+                static_folder=frontend_dir,
+                static_url_path='')
     
     # Configuration
     app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'uploads')
@@ -16,28 +23,40 @@ def create_app():
     # Ensure upload folder exists
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     
-    # Register the blueprint
-    app.register_blueprint(main_blueprint)
+    # Register the blueprint (API routes)
+    app.register_blueprint(main_blueprint, url_prefix='/api')
     
-    # Enable CORS with more permissive settings for development
+    # Enable CORS for API routes
     CORS(app, resources={
-        r"/*": {
-            "origins": ["*"],  # Allow all origins for development
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"],
-            "supports_credentials": True,
-            "expose_headers": ["Content-Disposition"]
+        r"/api/*": {
+            "origins": ["*"],
+            "methods": ["GET", "POST", "OPTIONS"],
+            "allow_headers": ["Content-Type"],
+            "supports_credentials": True
         }
     })
     
     # Serve the main HTML file
     @app.route('/')
-    def serve_frontend():
-        return send_from_directory(app.static_folder, 'Skinlytics.html')
+    def index():
+        return send_from_directory(frontend_dir, 'Skinlytics.html')
     
-    # Serve static files from the frontend directory
+    # Handle other frontend routes (for SPA routing)
     @app.route('/<path:path>')
-    def serve_static(path):
-        return send_from_directory(app.static_folder, path)
+    def serve_any(path):
+        # If the path exists as a file, serve it
+        if os.path.isfile(os.path.join(frontend_dir, path)):
+            return send_from_directory(frontend_dir, path)
+        # Otherwise, serve index.html and let the frontend router handle it
+        return send_from_directory(frontend_dir, 'Skinlytics.html')
+    
+    # Error handlers
+    @app.errorhandler(404)
+    def not_found(e):
+        return send_from_directory(frontend_dir, 'Skinlytics.html')
+    
+    @app.errorhandler(500)
+    def server_error(e):
+        return jsonify({"error": "Internal server error"}), 500
     
     return app
