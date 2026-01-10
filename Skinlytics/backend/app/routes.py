@@ -58,8 +58,7 @@ def analyze_skin_image(image_path):
         
         # Lazy load model and make prediction
         current_app.logger.info("Loading HAM10000 model and making prediction...")
-        model = get_ham10000_model()
-        prediction = model.predict(image_path)
+        prediction = get_ham10000_model().predict(image_path)
         current_app.logger.info(f"Prediction result: {prediction}")
         
         if not prediction.get('success', False):
