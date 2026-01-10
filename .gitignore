@@ -19,3 +19,7 @@ models/*.h5
 
 # Vercel
 .vercel
+
+# Local development
+Lib/
+Scripts/
