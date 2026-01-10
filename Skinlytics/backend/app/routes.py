@@ -133,11 +133,18 @@ def uploaded_file(filename):
         current_app.logger.error(f"Error serving file {filename}: {str(e)}")
         return "File not found", 404
 
-@main.route('/api/analyze', methods=['POST'])
-@main.route('/api/analyze/', methods=['POST'])
+@main.route('/analyze', methods=['GET', 'POST'])
+@main.route('/analyze/', methods=['GET', 'POST'])
 def analyze_image():
     """API-Endpunkt für die Hautbildanalyse."""
     current_app.logger.info("Received analyze request")
+    
+    # Handle GET request for testing
+    if request.method == 'GET':
+        return jsonify({
+            'status': 'ok',
+            'message': 'API is running. Please use POST to upload an image for analysis.'
+        }), 200
     
     # Check if file was uploaded
     if 'file' not in request.files:
