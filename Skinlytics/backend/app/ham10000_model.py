@@ -1,11 +1,11 @@
 import os
+import logging
+import cv2
+import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-import numpy as np
-import cv2
-from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
-import logging
+from tensorflow.keras.applications.resnet50 import preprocess_input
 
 # Logger einrichten
 logging.basicConfig(level=logging.INFO)
@@ -39,8 +39,14 @@ class HAM10000Model:
         # Klassen, die als potenziell bösartig gelten
         self.cancer_classes = ['akiec', 'bcc', 'mel']
         
+        # Bestimme den absoluten Pfad zum Modell
+        if model_path is None:
+            # Gehe 3 Verzeichnisebenen hoch von der aktuellen Datei, um zum Projektroot zu gelangen
+            BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+            model_path = os.path.join(BASE_DIR, 'models', 'ham10000_model_final.h5')
+            
         # Lade das Modell
-        self.load_model(model_path or os.path.join(os.path.dirname(__file__), '..', 'models', 'ham10000_model_final.h5'))
+        self.load_model(model_path)
         
         # Disclaimer für die Ausgabe
         self.disclaimer = "Hinweis: Diese Analyse ist kein Ersatz für eine professionelle ärztliche Diagnose. Bitte konsultieren Sie bei gesundheitlichen Bedenken immer einen Arzt."
@@ -50,79 +56,26 @@ class HAM10000Model:
         
         Args:
             model_path (str): Pfad zum trainierten Modell.
+            
+        Raises:
+            FileNotFoundError: Wenn die Modell-Datei nicht gefunden wird
+            Exception: Bei anderen Fehlern beim Laden des Modells
         """
         try:
-            if os.path.exists(model_path):
-                logger.info(f"Lade Modell von {model_path}")
-                self.model = load_model(model_path)
-                logger.info("Modell erfolgreich geladen")
-            else:
-                logger.warning(f"Modell nicht gefunden unter {model_path}. Verwende Standardmodell.")
-                self._create_default_model()
-        except Exception as e:
-            logger.error(f"Fehler beim Laden des Modells: {str(e)}")
-            logger.info("Erstelle Standardmodell als Fallback")
-            self._create_default_model()
-    
-    def _create_default_model(self):
-        """Erstellt ein Standardmodell als Fallback mit ResNet50."""
-        try:
-            logger.info("Erstelle Standardmodell mit ResNet50...")
-            
-            # Basis-Modell mit ResNet50
-            base_model = ResNet50(
-                input_shape=(*self.input_size, 3),
-                include_top=False,
-                weights='imagenet',
-                pooling='avg'  # GlobalAveragePooling2D direkt im Basis-Modell
-            )
-            
-            # Gefriere die Basis-Schichten
-            base_model.trainable = False
-            
-            # Erstelle das Modell
-            inputs = tf.keras.Input(shape=(*self.input_size, 3))
-            
-            # ResNet50 Vorverarbeitung
-            x = tf.keras.applications.resnet50.preprocess_input(inputs)
-            
-            # Basis-Modell
-            x = base_model(x, training=False)
-            
-            # Batch Normalization für bessere Stabilität
-            x = tf.keras.layers.BatchNormalization()(x)
-            
-            # Dropout zur Regularisierung
-            x = tf.keras.layers.Dropout(0.5)(x)
-            
-            # Ausgabeschicht
-            outputs = tf.keras.layers.Dense(
-                len(self.classes), 
-                activation='softmax',
-                kernel_regularizer=tf.keras.regularizers.l2(0.01)  # L2 Regularisierung
-            )(x)
-            
-            # Modell zusammenbauen
-            self.model = tf.keras.Model(inputs, outputs)
-            
-            # Kompilieren mit optimiertem Learning Rate
-            optimizer = tf.keras.optimizers.Adam(learning_rate=1e-3)
-            
-            self.model.compile(
-                optimizer=optimizer,
-                loss='categorical_crossentropy',
-                metrics=['accuracy', 
-                        tf.keras.metrics.AUC(name='auc'),
-                        tf.keras.metrics.Precision(name='precision'),
-                        tf.keras.metrics.Recall(name='recall')]
-            )
-            
-            logger.info("ResNet50 Standardmodell erfolgreich erstellt")
+            if not os.path.exists(model_path):
+                error_msg = f"Modell nicht gefunden: {model_path}"
+                logger.error(error_msg)
+                raise FileNotFoundError(error_msg)
+                
+            logger.info(f"Lade Modell von {model_path}")
+            self.model = load_model(model_path)
+            logger.info("Modell erfolgreich geladen")
             
         except Exception as e:
-            logger.error(f"Fehler beim Erstellen des ResNet50-Modells: {str(e)}")
+            error_msg = f"Kritischer Fehler beim Laden des Modells: {str(e)}"
+            logger.error(error_msg)
             raise
-
+    
     def preprocess_image(self, image_path, target_size=None):
         """Bereitet das Bild für die Vorhersage mit ResNet50 vor.
         
@@ -403,5 +356,18 @@ class HAM10000Model:
             logger.warning(f"Fehler bei der Farbzählung: {str(e)}")
             return 1
 
-# Globale Instanz des Modells
-ham10000_model = HAM10000Model()
+# Globale Variable für das Modell
+_ham10000_model = None
+
+def get_ham10000_model():
+    """Gibt die globale Modellinstanz zurück und lädt sie bei Bedarf.
+    
+    Returns:
+        HAM10000Model: Die geladene Modellinstanz
+    """
+    global _ham10000_model
+    if _ham10000_model is None:
+        logger.info("Lazy Loading des HAM10000-Modells...")
+        _ham10000_model = HAM10000Model()
+        logger.info("HAM10000-Modell erfolgreich geladen")
+    return _ham10000_model

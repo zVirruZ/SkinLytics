@@ -1,36 +1,21 @@
 import os
 import uuid
 from flask import Blueprint, request, jsonify, current_app, send_from_directory
-from keras.src.applications.resnet import ResNet50, preprocess_input
 from werkzeug.utils import secure_filename
 import cv2
 import numpy as np
-from .ham10000_model import ham10000_model
-from flask import current_app
+from tensorflow.keras.applications.resnet50 import preprocess_input
+from .ham10000_model import get_ham10000_model
 
 # Create blueprint
 main = Blueprint('main', __name__)
 
-# Global model variable
-MODEL = None
+# Constants
 INPUT_SIZE = (224, 224)
 
 # Allowed file extensions
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
-def load_skin_cancer_model():
-    """Lädt das vortrainierte Modell für die Hautkrebserkennung."""
-    global MODEL
-    if MODEL is None:
-        try:
-            # Lade ein vortrainiertes Modell (MobileNetV2 als Beispiel)
-            # In einer echten Anwendung würden Sie hier Ihr speziell trainiertes Modell laden
-            MODEL = ResNet50(weights='imagenet')
-            current_app.logger.info("Modell erfolgreich geladen")
-        except Exception as e:
-            current_app.logger.error(f"Fehler beim Laden des Modells: {str(e)}")
-            raise
-    return MODEL
 
 def preprocess_image(image_path):
     """Bild für die Analyse vorbereiten."""
@@ -71,9 +56,10 @@ def analyze_skin_image(image_path):
             
         current_app.logger.info(f"File size: {file_size} bytes")
         
-        # Make prediction
-        current_app.logger.info("Calling HAM10000 model for prediction...")
-        prediction = ham10000_model.predict(image_path)
+        # Lazy load model and make prediction
+        current_app.logger.info("Loading HAM10000 model and making prediction...")
+        model = get_ham10000_model()
+        prediction = model.predict(image_path)
         current_app.logger.info(f"Prediction result: {prediction}")
         
         if not prediction.get('success', False):
