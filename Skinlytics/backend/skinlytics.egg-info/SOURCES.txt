@@ -5,8 +5,10 @@ app/routes.py
 skinlytics.egg-info/PKG-INFO
 skinlytics.egg-info/SOURCES.txt
 skinlytics.egg-info/dependency_links.txt
+skinlytics.egg-info/tmpbfjhgghl
 skinlytics.egg-info/top_level.txt
 tests/__init__.py
 tests/conftest.py
 tests/test_ham10000_model.py
+tests/test_integration.py
 tests/test_routes.py

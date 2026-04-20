@@ -5,21 +5,30 @@ import numpy as np
 from PIL import Image
 
 from app import create_app
-from app.ham10000_model import HAM10000Model
+from ..app.ham10000_model import HAM10000Model
 
 # Test configuration
 TEST_UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'test_uploads')
 os.makedirs(TEST_UPLOAD_FOLDER, exist_ok=True)
 
 @pytest.fixture
-def app():
+def app(monkeypatch):
     """Create and configure a new app instance for each test."""
-    # Create a temporary file to isolate the database for each test
-    app = create_app({
-        'TESTING': True,
-        'UPLOAD_FOLDER': TEST_UPLOAD_FOLDER,
-        'MAX_CONTENT_LENGTH': 16 * 1024 * 1024  # 16MB max file size
-    })
+    # Set environment variables for test configuration
+    monkeypatch.setenv('TESTING', 'true')
+    
+    # Create the app
+    app = create_app()
+    
+    # Update the app configuration for testing
+    app.config.update(
+        TESTING=True,
+        UPLOAD_FOLDER=TEST_UPLOAD_FOLDER,
+        MAX_CONTENT_LENGTH=16 * 1024 * 1024  # 16MB max file size
+    )
+    
+    # Ensure the test upload directory exists
+    os.makedirs(TEST_UPLOAD_FOLDER, exist_ok=True)
 
     # Create the upload folder if it doesn't exist
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
