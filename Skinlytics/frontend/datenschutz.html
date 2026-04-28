@@ -2,26 +2,12 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datenschutzerklärung & AGBs - SkinLytics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SkinLytics | Next‑Gen KI Hautanalyse</title>
+    <!-- Google Fonts: Inter & Space Grotesk für Premium Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #2c7da0;
-            --secondary-color: #468faf;
-            --accent-color: #61a5c2;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --text-color: #343a40;
-            --success-color: #28a745;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
-            --info-color: #17a2b8;
-            --border-radius: 8px;
-            --box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-            --highlight-bg: #fff9e6;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -29,443 +15,638 @@
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            line-height: 1.7;
-            color: var(--text-color);
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-            padding: 0;
-            margin: 0;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 0% 20%, #f0f6fe, #e9f0f8);
+            color: #0a1c2a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
         }
 
-        .container {
-            max-width: 1200px;
+        :root {
+            --primary: #0f5b7a;
+            --primary-dark: #0a3f57;
+            --primary-glow: rgba(15, 91, 122, 0.25);
+            --accent: #e06e5e;
+            --accent-dark: #c44f3d;
+            --gray-50: #fbfdff;
+            --gray-100: #f2f6fc;
+            --gray-200: #e9edf2;
+            --gray-800: #1f2a3e;
+            --shadow-xl: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+            --shadow-2xl: 0 30px 45px -15px rgba(0, 0, 0, 0.25);
+            --border-glass: 1px solid rgba(255,255,255,0.5);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Moderner Glas-Effekt */
+        .glass-premium {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 12px 28px -8px rgba(0,0,0,0.08);
+        }
+
+        /* Navigation ultra clean */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 110;
+            background: rgba(255,255,255,0.78);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(15, 91, 122, 0.12);
+        }
+
+        .nav-container {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 3rem;
-            background-color: white;
-            box-shadow: var(--box-shadow);
-            border-radius: var(--border-radius);
-            margin-top: 3rem;
-            margin-bottom: 3rem;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(125deg, #0f5b7a, #3596b9);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            background: none;
+            color: var(--primary);
+            text-shadow: 0 2px 6px rgba(15,91,122,0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #1f2a3e;
+            transition: all 0.25s ease;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2.5px;
+            background: linear-gradient(95deg, var(--primary), var(--accent));
+            border-radius: 3px;
+            transition: width 0.35s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section mit 3D Tilt Effekt */
+        .hero {
+            padding: 5rem 2rem;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(125deg, #0a3f57, #2a7f9c, #e06e5e);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: shimmer 6s infinite linear;
         }
 
-        h1 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 600;
-            position: relative;
-            padding-bottom: 1rem;
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
 
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            border-radius: 2px;
-        }
-
-        h2 {
-            color: var(--secondary-color);
-            margin: 3rem 0 1.5rem;
-            font-size: 1.8rem;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 1rem;
-            font-weight: 600;
-        }
-
-        h3 {
-            color: var(--dark-color);
-            margin: 2rem 0 1rem;
-            font-size: 1.3rem;
-            font-weight: 600;
-            position: relative;
-            padding-left: 0.5rem;
-        }
-
-        h3::before {
-            content: '•';
-            color: var(--accent-color);
-            position: absolute;
-            left: -0.5rem;
-            font-size: 1.5rem;
-        }
-
-        p {
-            margin-bottom: 1.2rem;
-            line-height: 1.8;
-            text-align: justify;
-        }
-
-        ul, ol {
-            margin-bottom: 1.5rem;
-            padding-left: 2rem;
-        }
-
-        li {
-            margin-bottom: 0.75rem;
-            line-height: 1.7;
-            position: relative;
-        }
-
-        li::marker {
-            color: var(--accent-color);
-            font-weight: bold;
-        }
-
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-            border-bottom: 1px dotted var(--primary-color);
-            transition: var(--transition);
-            font-weight: 500;
-        }
-
-        a:hover {
-            color: var(--secondary-color);
-            border-bottom: 1px solid var(--secondary-color);
-        }
-
-        .back-button {
+        .btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 1rem 2rem;
+            gap: 0.75rem;
+            padding: 1rem 2.2rem;
             border-radius: 50px;
-            margin-top: 2.5rem;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            transition: all 0.3s var(--ease-out-expo);
             border: none;
             cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 4px 6px rgba(44, 125, 160, 0.2);
+            font-size: 1rem;
+            letter-spacing: -0.01em;
         }
 
-        .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(44, 125, 160, 0.3);
-            text-decoration: none;
+        .btn-primary {
+            background: linear-gradient(105deg, var(--primary), #3285a3);
             color: white;
+            box-shadow: 0 12px 18px -10px rgba(15,91,122,0.4);
         }
 
-        .section {
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background-color: var(--light-color);
-            border-radius: var(--border-radius);
-            border: 1px solid #eaeaea;
-            position: relative;
-            transition: var(--transition);
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 28px -12px rgba(15,91,122,0.5);
         }
 
-        .section:hover {
-            border-color: var(--accent-color);
-            box-shadow: 0 4px 8px rgba(97, 165, 194, 0.1);
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--primary);
+            color: var(--primary-dark);
+            backdrop-filter: blur(4px);
         }
 
-        .legal-highlight {
-            background-color: var(--highlight-bg);
-            border-left: 4px solid var(--warning-color);
+        .btn-outline:hover {
+            background: rgba(15,91,122,0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Upload Card mit WOW Effekt */
+        .upload-zone {
+            border: 2px dashed rgba(15,91,122,0.3);
+            border-radius: 2rem;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(6px);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.85);
+            transform: scale(0.99);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Prediction Cards mit 3D Hover */
+        .pred-card-3d {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+        }
+
+        .pred-card-3d:hover {
+            transform: translateY(-6px) rotateX(2deg);
+            box-shadow: 0 20px 28px -12px rgba(0,0,0,0.15);
+        }
+
+        /* Team im Impressum – absolute Professionalität */
+        .team-wow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2.2rem;
+            margin: 2.5rem 0;
+        }
+
+        .team-card {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
             padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-        }
-
-        .legal-highlight p:last-child {
-            margin-bottom: 0;
-        }
-
-        .last-updated {
+            width: 210px;
             text-align: center;
-            font-style: italic;
-            color: #6c757d;
-            margin-bottom: 3rem;
-            padding: 1rem;
-            background-color: #f8f9fa;
-            border-radius: var(--border-radius);
-            border: 1px dashed #dee2e6;
+            transition: all 0.4s;
+            box-shadow: 0 12px 28px -10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.7);
         }
 
-        .contact-box {
-            background: linear-gradient(135deg, #f8fdff 0%, #f0f9ff 100%);
-            border: 2px solid var(--accent-color);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            margin: 2rem 0;
+        .team-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 4px solid white;
+            box-shadow: 0 12px 20px -8px rgba(0,0,0,0.2);
+            transition: transform 0.25s;
         }
 
-        .contact-box h3 {
-            color: var(--primary-color);
-            margin-top: 0;
+        .team-card:hover {
+            transform: translateY(-10px);
+            background: white;
         }
 
-        .definition {
-            display: inline-block;
-            background-color: #e8f4fc;
-            color: var(--primary-color);
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.9em;
+        .team-card:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Toast Premium */
+        .toast-ultra {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 1rem 1.8rem;
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            z-index: 1200;
             font-weight: 500;
-            margin: 0 0.3rem;
+            animation: slideUpFade 0.3s ease;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 1.5rem;
-                margin: 1rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-                margin: 2.5rem 0 1.25rem;
-            }
-
-            .section {
-                padding: 1.5rem;
-            }
-
-            .back-button {
-                width: 100%;
-                justify-content: center;
-                padding: 0.875rem 1.5rem;
-            }
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @media print {
-            .back-button {
-                display: none;
-            }
-
-            .container {
-                box-shadow: none;
-                margin: 0;
-                padding: 1rem;
-            }
-
-            body {
-                background: white;
-            }
+        /* Modal für Datenschutz / AGB elegant */
+        .modal-glass {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
         }
 
-        .toc {
-            background-color: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--primary-color);
+        .modal-card {
+            max-width: 550px;
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            animation: scaleIn 0.25s var(--ease-out-expo);
         }
 
-        .toc h3 {
-            margin-top: 0;
-            color: var(--primary-color);
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .toc ul {
-            columns: 2;
-            column-gap: 2rem;
+        footer {
+            background: #0f1a24;
+            color: #b3c7d6;
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        @media (max-width: 768px) {
-            .toc ul {
-                columns: 1;
-            }
-        }
-
-        .law-reference {
-            font-size: 0.9em;
-            color: #6c757d;
-            font-style: italic;
-            margin-top: 0.5rem;
-        }
-
-        .data-category {
-            display: inline-block;
-            background-color: #e9ecef;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85em;
-            margin: 0.25rem;
-            border: 1px solid #dee2e6;
+        @media (max-width: 800px) {
+            .hero h1 { font-size: 2.4rem; }
+            .nav-links { gap: 1.2rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Datenschutzerklärung & Allgemeine Geschäftsbedingungen</h1>
-        <p class="last-updated">Stand: 8. Jänner 2026 | SkinLytics, 1050 Wien</p>
 
-        <div class="toc">
-            <h3>Inhaltsübersicht</h3>
-            <ul>
-                <li><a href="#datenschutz">1. Datenschutzerklärung</a></li>
-                <li><a href="#agbs">2. Allgemeine Geschäftsbedingungen</a></li>
-                <li><a href="#cookies">3. Cookies & Tracking</a></li>
-                <li><a href="#rechte">4. Ihre Rechte</a></li>
-                <li><a href="#kontakt">5. Kontakt & Beschwerden</a></li>
-            </ul>
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <i class="fas fa-brain"></i>
+            <span>SkinLytics<span style="font-weight:400;">|AI</span></span>
         </div>
-
-        <div class="section" id="datenschutz">
-            <h2>1. Datenschutzerklärung gemäß DSGVO</h2>
-
-            <h3>1.1 Präambel und Geltungsbereich</h3>
-            <p>Die SkinLytics GmbH („wir“, „uns“, „unser“) bietet unter der Marke SkinLytics eine mobile Anwendung und zugehörige Webdienste zur KI-gestützten Analyse von Hautbildern an. Diese Datenschutzerklärung klärt Nutzer („Sie“, „Ihr“) über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten auf und gilt ergänzend zu unseren Allgemeinen Geschäftsbedingungen. Die Erklärung orientiert sich an den Vorgaben der <span class="definition">Datenschutz-Grundverordnung (DSGVO)</span>, des <span class="definition">österreichischen Datenschutzgesetzes (DSG)</span> sowie der <span class="definition">E-Privacy-Richtlinie</span>.</p>
-
-            <h3>1.2 Verantwortliche Stelle und Datenschutzbeauftragter</h3>
-            <p><strong>Verantwortlicher:</strong> SkinLytics, Spengergasse 20, 1050 Wien, Österreich</p>
-            <p><strong>E-Mail:</strong> Skinlytics@outlook.com</p>
-
-            <h3>1.3 Grundlagen und Zwecke der Datenverarbeitung</h3>
-            <p>Wir verarbeiten personenbezogene Daten nur auf einer gesetzlich zulässigen Grundlage:</p>
-            <ul>
-                <li><strong>Zur Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO):</strong> Verarbeitung der von Ihnen hochgeladenen Hautbilder und der von Ihnen eingegebenen Informationen (z.B. Hauttyp, Beschwerden) zur Bereitstellung der Analysefunktion, die Sie in Anspruch nehmen.</li>
-                <li><strong>Aufgrund Ihrer ausdrücklichen Einwilligung (Art. 6 Abs. 1 lit. a, Art. 9 Abs. 2 lit. a DSGVO):</strong> Für die Nutzung Ihrer anonymisierten Analyseergebnisse zur Verbesserung und Trainierung unserer KI-Algorithmen. Diese Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen.</li>
-                <li><strong>Zur Wahrung berechtigter Interessen (Art. 6 Abs. 1 lit. f DSGVO):</strong> Für Sicherheitsmaßnahmen, Betrugsprävention, die Bereitstellung technischer Unterstützung und (sofern Sie dem nicht widersprochen haben) Marketingmaßnahmen gegenüber Bestandskunden.</li>
-            </ul>
-
-            <h3>1.4 Kategorien der verarbeiteten Daten</h3>
-            <p>Wir verarbeiten folgende Kategorien personenbezogener Daten:</p>
-            <p><span class="data-category">Kontakt- & Account-Daten</span> <span class="data-category">Gesundheitsdaten</span> <span class="data-category">Nutzungsdaten</span> <span class="data-category">Technische Daten</span></p>
-            <ul>
-                <li><strong>Kontaktdaten:</strong> Bei Registrierung oder Kontaktaufnahme (Name, E-Mail-Adresse, gewählter Benutzername).</li>
-                <li><strong>Gesundheitsbezogene Daten (Besondere Kategorie gem. Art. 9 DSGVO):</strong> Die von Ihnen hochgeladenen Fotos Ihrer Haut sowie alle damit in Verbindung stehenden Angaben (Selbsteinschätzung, Symptombeschreibung) und die daraus generierten Analyseergebnisse stellen <strong>besondere Kategorien personenbezogener Daten</strong> dar. Die Verarbeitung erfolgt auf Grundlage Ihrer <strong>ausdrücklichen Einwilligung</strong>.</li>
-                <li><strong>Nutzungsdaten:</strong> Meta-Daten der Uploads (Dateigröße, Zeitstempel), Interaktionen mit der App, gesetzte Präferenzen, Geräteinformationen (Gerätetyp, Betriebssystemversion).</li>
-                <li><strong>Technische Daten (Server-Logfiles):</strong> IP-Adresse (für maximal 7 Tage in anonymisierter Form gespeichert), Browsertyp und -version, Datum/Uhrzeit des Zugriffs, angefragte URL, HTTP-Statuscode, übertragene Datenmenge. Diese Daten werden zur Gewährleistung der Systemsicherheit (z.B. Erkennung von DDoS-Angriffen) für maximal 30 Tage gespeichert.</li>
-            </ul>
-
-            <div class="legal-highlight">
-                <p><strong>Hinweis zu Gesundheitsdaten:</strong> Die Verarbeitung Ihrer Hautbilder und damit verbundener Daten unterliegt besonderen Schutzvorkehrungen gemäß Art. 9 DSGVO. Diese Daten werden ausschließlich in hochsicheren Rechenzentren innerhalb der EU/EWR verarbeitet und für die Dauer Ihrer Account-Existenz bei uns gespeichert, sofern Sie keine vorzeitige Löschung verlangen.</p>
-            </div>
-
-            <h3>1.5 Einsatz von Dienstleistern (Auftragsverarbeiter)</h3>
-            <p>Zur Bereitstellung unserer Dienste nutzen wir spezialisierte Dienstleister (z.B. Cloud-Hosting-Anbieter, KI-Model-Hosting, Payment-Service-Provider). Diese verarbeiten Daten ausschließlich nach unserer Weisung auf Basis strenger <strong>Auftragsverarbeitungsverträge (AVV)</strong> gemäß Art. 28 DSGVO.</p>
-            <p><strong>Datenübertragung in Drittländer:</strong> Eine Datenübertragung in Drittländer (z.B. USA) erfolgt nur, wenn ein <strong>Angemessenheitsbeschluss der EU-Kommission</strong> vorliegt (z.B. für Kanada, Japan) oder wir geeignete Garantien wie <strong>EU-Standardvertragsklauseln (SCCs)</strong> vereinbart und eine Einzelfallprüfung der Datenschutzlage im Empfängerland vorgenommen haben. Auf Anfrage erhalten Sie eine Kopie der jeweiligen Garantien.</p>
-        </div>
-
-        <div class="section" id="agbs">
-            <h2>2. Allgemeine Geschäftsbedingungen (AGB)</h2>
-
-            <h3>2.1 Geltungsbereich</h3>
-            <p>Diese Allgemeinen Geschäftsbedingungen gelten für alle Verträge zwischen der SkinLytics GmbH und den Nutzern der SkinLytics-App und -Webseite. Abweichende Bedingungen des Nutzers erkennen wir nicht an, es sei denn, wir stimmen ihrer Geltung ausdrücklich schriftlich zu.</p>
-            <p class="law-reference">Gemäß §§ 864 ff. Unternehmensgesetzbuch (UGB), §§ 1 Konsumentenschutzgesetz (KSchG).</p>
-
-            <h3>2.2 Vertragsgegenstand & Leistungsbeschreibung</h3>
-            <p>SkinLytics bietet eine automatisierte, KI-gestützte Hautanalyse an. Der Nutzer erhält nach Upload eines Fotos und Beantwortung von Fragen eine algorithmusbasierte Einschätzung zu erkennbaren Hautmerkmalen.</p>
-
-            <div class="legal-highlight">
-                <p><strong>Wichtiger medizinischer Hinweis:</strong> Die von SkinLytics erstellten Analysen und bereitgestellten Informationen ersetzen <strong>nicht</strong> die professionelle Diagnose, Beratung oder Behandlung durch einen approbierten Arzt (Dermatologen) oder medizinisches Fachpersonal. Die Ergebnisse sind <strong>rein informatorischer Natur</strong> und stellen keine medizinische Diagnose dar. Bei konkretem Verdacht auf Hauterkrankungen, bei Veränderungen der Haut oder bei anhaltenden Beschwerden suchen Sie bitte <strong>unverzüglich einen Arzt auf</strong>.</p>
-            </div>
-
-            <h3>2.3 Vertragsschluss</h3>
-            <p>Der Vertrag für kostenpflichtige Premium-Dienste kommt durch die Auswahl des Produkts, die Durchführung des Bestellvorgangs und unsere anschließende Bestellbestätigung per E-Mail zustande. Kostenlose Basisfunktionen können nach Registrierung sofort genutzt werden.</p>
-
-            <h3>2.4 Haftungsausschluss & -begrenzung</h3>
-            <ul>
-                <li>Unsere Haftung für Schäden, die nicht auf Körper- oder Gesundheitsverletzungen beruhen, ist auf die Höhe des für den Nutzer entstandenen, vorhersehbaren, typischen Vertragsschadens begrenzt, sofern nicht Vorsatz oder grobe Fahrlässigkeit vorliegt.</li>
-                <li>Wir haften nicht für Schäden, die auf falschen, unvollständigen oder irreführenden Angaben des Nutzers, auf unsachgemäßer Anwendung der App oder auf Umständen beruhen, die außerhalb unseres Einflussbereichs liegen (z.B. Qualität der Kamera, Lichtverhältnisse beim Foto).</li>
-                <li>Die Haftung für leichte Fahrlässigkeit ist ausgeschlossen, soweit es sich nicht um wesentliche Vertragspflichten (Kardinalpflichten) handelt.</li>
-            </ul>
-            <p class="law-reference">Gemäß §§ 1295 ff. Allgemeines Bürgerliches Gesetzbuch (ABGB).</p>
-
-            <h3>2.5 Urheberrecht & Nutzungsrechte</h3>
-            <p>Die App, die Webseite, die zugrunde liegenden Algorithmen und alle damit verbundenen Texte, Grafiken und Logos sind urheberrechtlich geschützt und Eigentum der SkinLytics GmbH oder ihrer Lizenzgeber. Dem Nutzer wird ein einfaches, nicht übertragbares, nicht exklusives Recht zur Nutzung der Dienste für den persönlichen Gebrauch eingeräumt.</p>
-            <p>Durch das Hochladen von Bildern gewährt der Nutzer SkinLytics das Recht, diese Bilder ausschließlich zur Durchführung der analysierenden Dienstleistung und, sofern separat eingewilligt, in anonymisierter Form zur Verbesserung der KI zu verwenden.</p>
-
-            <h3>2.6 Vertragsdauer & Kündigung</h3>
-            <p>Kostenpflichtige Abonnements laufen für die gewählte Vertragslaufzeit (monatlich/jährlich) und verlängern sich automatisch um dieselbe Laufzeit, wenn sie nicht spätestens 24 Stunden vor Ablauf der aktuellen Laufzeit gekündigt werden. Die Kündigung erfolgt über die Einstellungen in der App oder per E-Mail an support@skinlytics.at.</p>
-        </div>
-
-        <div class="section" id="cookies">
-            <h2>3. Cookies & Tracking-Technologien</h2>
-            <p>Unsere Webseite und App verwenden Technologien zur Analyse des Nutzungsverhaltens, zur Personalisierung und zur technischen Bereitstellung der Dienste.</p>
-
-            <h3>3.1 Essenzielle Cookies & Local Storage</h3>
-            <p>Für die grundlegende Funktionalität notwendige Technologien (Session-Cookies, Local Storage für Login-Token) werden auf Grundlage unseres berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO) eingesetzt. Ohne diese ist die Nutzung der Dienste nicht möglich.</p>
-
-            <h3>3.2 Analyse-Cookies (Google Analytics 4)</h3>
-            <p>Wir nutzen <strong>Google Analytics 4 (GA4)</strong> mit erweiterter Datenschutzkonfiguration:</p>
-            <ul>
-                <li><strong>IP-Anonymisierung:</strong> Ihre IP-Adresse wird gekürzt und nicht im Klartext gespeichert.</li>
-                <li><strong>Keine Personenbeziehbarkeit:</strong> Daten werden nicht mit anderen Google-Daten (wie Ihrem Google-Account) zusammengeführt.</li>
-                <li><strong>Datenaufbewahrung:</strong> Ereignisdaten werden nach 14 Monaten automatisch gelöscht.</li>
-                <li><strong>Rechtsgrundlage:</strong> Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Sie können diese über unser Cookie-Banner verwalten oder widerrufen.</li>
-            </ul>
-
-            <h3>3.3 Marketing-Cookies</h3>
-            <p>Cookies von Drittanbietern (z.B. Meta Pixel, LinkedIn Insight Tag) werden nur mit Ihrer ausdrücklichen Einwilligung gesetzt und dienen der Schaltung von zielgruppengerechter Werbung und der Messung von Kampagnenerfolgen.</p>
-        </div>
-
-        <div class="section" id="rechte">
-            <h2>4. Ihre Rechte gemäß DSGVO</h2>
-            <p>Sie haben umfangreiche Rechte bezüglich Ihrer personenbezogenen Daten:</p>
-            <ul>
-                <li><strong>Auskunftsrecht (Art. 15 DSGVO):</strong> Sie können eine Bestätigung verlangen, ob und welche personenbezogenen Daten wir von Ihnen verarbeiten.</li>
-                <li><strong>Recht auf Berichtigung (Art. 16 DSGVO):</strong> Sie können die Berichtigung unrichtiger oder Vervollständigung unvollständiger Daten verlangen.</li>
-                <li><strong>Recht auf Löschung („Recht auf Vergessenwerden“, Art. 17 DSGVO):</strong> Unter bestimmten Voraussetzungen (z.B. wenn die Daten nicht mehr benötigt werden oder Sie Ihre Einwilligung widerrufen) können Sie die Löschung Ihrer Daten verlangen.</li>
-                <li><strong>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO):</strong> Sie können die Einschränkung der Verarbeitung verlangen, z.B. wenn Sie die Richtigkeit der Daten bestreiten.</li>
-                <li><strong>Recht auf Datenübertragbarkeit (Art. 20 DSGVO):</strong> Sie haben das Recht, die Sie betreffenden Daten, die Sie uns bereitgestellt haben, in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten.</li>
-                <li><strong>Widerrufsrecht (Art. 7 Abs. 3 DSGVO):</strong> Eine erteilte Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen. Die Rechtmäßigkeit der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung wird davon nicht berührt.</li>
-                <li><strong>Widerspruchsrecht (Art. 21 DSGVO):</strong> Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Sie betreffender personenbezogener Daten, die aufgrund von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, Widerspruch einzulegen.</li>
-            </ul>
-            <p>Die Ausübung Ihrer Rechte ist für Sie <strong>kostenfrei</strong>. Bitte richten Sie Ihren Antrag per E-Mail an <a href="mailto:datenschutz@skinlytics.at">datenschutz@skinlytics.at</a> oder postalisch an unsere Geschäftsadresse. Zur Verhinderung von Missbrauch können wir Ihre Identität überprüfen (z.B. durch Abfrage accountbezogener Details).</p>
-        </div>
-
-        <div class="section" id="kontakt">
-            <h2>5. Kontakt & Beschwerdemöglichkeiten</h2>
-
-            <div class="contact-box">
-                <h3>Verantwortliche Stelle</h3>
-                <p>
-                    <strong>HTL-Spengergasse</strong><br>
-                    Spengergasse 20<br>
-                    1050 Wien<br>
-                    Österreich<br>
-                    <strong>E-Mail (Allgemein):</strong> <a href="mailto:Skinlytics@outlook.com">Skinlytics@outlook.com</a><br>
-                </p>
-            </div>
-
-            <h3>Beschwerderecht bei der Aufsichtsbehörde</h3>
-            <p>Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer personenbezogenen Daten gegen die DSGVO verstößt, haben Sie das Recht, eine Beschwerde bei der zuständigen Aufsichtsbehörde einzureichen. Dies ist für Österreich:</p>
-            <p>
-                <strong>Österreichische Datenschutzbehörde</strong><br>
-                Barichgasse 40-42<br>
-                1030 Wien<br>
-                <strong>Telefon:</strong> +43 1 52 152-0<br>
-                <strong>E-Mail:</strong> <a href="mailto:dsb@dsb.gv.at">dsb@dsb.gv.at</a><br>
-                <strong>Webseite:</strong> <a href="https://www.dsb.gv.at" target="_blank">www.dsb.gv.at</a>
-            </p>
-
-            <h3>Änderungen dieser Dokumente</h3>
-            <p>Wir behalten uns vor, diese Datenschutzerklärung und die AGBs anzupassen, um sie an geänderte Rechtslagen, technische Gegebenheiten oder weiterentwickelte Dienstleistungen anzupassen. Die jeweils aktuelle Version finden Sie stets unter <a href="https://www.skinlytics.at/datenschutz">www.skinlytics.at/datenschutz</a>. Über wesentliche Änderungen werden wir Sie, soweit erforderlich, per E-Mail oder über einen Hinweis in der App informieren.</p>
-        </div>
-
-        <a href="Skinlytics.html" class="back-button">← Zurück zur Startseite</a>
+        <ul class="nav-links">
+            <li><a href="#" data-section="home">Start</a></li>
+            <li><a href="#" data-section="upload">Analyse</a></li>
+            <li><a href="#" data-section="history">Verlauf</a></li>
+            <li><a href="#" data-section="hilfe">Anleitung</a></li>
+            <li><a href="#" data-section="impressum">Impressum</a></li>
+            <li><a href="#" data-section="settings">Einstellungen</a></li>
+        </ul>
     </div>
+</nav>
+
+<!-- Hero -->
+<section id="homeSection" class="hero">
+    <div style="max-width: 1000px; margin:0 auto;">
+        <h1>KI-gestützte <br> Hautpräzisionsanalyse</h1>
+        <p style="font-size:1.2rem; margin: 1.5rem auto; max-width: 550px; color: #2c475c;">Erkennen Sie potenzielle Hautveränderungen mit modernster Computer Vision.</p>
+        <div>
+            <button class="btn btn-primary" id="heroAnalyzeBtn"><i class="fas fa-microscope"></i> Analyse starten</button>
+            <button class="btn btn-outline" id="heroHistoryBtn" style="margin-left: 1rem;"><i class="fas fa-chart-simple"></i> Verlauf</button>
+        </div>
+    </div>
+</section>
+
+<!-- Upload Section -->
+<section id="uploadSection" style="display: none; max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem;">
+    <div class="glass-premium" style="border-radius: 2.5rem; padding: 2rem;">
+        <h2 style="font-size: 2rem;">Hautbild hochladen</h2>
+        <div id="uploadArea" class="upload-zone" style="padding: 3rem; text-align: center; border-radius: 2rem; margin: 1.5rem 0;">
+            <i class="fas fa-cloud-arrow-up" style="font-size: 3rem; color: var(--primary);"></i>
+            <p>Bild ablegen oder klicken (JPG/PNG, max. 10MB)</p>
+            <input type="file" id="fileInput" accept="image/jpeg,image/png" style="display: none;">
+        </div>
+        <div id="previewArea" style="text-align: center; display: none;">
+            <img id="previewImg" style="max-width: 260px; border-radius: 1.5rem; box-shadow: var(--shadow-xl);">
+        </div>
+        <button id="analyzeBtn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" disabled>Analyse starten</button>
+    </div>
+</section>
+
+<!-- Results Section Premium -->
+<section id="resultsSection" style="display: none; max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem;">
+    <div class="glass-premium" style="border-radius: 2.5rem; padding: 2rem;">
+        <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+            <i id="resultIcon" class="fas fa-circle-check" style="font-size: 3.5rem; color: #10b981;"></i>
+            <div>
+                <h2 id="resultText" style="font-size: 2rem;">Keine Auffälligkeit</h2>
+                <span id="binaryBadge" style="background: #e0f2e9; padding: 0.2rem 1rem; border-radius: 40px; font-weight: 600;">Unauffällig</span>
+                <span id="confidenceSpan" style="margin-left: 1rem;">Sicherheit: 94%</span>
+            </div>
+        </div>
+        <p id="resultDesc" style="margin: 1.5rem 0; font-size: 1.05rem;">Die Analyse zeigte keine verdächtigen Läsionen.</p>
+        <div id="predictionsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px,1fr)); gap: 1rem; margin: 2rem 0;"></div>
+        <textarea id="analysisNote" rows="2" placeholder="Notiz hinzufügen (z.B. Stelle, Datum, Beobachtung)" style="width:100%; border-radius: 1.5rem; border:1px solid #cbd5e1; padding: 0.8rem;"></textarea>
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button id="saveResultBtn" class="btn btn-primary"><i class="fas fa-bookmark"></i> Im Verlauf speichern</button>
+            <button id="newAnalysisBtn" class="btn btn-outline">Neue Aufnahme</button>
+        </div>
+    </div>
+</section>
+
+<!-- History Section -->
+<section id="historySection" style="display: none; max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem;">
+    <h2 style="font-size: 2rem;"><i class="fas fa-clock-rotate-left"></i> Analyse-Verlauf</h2>
+    <div id="historyList" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1.2rem;"></div>
+</section>
+
+<!-- Hilfe Section -->
+<section id="hilfeSection" style="display: none; max-width: 900px; margin: 2rem auto; padding: 0 1.5rem;">
+    <div class="glass-premium" style="border-radius: 2rem; padding: 2rem;">
+        <h2>Optimale Aufnahme</h2>
+        <ul style="margin-top: 1rem; list-style: none;">
+            <li><i class="fas fa-sun" style="color:var(--accent);"></i> Natürliches Tageslicht, keine Schatten</li>
+            <li><i class="fas fa-camera-retro"></i> 10–15 cm Abstand, scharfes Bild</li>
+            <li><i class="fas fa-ban"></i> Keine Filter / Nachbearbeitung</li>
+            <li><i class="fas fa-stethoscope"></i> KI ist kein Arzt – bei Auffälligkeiten Dermatologe aufsuchen</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Impressum mit Teamfotos & Datenschutztext -->
+<section id="impressumSection" style="display: none; max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem;">
+    <div class="glass-premium" style="border-radius: 2.5rem; padding: 2rem;">
+        <h2 style="text-align: center;">Impressum & Rechtliches</h2>
+        <div class="team-wow">
+            <div class="team-card"><img src="Foto-Enes.png" alt="Enes Yigit"><h3>Enes Yigit</h3><p>Projektleitung</p></div>
+            <div class="team-card"><img src="Foto-Esra.jpg" alt="Esra Sokullu"><h3>Esra Sokullu</h3><p>KI-Forschung</p></div>
+            <div class="team-card"><img src="Foto-Fadime.jpg" alt="Fadime Cobanoglu"><h3>Fadime Cobanoglu</h3><p>UX/UI Design</p></div>
+            <div class="team-card"><img src="Foto-Pia.png" alt="Pia Sesar"><h3>Pia Sesar</h3><p>Datenwissenschaft</p></div>
+        </div>
+        <p><strong>SkinLytics – Schulprojekt HTL Spengergasse</strong><br>Spengergasse 20, 1050 Wien | <i class="fas fa-envelope"></i> Skinlytics@outlook.com</p>
+        <hr style="margin: 1.8rem 0;">
+        <h3>📜 Datenschutz & AGBs (DSGVO-konform)</h3>
+        <div style="background: #f6fafe; border-radius: 1.5rem; padding: 1.5rem; margin-top: 1rem; max-height: 320px; overflow-y: auto;">
+            <p><strong>Datenschutzerklärung:</strong> Ihre hochgeladenen Bilder werden ausschließlich lokal im Browser analysiert (Simulation) bzw. zur Speicherung im Verlauf nur in Ihrem lokalen Speicher abgelegt. Es erfolgt keine Übermittlung an externe Server. Die Einwilligung zur Verarbeitung können Sie jederzeit in den Einstellungen widerrufen.</p>
+            <p><strong>Allgemeine Geschäftsbedingungen:</strong> Die Nutzung der Hautanalyse dient ausschließlich Informationszwecken. Die KI-Analyse ersetzt keine medizinische Diagnose. Für Schäden, die aus Fehlinterpretationen resultieren, übernimmt SkinLytics keine Haftung. Mit der Nutzung bestätigen Sie die Volljährigkeit.</p>
+            <p><strong>Ihre Rechte (Art. 15–22 DSGVO):</strong> Auskunft, Löschung, Berichtigung, Widerspruch. Kontakt: datenschutz@skinlytics.at (fiktiv).</p>
+        </div>
+        <button id="impressumBackBtn" class="btn btn-outline" style="margin-top: 2rem;"><i class="fas fa-arrow-left"></i> Zurück zur Startseite</button>
+    </div>
+</section>
+
+<!-- Settings -->
+<section id="settingsSection" style="display: none; max-width: 750px; margin: 2rem auto; padding: 0 1.5rem;">
+    <div class="glass-premium" style="border-radius: 2rem; padding: 2rem;">
+        <h2><i class="fas fa-sliders-h"></i> Datenschutz-Präferenzen</h2>
+        <div style="margin: 2rem 0; background:#f2f5f9; border-radius: 1.5rem; padding: 1.2rem;">
+            <p><strong>Einwilligungsstatus:</strong> <span id="consentStatusText" style="font-weight:800;">Aktiv</span></p>
+            <button id="revokeConsentBtn" class="btn" style="background:#e06e5e; margin-top: 0.5rem;">Einwilligung widerrufen</button>
+            <button id="giveConsentBtn" class="btn btn-primary" style="display:none; margin-top: 0.5rem;">Einwilligung erteilen</button>
+        </div>
+        <button id="clearHistoryBtn" class="btn" style="background:#c44f3d;"><i class="fas fa-trash-can"></i> Gesamten Verlauf löschen</button>
+    </div>
+</section>
+
+<footer>
+    <div style="text-align: center;">© 2026 SkinLytics | KI Hautanalyse | <a href="#" id="footerImpressum" style="color:#86b3ca;">Impressum & Datenschutz</a></div>
+</footer>
+
+<script>
+    // ---------- SUPERCHARGED SKINLYTICS ----------
+    let consentGiven = localStorage.getItem('skinlytics_consent') === 'true';
+    let currentImageData = null;
+    let currentPredictions = null;
+    let currentBinary = null;
+
+    const SKIN_CLASSES = [
+        { id: 'akiec', name: 'Aktinische Keratose', suspicious: true, desc: 'Präkanzeröse Läsion' },
+        { id: 'bcc', name: 'Basalzellkarzinom', suspicious: true, desc: 'Häufigster Hautkrebs' },
+        { id: 'bkl', name: 'Benigne keratotische Läsion', suspicious: false, desc: 'Harmloser Sonnenschaden' },
+        { id: 'df', name: 'Dermatofibrom', suspicious: false, desc: 'Gutartiger Knoten' },
+        { id: 'mel', name: 'Melanom', suspicious: true, desc: 'Bösartig – hohe Relevanz' },
+        { id: 'nv', name: 'Melanozytärer Nävus', suspicious: false, desc: 'Gutartiger Leberfleck' },
+        { id: 'vasc', name: 'Gefäßläsion', suspicious: false, desc: 'Hämangiom etc.' }
+    ];
+
+    function loadHistory() { return JSON.parse(localStorage.getItem('skinlytics_hist') || '[]'); }
+    function saveHistory(arr) { localStorage.setItem('skinlytics_hist', JSON.stringify(arr)); updateHistoryUI(); }
+
+    function addHistoryEntry(entry) { let h = loadHistory(); h.unshift({ id: Date.now(), date: new Date().toISOString(), ...entry }); saveHistory(h); showToast("✓ Analyse gespeichert", "success"); }
+    function deleteHistoryById(id) { let h = loadHistory().filter(i => i.id != id); saveHistory(h); showToast("Eintrag gelöscht", "info"); }
+    function clearFullHistory() { if(confirm("⚠️ Alle gespeicherten Analysen endgültig löschen?")) { saveHistory([]); showToast("Verlauf komplett geleert", "warning"); } }
+
+    function updateHistoryUI() {
+        const container = document.getElementById('historyList');
+        if(!container) return;
+        let history = loadHistory();
+        if(history.length===0) { container.innerHTML = '<div class="glass-premium" style="padding:2rem; text-align:center;">✨ Noch keine gespeicherten Analysen.</div>'; return; }
+        container.innerHTML = history.map(item => `
+            <div class="glass-premium" style="padding:1.2rem; border-radius:1.8rem;">
+                <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+                    <span><i class="far fa-calendar-alt"></i> ${new Date(item.date).toLocaleString()}</span>
+                    <span style="background:${item.isSuspicious ? '#fee2e2' : '#dcfce7'}; padding:0.2rem 1rem; border-radius:50px;">${item.isSuspicious ? '⚠️ Verdächtig' : '✅ Unauffällig'}</span>
+                </div>
+                <p><strong>Ergebnis:</strong> ${item.resultLabel}</p>
+                ${item.imageData ? `<img src="${item.imageData}" style="max-width:90px; border-radius:1rem; margin:0.5rem 0;">` : ''}
+                ${item.note ? `<p><i class="fas fa-pen-fancy"></i> ${escapeHtml(item.note)}</p>` : ''}
+                <button class="btn" style="background:#c44f3d; padding:0.3rem 1.2rem; margin-top:0.5rem;" onclick="deleteHistoryById(${item.id})">Löschen</button>
+            </div>
+        `).join('');
+    }
+    window.deleteHistoryById = deleteHistoryById;
+
+    function showToast(msg, type='info') {
+        let toast = document.createElement('div');
+        toast.className = 'toast-ultra';
+        toast.innerHTML = `<i class="fas ${type==='success'?'fa-circle-check':'fa-info-circle'}"></i> ${msg}`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3200);
+    }
+
+    function generateRealisticPredictions() {
+        let probs = Array(7).fill(0);
+        let remaining = 100;
+        for(let i=0;i<6;i++) { let val = Math.floor(Math.random() * 28) + 2; probs[i]=val; remaining-=val; }
+        probs[6]=Math.max(1,remaining);
+        let suspiciousOverall = Math.random() < 0.32;
+        if(suspiciousOverall) {
+            let suspiciousIdx = SKIN_CLASSES.map((c,i)=>c.suspicious ? i : -1).filter(i=>i!==-1);
+            let target = suspiciousIdx[Math.floor(Math.random()*suspiciousIdx.length)];
+            let boost = 58 + Math.floor(Math.random()*30);
+            let old = probs[target];
+            probs[target] = boost;
+            let diff = boost - old;
+            for(let i=0;i<probs.length;i++) if(i!==target && probs[i]>6) probs[i] -= diff/3;
+            let sum = probs.reduce((a,b)=>a+b,0);
+            if(sum!==100) probs[0] += (100-sum);
+        }
+        return SKIN_CLASSES.map((c,i)=>({ ...c, confidence: Math.min(99,Math.max(1,Math.round(probs[i]))) })).sort((a,b)=>b.confidence-a.confidence);
+    }
+
+    function performAnalysis() {
+        let preds = generateRealisticPredictions();
+        let suspiciousPred = preds.find(p=>p.suspicious && p.confidence > 45);
+        let isSusp = !!suspiciousPred;
+        let conf = isSusp ? (suspiciousPred.confidence) : preds.find(p=>!p.suspicious).confidence;
+        let label = isSusp ? "⚠️ Verdächtige Veränderung" : "🔍 Unauffälliges Hautbild";
+        let desc = isSusp ? "Die KI erkennt potenzielle Auffälligkeiten – bitte dermatologisch abklären lassen." : "Es wurden keine signifikanten Anomalien detektiert. Bleiben Sie aufmerksam.";
+        return { predictions: preds, isSuspicious: isSusp, confidence: Math.round(conf), resultLabel: label, description: desc };
+    }
+
+    function displayResults(analysis, imgData) {
+        currentPredictions = analysis.predictions;
+        currentBinary = { isSuspicious: analysis.isSuspicious, confidence: analysis.confidence };
+        currentImageData = imgData;
+        document.getElementById('resultIcon').innerHTML = analysis.isSuspicious ? '<i class="fas fa-triangle-exclamation" style="color:#e06e5e; font-size:3rem;"></i>' : '<i class="fas fa-circle-check" style="color:#10b981; font-size:3rem;"></i>';
+        document.getElementById('resultText').innerText = analysis.resultLabel;
+        document.getElementById('binaryBadge').innerHTML = analysis.isSuspicious ? 'Verdächtig' : 'Unauffällig';
+        document.getElementById('binaryBadge').style.background = analysis.isSuspicious ? '#fee2e2' : '#dcfce7';
+        document.getElementById('confidenceSpan').innerHTML = `Sicherheit: ${analysis.confidence}%`;
+        document.getElementById('resultDesc').innerText = analysis.description;
+        const grid = document.getElementById('predictionsGrid');
+        grid.innerHTML = analysis.predictions.map(p => `<div class="pred-card-3d ${p.suspicious ? 'suspicious' : ''}"><strong>${p.name}</strong> <span style="float:right;">${p.confidence}%</span><div style="font-size:0.7rem; color:#4a627a;">${p.desc}</div></div>`).join('');
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('uploadSection').style.display = 'none';
+        document.getElementById('homeSection').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Navigation und Consent
+    function showSection(sectionId) {
+        const sections = ['homeSection','uploadSection','historySection','hilfeSection','impressumSection','settingsSection','resultsSection'];
+        sections.forEach(s => { let el = document.getElementById(s); if(el) el.style.display = 'none'; });
+        document.getElementById(sectionId).style.display = 'block';
+        if(sectionId === 'historySection') updateHistoryUI();
+        if(sectionId === 'settingsSection') updateSettingsUI();
+    }
+
+    function updateSettingsUI() {
+        let statusSpan = document.getElementById('consentStatusText');
+        let revokeBtn = document.getElementById('revokeConsentBtn');
+        let giveBtn = document.getElementById('giveConsentBtn');
+        if(consentGiven) {
+            statusSpan.innerText = '✅ Aktiv (Einwilligung erteilt)';
+            revokeBtn.style.display = 'inline-flex';
+            giveBtn.style.display = 'none';
+        } else {
+            statusSpan.innerText = '❌ Inaktiv – Keine Einwilligung';
+            revokeBtn.style.display = 'none';
+            giveBtn.style.display = 'inline-flex';
+        }
+    }
+
+    function setConsent(value) {
+        consentGiven = value;
+        localStorage.setItem('skinlytics_consent', value);
+        updateSettingsUI();
+        if(!value) showToast('Einwilligung widerrufen. Analyse deaktiviert.', 'warning');
+        else showToast('Einwilligung erteilt – Sie können starten', 'success');
+        document.getElementById('analyzeBtn').disabled = !(consentGiven && currentImageData);
+    }
+
+    // Upload Events
+    const uploadDiv = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const previewDiv = document.getElementById('previewArea');
+    const previewImg = document.getElementById('previewImg');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+
+    uploadDiv.addEventListener('click', () => fileInput.click());
+    uploadDiv.addEventListener('dragover', (e) => { e.preventDefault(); uploadDiv.style.borderColor = '#0f5b7a'; uploadDiv.style.background = '#f0f9ff'; });
+    uploadDiv.addEventListener('dragleave', () => { uploadDiv.style.borderColor = 'rgba(15,91,122,0.3)'; uploadDiv.style.background = 'rgba(255,255,255,0.7)'; });
+    uploadDiv.addEventListener('drop', (e) => { e.preventDefault(); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); uploadDiv.style.borderColor = 'rgba(15,91,122,0.3)'; });
+    fileInput.addEventListener('change', (e) => { if(e.target.files[0]) handleFile(e.target.files[0]); });
+
+    function handleFile(file) {
+        if(!file.type.match('image.*')) { alert('Bitte ein Bild wählen'); return; }
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            currentImageData = ev.target.result;
+            previewImg.src = currentImageData;
+            previewDiv.style.display = 'block';
+            analyzeBtn.disabled = !consentGiven;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    analyzeBtn.addEventListener('click', () => {
+        if(!consentGiven) { showToast('Einwilligung fehlt → Einstellungen', 'error'); showSection('settingsSection'); return; }
+        if(!currentImageData) return;
+        analyzeBtn.disabled = true; analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Neuronale Analyse...';
+        setTimeout(() => {
+            let analysis = performAnalysis();
+            displayResults(analysis, currentImageData);
+            analyzeBtn.disabled = false; analyzeBtn.innerHTML = 'Analyse starten';
+        }, 1600);
+    });
+
+    document.getElementById('saveResultBtn')?.addEventListener('click', () => {
+        if(!currentPredictions || !currentImageData) { showToast('Keine Analyse verfügbar', 'error'); return; }
+        let note = document.getElementById('analysisNote').value;
+        addHistoryEntry({
+            resultLabel: currentBinary.isSuspicious ? 'Verdächtig' : 'Unauffällig',
+            isSuspicious: currentBinary.isSuspicious,
+            confidence: currentBinary.confidence,
+            note: note,
+            imageData: currentImageData,
+            predictions: currentPredictions.map(p=>({name:p.name,conf:p.confidence}))
+        });
+    });
+    document.getElementById('newAnalysisBtn')?.addEventListener('click', () => { currentImageData=null; previewDiv.style.display='none'; analyzeBtn.disabled=true; showSection('uploadSection'); });
+    document.getElementById('revokeConsentBtn')?.addEventListener('click', () => setConsent(false));
+    document.getElementById('giveConsentBtn')?.addEventListener('click', () => setConsent(true));
+    document.getElementById('clearHistoryBtn')?.addEventListener('click', clearFullHistory);
+    document.getElementById('heroAnalyzeBtn').addEventListener('click', () => { if(!consentGiven) { showToast('Einwilligung erforderlich','error'); showSection('settingsSection'); } else showSection('uploadSection'); });
+    document.getElementById('heroHistoryBtn').addEventListener('click', () => showSection('historySection'));
+    document.getElementById('impressumBackBtn')?.addEventListener('click', () => showSection('homeSection'));
+    document.getElementById('footerImpressum')?.addEventListener('click', (e) => { e.preventDefault(); showSection('impressumSection'); });
+    document.querySelectorAll('[data-section]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            let sec = link.getAttribute('data-section');
+            if(sec === 'upload' && !consentGiven) { showToast('Bitte Einwilligung in Einstellungen', 'error'); showSection('settingsSection'); return; }
+            if(sec === 'upload') showSection('uploadSection');
+            else if(sec === 'home') showSection('homeSection');
+            else if(sec === 'history') showSection('historySection');
+            else if(sec === 'hilfe') showSection('hilfeSection');
+            else if(sec === 'impressum') showSection('impressumSection');
+            else if(sec === 'settings') showSection('settingsSection');
+        });
+    });
+
+    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    if(!consentGiven) analyzeBtn.disabled = true;
+    updateSettingsUI(); showSection('homeSection');
+</script>
 </body>
 </html>
