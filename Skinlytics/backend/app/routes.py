@@ -1,11 +1,13 @@
 import os
 import uuid
-from flask import Blueprint, request, jsonify, current_app, send_from_directory
+import datetime
+from flask import Blueprint, request, jsonify, current_app, send_from_directory, Response
 from werkzeug.utils import secure_filename
 import cv2
 import numpy as np
 from tensorflow.keras.applications.resnet50 import preprocess_input
 from .ham10000_model import get_ham10000_model
+from .pdf_generator import SkinLyticsPDFGenerator
 
 # Create blueprint
 main = Blueprint('main', __name__)
@@ -218,4 +220,45 @@ def analyze_image():
             'success': False,
             'has_cancer': False,
             'advice': 'Bitte versuchen Sie es mit einem anderen Bild oder wenden Sie sich an den Support.'
+        }), 500
+
+@main.route('/generate-pdf', methods=['POST'])
+def generate_pdf_report():
+    """Generate PDF report from analysis data."""
+    try:
+        # Get JSON data from request
+        data = request.get_json()
+        analysis_result = data.get('analysis_result')
+        note_text = data.get('note_text', '')
+        include_logo = data.get('include_logo', True)
+        
+        if not analysis_result:
+            return jsonify({
+                'status': 'error',
+                'error': 'Keine Analyseergebnisse bereitgestellt'
+            }), 400
+        
+         # Create PDF using professional SkinLyticsPDFGenerator
+        from .pdf_generator import SkinLyticsPDFGenerator
+        
+        generator = SkinLyticsPDFGenerator()
+        pdf_bytes = generator.create_pdf_from_analysis_result(analysis_result, note_text=note_text)
+        
+        # Return PDF as response
+        from flask import Response
+        response = Response(
+            pdf_bytes,
+            mimetype='application/pdf',
+            headers={
+                'Content-Disposition': f'attachment; filename=skinlytics_medical_report_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.pdf'
+            }
+        )
+        
+        return response
+        
+    except Exception as e:
+        error_msg = f"Fehler bei der PDF-Generierung: {str(e)}"
+        return jsonify({
+            'status': 'error',
+            'error': error_msg
         }), 500

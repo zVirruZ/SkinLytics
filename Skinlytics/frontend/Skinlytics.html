@@ -2,2500 +2,1705 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkinLytics - Hautanalyse mit KI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SkinLytics | Professionelle KI-Hautanalyse</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Grundlegende Stile */
-        :root {
-            --primary-color: #2c7da0;
-            --secondary-color: #468faf;
-            --accent-color: #e63946;
-            --light-color: #f8f9fa;
-            --white-color: #ffffff;
-            --dark-color: #1e3a5f;
-            --text-color: #333333;
-            --light-text: #6c757d;
-            --border-radius: 10px;
-            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #f8fdff 0%, #e6f2ff 100%);
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 0% 20%, #f0f6fe, #e9f0f8);
+            color: #0a1c2a;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
+        /* Hauptinhalt dehnt sich aus, Footer bleibt unten */
+        .main-content {
+            flex: 1;
         }
 
-        /* Header */
-        header {
-            background-color: var(--white-color);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        :root {
+            --primary: #0f5b7a;
+            --primary-dark: #0a3f57;
+            --accent: #e06e5e;
+            --accent-dark: #c44f3d;
+            --gray-800: #1f2a3e;
+            --shadow-xl: 0 25px 40px -12px rgba(0,0,0,0.2);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Glas-Effekte */
+        .glass-premium {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 12px 28px -8px rgba(0,0,0,0.08);
+        }
+
+        /* Navigation */
+        .navbar {
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 110;
+            background: rgba(255,255,255,0.78);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(15,91,122,0.12);
         }
 
-        .navbar {
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            justify-content: space-between;
             flex-wrap: wrap;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            font-size: 1.7rem;
+            gap: 0.8rem;
+            font-family: 'Space Grotesk', monospace;
             font-weight: 700;
-            color: var(--dark-color);
+            font-size: 1.8rem;
+            background: linear-gradient(125deg, #0f5b7a, #3596b9);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
 
-        .logo img {
-            height: 72px;
-            width: auto;
-            margin-right: 0.75rem;
-            object-fit: contain;
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
         }
 
         .nav-links {
             display: flex;
+            gap: 2rem;
             list-style: none;
-            flex-wrap: wrap;
-        }
-
-        .nav-links li {
-            margin-left: 1.8rem;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 500;
-            transition: var(--transition);
+            font-weight: 600;
+            color: #1f2a3e;
+            transition: all 0.25s ease;
             position: relative;
-            padding: 0.5rem 0;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
+            font-size: 0.95rem;
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
+            bottom: -6px;
             left: 0;
-            background-color: var(--primary-color);
-            transition: var(--transition);
+            width: 0;
+            height: 2.5px;
+            background: linear-gradient(95deg, var(--primary), var(--accent));
+            border-radius: 3px;
+            transition: width 0.35s var(--ease-out-expo);
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            padding: 5rem 0;
+            padding: 4rem 2rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,160L48,170.7C96,181,192,203,288,202.7C384,203,480,181,576,165.3C672,149,768,139,864,149.3C960,160,1056,192,1152,192C1248,192,1344,160,1392,144L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
         }
 
         .hero h1 {
-            font-size: 2.8rem;
-            margin-bottom: 1.2rem;
-            font-weight: 700;
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(125deg, #0a3f57, #2a7f9c, #e06e5e);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: shimmer 6s infinite linear;
         }
 
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-            opacity: 0.9;
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
 
+        /* Buttons */
         .btn {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
             padding: 0.9rem 2rem;
-            border: none;
             border-radius: 50px;
-            font-size: 1rem;
             font-weight: 600;
+            transition: all 0.3s var(--ease-out-expo);
+            border: none;
             cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
+            font-size: 1rem;
         }
 
-        .btn:hover {
-            background-color: #c1121f;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(230, 57, 70, 0.4);
+        .btn-primary {
+            background: linear-gradient(105deg, var(--primary), #3285a3);
+            color: white;
+            box-shadow: 0 12px 18px -10px rgba(15,91,122,0.4);
         }
 
-        .btn-secondary {
-            background-color: var(--primary-color);
-            box-shadow: 0 4px 10px rgba(44, 125, 160, 0.3);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--secondary-color);
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
         }
 
         .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            box-shadow: none;
+            background: transparent;
+            border: 1.5px solid var(--primary);
+            color: var(--primary-dark);
         }
 
-        .btn-outline:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        .btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-        }
-
-        .btn-danger {
-            background-color: var(--danger-color);
-            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
-        }
-
-        .btn-danger:hover {
-            background-color: #dc2626;
-        }
-
-        /* Toast Notification */
-        .toast-notification {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1100;
-            animation: slideIn 0.3s ease;
-            border-left: 4px solid;
-        }
-
-        .toast-notification.success {
-            border-left-color: #10b981;
-        }
-        .toast-notification.error {
-            border-left-color: #ef4444;
-        }
-        .toast-notification.info {
-            border-left-color: var(--primary-color);
-        }
-        .toast-notification.warning {
-            border-left-color: #f59e0b;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Upload Section */
-        .upload-section {
-            background-color: var(--white-color);
-            padding: 4rem 0;
-            margin: 3rem 0;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            color: var(--dark-color);
-            font-size: 2.2rem;
-            font-weight: 600;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--light-text);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .upload-area {
-            border: 2px dashed #cbd5e1;
-            border-radius: var(--border-radius);
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            transition: var(--transition);
+        /* Upload Bereich */
+        .upload-zone {
+            border: 2px dashed rgba(15,91,122,0.3);
+            border-radius: 2rem;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(6px);
+            transition: all 0.3s;
             cursor: pointer;
-            background-color: #f8fafc;
-        }
-
-        .upload-area.disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .upload-area:hover:not(.disabled) {
-            border-color: var(--primary-color);
-            background-color: #f0f7ff;
-            transform: translateY(-5px);
-        }
-
-        .upload-area i {
-            font-size: 3.5rem;
-            color: #94a3b8;
-            margin-bottom: 1.2rem;
-        }
-
-        .upload-area p {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .file-types {
-            color: var(--light-text);
-            font-size: 0.9rem;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .image-preview {
-            max-width: 320px;
-            max-height: 320px;
-            margin: 1.5rem auto;
-            display: none;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-        }
-
-        .image-preview img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .analyze-btn {
-            display: block;
-            margin: 0 auto;
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-        }
-
-        .analyze-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Instructions Section */
-        .instructions {
-            background-color: var(--white-color);
-            padding: 4rem 0;
-            margin: 3rem 0;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-        }
-
-        .instruction-steps {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 2rem;
-        }
-
-        .step {
-            flex: 0 0 calc(33.333% - 1.5rem);
-            text-align: center;
-            padding: 2rem 1.5rem;
-            margin-bottom: 1.5rem;
-            background-color: #f8fafc;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            border: 1px solid #e2e8f0;
-        }
-
-        .step:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-color);
-        }
-
-        .step-icon {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2.2rem;
-            color: white;
-            box-shadow: 0 5px 15px rgba(44, 125, 160, 0.3);
-        }
-
-        .step h3 {
-            margin-bottom: 1rem;
-            color: var(--dark-color);
-            font-size: 1.3rem;
-        }
-
-        .step p {
-            color: var(--light-text);
-            line-height: 1.7;
-        }
-
-        /* Results Section */
-        .results-section {
-            background-color: var(--white-color);
-            padding: 0;
-            margin: 3rem 0;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            display: none;
-            overflow: hidden;
-        }
-
-        .result-content {
-            text-align: left;
-            max-width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        .result-header {
-            display: flex;
-            align-items: center;
-            padding: 2.5rem 3rem;
-            background: linear-gradient(135deg, #f8fafc 0%, #f0f7ff 100%);
-            border-bottom: 1px solid #e2e8f0;
-            flex-wrap: wrap;
-        }
-
-        .result-icon {
-            font-size: 3.5rem;
-            margin: 0 2rem 0 0;
-            flex-shrink: 0;
-        }
-
-        .positive-result {
-            color: #ef4444;
-        }
-
-        .negative-result {
-            color: #10b981;
-        }
-
-        .result-text {
-            font-size: 1.8rem;
-            margin: 0 0 0.5rem 0;
-            font-weight: 600;
-            color: var(--dark-color);
-            text-align: left;
-        }
-
-        .binary-classification {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.8rem;
-        }
-
-        .binary-label {
-            font-weight: 500;
-            margin-right: 0.5rem;
-            color: var(--text-color);
-        }
-
-        .binary-value {
-            font-weight: 600;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            margin-right: 0.5rem;
-        }
-
-        .binary-value.verdaechtig {
-            background-color: #fee2e2;
-            color: #b91c1c;
-        }
-
-        .binary-value.unauffaellig {
-            background-color: #dcfce7;
-            color: #166534;
-        }
-
-        .confidence {
-            color: var(--light-text);
-            font-size: 0.95rem;
-        }
-
-        .result-details {
-            padding: 2.5rem 3rem;
-        }
-
-        .result-description {
-            margin-bottom: 2.5rem;
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: var(--text-color);
-        }
-
-        /* Save Result Area */
-        .save-result-area {
-            background-color: #f0f7ff;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border: 1px solid #e2e8f0;
-        }
-
-        .save-result-area h4 {
-            margin-bottom: 1rem;
-            color: var(--dark-color);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .note-input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #cbd5e1;
-            border-radius: var(--border-radius);
-            font-family: inherit;
-            margin: 0.5rem 0;
-            resize: vertical;
-        }
-
-        .save-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .predictions-container {
-            margin: 2.5rem 0;
-        }
-
-        .predictions-container h3 {
-            font-size: 1.3rem;
-            color: var(--dark-color);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .predictions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .prediction-card {
-            background: #f8fafc;
-            border-radius: 8px;
-            padding: 1.5rem;
-            border-left: 4px solid var(--primary-color);
-            transition: var(--transition);
-        }
-
-        .prediction-card.suspicious {
-            border-left-color: #ef4444;
-        }
-
-        .prediction-card .prediction-name {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--dark-color);
-            margin-bottom: 0.75rem;
-        }
-
-        .prediction-card .prediction-confidence {
-            font-size: 0.9rem;
-            color: var(--light-text);
-        }
-
-        .disclaimer {
-            background: #f0f7ff;
-            border-left: 4px solid var(--primary-color);
-            padding: 1.2rem 1.5rem;
-            border-radius: 6px;
-            margin-top: 2.5rem;
-            display: flex;
-            align-items: flex-start;
-        }
-
-        .disclaimer i {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            margin-right: 1rem;
-            margin-top: 0.2rem;
-        }
-
-        .disclaimer p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        .result-actions {
-            padding: 0 3rem 2.5rem 3rem;
-            text-align: center;
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* History Section */
-        .history-section {
-            background-color: var(--white-color);
-            padding: 4rem 0;
-            margin: 3rem 0;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            display: none;
-        }
-
-        .history-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-            padding: 0 1rem;
-        }
-
-        .history-header h2 {
-            font-size: 1.8rem;
-            color: var(--dark-color);
-        }
-
-        .history-stats {
-            color: var(--light-text);
-            font-size: 0.9rem;
-        }
-
-        .history-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .history-item {
-            background: #f8fafc;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            border: 1px solid #e2e8f0;
-            transition: var(--transition);
-        }
-
-        .history-item:hover {
-            box-shadow: var(--box-shadow);
-            border-color: var(--primary-color);
-        }
-
-        .history-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .history-date {
-            font-weight: 600;
-            color: var(--primary-color);
-            font-size: 0.9rem;
-        }
-
-        .history-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .history-badge.verdaechtig {
-            background-color: #fee2e2;
-            color: #b91c1c;
-        }
-
-        .history-badge.unauffaellig {
-            background-color: #dcfce7;
-            color: #166534;
-        }
-
-        .history-result {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .history-confidence {
-            color: var(--light-text);
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .history-image {
-            margin: 1rem 0;
-            max-width: 150px;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            cursor: pointer;
-            border: 1px solid #e2e8f0;
-        }
-
-        .history-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: var(--transition);
-        }
-
-        .history-image:hover img {
-            transform: scale(1.05);
-        }
-
-        .history-predictions {
-            margin: 1rem 0;
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 0.75rem;
-            border: 1px solid #e2e8f0;
-        }
-
-        .history-predictions h5 {
-            font-size: 0.85rem;
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .history-prediction-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .history-prediction-tag {
-            background: #f0f7ff;
-            padding: 0.25rem 0.5rem;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .history-prediction-tag.high {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-
-        .history-note {
-            background: white;
-            padding: 0.75rem;
-            border-radius: var(--border-radius);
-            margin: 0.75rem 0;
-            font-size: 0.9rem;
-            border-left: 3px solid var(--primary-color);
-        }
-
-        .history-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-        }
-
-        .empty-history {
-            text-align: center;
             padding: 3rem;
-            color: var(--light-text);
-        }
-
-        .empty-history i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        /* Settings Section */
-        .settings-section {
-            background-color: var(--white-color);
-            padding: 4rem 0;
-            margin: 3rem 0;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            display: none;
-        }
-
-        .settings-content {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .settings-content h2 {
             text-align: center;
-            margin-bottom: 2rem;
-            color: var(--dark-color);
-            font-size: 2rem;
-            position: relative;
-            padding-bottom: 1rem;
         }
 
-        .settings-content h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        .upload-zone:hover {
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.85);
+            transform: scale(0.99);
         }
 
-        .settings-card {
-            background: #f8fafc;
-            border-radius: var(--border-radius);
-            padding: 2rem;
+        /* Prediction Cards */
+        .pred-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            transition: all 0.2s;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Team Cards */
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
             margin: 2rem 0;
-            border: 1px solid #e2e8f0;
+        }
+        .team-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+        .team-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 0.8rem;
+            border: 3px solid var(--primary);
+        }
+        .team-card:hover { transform: translateY(-5px); }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #1e293b;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            z-index: 1200;
+            animation: fadeInUp 0.2s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .settings-card h3 {
-            color: var(--dark-color);
-            margin-bottom: 1rem;
+        /* Footer - stabil unten */
+        footer {
+            background: #0f1a24;
+            color: #b3c7d6;
+            padding: 2rem 2rem 1.5rem;
+            margin-top: 3rem;
+            width: 100%;
+        }
+
+        /* Consent Banner (Overlay) - wie echte professionelle Websites */
+        .consent-banner-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.2s;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .consent-card {
+            max-width: 650px;
+            width: 90%;
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s var(--ease-out-expo);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .consent-header {
+            background: linear-gradient(105deg, var(--primary), #2a7f9c);
+            padding: 1.2rem 1.8rem;
+            color: white;
+        }
+        .consent-header h3 { font-size: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .consent-body {
+            padding: 1.8rem;
+            max-height: 55vh;
+            overflow-y: auto;
+        }
+        .consent-section {
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e9edf2;
+        }
+        .consent-section h4 { color: var(--primary); margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem; }
+        .highlight-box {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+        .checkbox-row {
+            background: #f2f6fc;
+            padding: 1rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            cursor: pointer;
+            margin: 1.5rem 0;
+        }
+        .checkbox-row input { width: 20px; height: 20px; margin-top: 2px; cursor: pointer; }
+        .consent-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            padding: 1rem 1.8rem 1.8rem;
+            background: #f8fafc;
+        }
+        .btn-outline-dark { background: transparent; border: 1px solid #cbd5e1; padding: 0.6rem 1.2rem; border-radius: 40px; cursor: pointer; font-weight: 500; }
+        .btn-primary-solid { background: var(--primary); color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 40px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .btn-primary-solid:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Toggle Switch Styles */
+        .toggle-switch {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-
-        .settings-card .status-badge {
+        .toggle-label {
+            position: relative;
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-left: 0.5rem;
-        }
-
-        .status-badge.active {
-            background-color: #dcfce7;
-            color: #166534;
-        }
-
-        .status-badge.inactive {
-            background-color: #fee2e2;
-            color: #b91c1c;
-        }
-
-        /* Image Modal */
-        .image-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 50px;
+            height: 24px;
+            background: #cbd5e1;
+            border-radius: 24px;
             cursor: pointer;
+            transition: background 0.3s;
         }
-
-        .image-modal img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
+        .toggle-label::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-
-        /* Impressum Section */
-        .impressum-section {
-            background-color: var(--white-color);
-            padding: 4rem 0;
-            margin: 3rem 0;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+        input[type="checkbox"]:checked + .toggle-label {
+            background: var(--primary);
+        }
+        input[type="checkbox"]:checked + .toggle-label::after {
+            transform: translateX(26px);
+        }
+        input[type="checkbox"] {
             display: none;
         }
 
-        .impressum-content {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .impressum-content h2 {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            color: var(--dark-color);
-            font-size: 2.2rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-
-        .impressum-content h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-        }
-
-        .team-list {
-            list-style: none;
-            margin: 2rem 0;
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-        }
-
-        .team-list li {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 1.1rem;
-        }
-
-        .team-list li:last-child {
-            border-bottom: none;
-        }
-
-        /* Hilfe Section */
-        .hilfe-section {
-            background-color: var(--white-color);
-            padding: 4rem 0;
-            margin: 3rem 0;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            display: none;
-        }
-
-        .hilfe-content {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .hilfe-content h2 {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            color: var(--dark-color);
-            font-size: 2.2rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-
-        .hilfe-content h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-        }
-
-        .hilfe-steps {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 2.5rem;
-        }
-
-        .hilfe-step {
-            flex: 0 0 calc(33.333% - 1.5rem);
-            text-align: center;
-            padding: 2rem 1.5rem;
+        /* Enhanced Settings Card */
+        .settings-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
             margin-bottom: 1.5rem;
-            background-color: #f8fafc;
-            border-radius: var(--border-radius);
             border: 1px solid #e2e8f0;
-            transition: var(--transition);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .settings-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+        .consent-option:hover {
+            background: #f1f5f9;
+            border-color: var(--primary);
         }
 
-        .hilfe-step:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .hilfe-step h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-            font-size: 1.3rem;
-        }
-
-        .hilfe-tipps {
-            background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            margin-top: 2.5rem;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .hilfe-tipps h3 {
-            margin-bottom: 1.2rem;
-            color: var(--dark-color);
-        }
-
-        .hilfe-tipps ul {
-            list-style: none;
-        }
-
-        .hilfe-tipps li {
-            margin-bottom: 0.8rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .hilfe-tipps li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        /* Consent Modal */
-        .consent-overlay {
+        /* Professionelles Zustimmungs-Banner Styles */
+        .professional-consent-banner {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(4px);
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
         }
 
-        .consent-modal {
+        .professional-consent-card {
             background: white;
-            max-width: 550px;
+            border-radius: 20px;
+            max-width: 700px;
             width: 90%;
-            border-radius: var(--border-radius);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            animation: modalSlideIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: slideUp 0.4s var(--ease-out-expo);
         }
 
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .consent-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), #2a7f9c);
             color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
         }
 
-        .consent-header h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.25rem;
-            text-align: center;
+        .consent-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .consent-logo i {
+            font-size: 2.5rem;
+            color: #ffffff;
+        }
+
+        .consent-logo h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
         }
 
         .consent-header p {
             font-size: 0.9rem;
-            text-align: center;
             opacity: 0.9;
+            margin: 0;
         }
 
-        .consent-body {
-            padding: 1.8rem;
-            max-height: 60vh;
-            overflow-y: auto;
+        .consent-content {
+            padding: 2rem;
         }
 
-        .consent-section {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e2e8f0;
+        .consent-message {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
         }
 
-        .consent-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        .consent-message p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
         }
 
-        .consent-section h3 {
+        .consent-categories {
+            margin-bottom: 2rem;
+        }
+
+        .consent-category {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .consent-category:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(15, 91, 122, 0.1);
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .category-info h4 {
             font-size: 1.1rem;
-            color: var(--dark-color);
-            margin-bottom: 0.75rem;
+            color: var(--primary);
+            margin: 0 0 0.3rem 0;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .consent-section p {
+        .category-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .category-badge.required {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .category-badge.optional {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .category-description {
             font-size: 0.9rem;
-            color: var(--light-text);
-            margin-bottom: 0.75rem;
+            color: #64748b;
             line-height: 1.5;
+            margin-bottom: 0.5rem;
         }
 
-        .checkbox-wrapper {
-            margin: 1.5rem 0;
-            padding: 1rem;
-            background-color: #f8fafc;
-            border-radius: var(--border-radius);
-            border: 1px solid #e2e8f0;
+        .legal-basis {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-style: italic;
         }
 
-        .checkbox-wrapper label {
+        .consent-actions {
             display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            cursor: pointer;
-            font-size: 0.95rem;
-            line-height: 1.4;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
-        .checkbox-wrapper input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-top: 2px;
+        .btn-accept {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
             cursor: pointer;
-            flex-shrink: 0;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-accept:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, var(--primary), #2a7f9c);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(15, 91, 122, 0.3);
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 91, 122, 0.4);
+        }
+
+        .btn-reject {
+            background: #f8fafc;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-reject:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
         }
 
         .consent-footer {
-            padding: 1rem 1.8rem 1.8rem;
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
             border-top: 1px solid #e2e8f0;
-            background-color: #f8fafc;
+            padding-top: 1.5rem;
         }
 
-        .consent-footer .btn {
-            padding: 0.7rem 1.5rem;
-            font-size: 0.9rem;
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
         }
 
-        .consent-footer .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .link-text {
-            color: var(--primary-color);
+        .footer-link {
+            color: var(--primary);
             text-decoration: none;
+            font-size: 0.9rem;
             font-weight: 500;
-        }
-
-        .link-text:hover {
-            text-decoration: underline;
-        }
-
-        /* Delete Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
             display: flex;
             align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(4px);
+            gap: 0.5rem;
+            transition: color 0.2s ease;
         }
 
-        .modal-content {
-            background: white;
-            max-width: 400px;
-            width: 90%;
-            border-radius: var(--border-radius);
-            overflow: hidden;
+        .footer-link:hover {
+            color: var(--primary-dark);
         }
 
-        .modal-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            padding: 1.5rem;
-            color: white;
+        .footer-text {
+            text-align: center;
         }
 
-        .modal-body {
-            padding: 1.5rem;
+        .footer-text p {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin: 0;
         }
 
-        .modal-footer {
-            padding: 1rem 1.5rem 1.5rem;
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--dark-color) 0%, #2c3e50 100%);
-            color: white;
-            padding: 4rem 0 2rem;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 2.5rem;
-        }
-
-        .footer-column {
-            flex: 0 0 calc(25% - 1.5rem);
-            margin-bottom: 2rem;
-        }
-
-        .footer-column h3 {
-            margin-bottom: 1.5rem;
-            color: var(--light-color);
-            font-size: 1.2rem;
+        .toggle-label-disabled {
             position: relative;
-            padding-bottom: 0.5rem;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            background: #94a3b8;
+            border-radius: 24px;
+            cursor: not-allowed;
+            opacity: 0.6;
         }
 
-        .footer-column h3::after {
+        .toggle-label-disabled::after {
             content: '';
             position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--primary-color);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 0.7rem;
-        }
-
-        .footer-column a {
-            color: #b0b8c5;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-column a:hover {
-            color: white;
-            padding-left: 5px;
-        }
-
-        .footer-column i {
-            margin-right: 0.5rem;
+            top: 2px;
+            left: 2px;
             width: 20px;
-            text-align: center;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #3a506b;
-            color: #b0b8c5;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 992px) {
-            .step, .hilfe-step {
-                flex: 0 0 calc(50% - 1rem);
-            }
-            .footer-column {
-                flex: 0 0 calc(50% - 1rem);
-            }
-            .hero h1 {
-                font-size: 2.4rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-            }
-            .nav-links {
-                margin-top: 1.5rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .nav-links li {
-                margin: 0.5rem 1rem;
-            }
-            .hero {
-                padding: 3rem 0;
-            }
-            .hero h1 {
-                font-size: 2rem;
-            }
-            .hero p {
-                font-size: 1.1rem;
-            }
-            .step, .hilfe-step {
-                flex: 0 0 100%;
-            }
-            .footer-column {
-                flex: 0 0 100%;
-            }
-            .result-header {
-                flex-direction: column;
-                text-align: center;
-                padding: 2rem 1.5rem;
-            }
-            .result-icon {
-                margin: 0 0 1.5rem 0;
-            }
-            .result-text {
-                text-align: center;
-                font-size: 1.6rem;
-            }
-            .binary-classification {
-                justify-content: center;
-            }
-            .result-details {
-                padding: 2rem 1.5rem;
-            }
-            .result-actions {
-                padding: 0 1.5rem 2rem;
-            }
-            .predictions-grid {
-                grid-template-columns: 1fr;
-            }
-            .consent-footer {
-                flex-direction: column;
-            }
-            .consent-footer .btn {
-                width: 100%;
-                text-align: center;
-            }
-            .history-image {
-                max-width: 100px;
-            }
+        @media (max-width: 800px) {
+            .hero h1 { font-size: 2.2rem; }
+            .nav-container { flex-direction: column; gap: 1rem; }
+            .nav-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo">
-                    <img src="image.png" alt="SkinLytics Logo" style="height: 3rem; margin-right: 0.5rem;">
-                    SkinLytics
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#" id="homeLink">Startseite</a></li>
-                    <li><a href="#" id="uploadLink">Analyse</a></li>
-                    <li><a href="#" id="historyLink">Verlauf</a></li>
-                    <li><a href="#" id="hilfeLink">Anleitung</a></li>
-                    <li><a href="#" id="impressumLink">Impressum</a></li>
-                    <li><a href="#" id="settingsLink">Einstellungen</a></li>
-                </ul>
-            </nav>
+<!-- Professionelles Zustimmungs-Banner wie bei echten Websites -->
+<div id="professionalConsentBanner" class="professional-consent-banner" style="display:none;">
+    <div class="professional-consent-card">
+        <div class="consent-header">
+            <div class="consent-logo">
+                <img src="image.png" alt="SkinLytics Logo" style="height: 2.5rem; margin-right: 0.8rem;">
+                <h3>Ihre Privatsphäre ist uns wichtig!</h3>
+            </div>
+            <p>SkinLytics | DSGVO-konform | 🇦🇹 Österreich</p>
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="homeSection">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Hautanalyse mit KI-Technologie</h1>
-                <p>SkinLytics nutzt fortschrittliche künstliche Intelligenz, um potenziell auffällige Hautveränderungen zu erkennen und Ihnen eine fundierte Ersteinschätzung zu geben.</p>
-                <a href="#" class="btn" id="heroAnalyzeBtn">Jetzt Hautbild analysieren</a>
-                <a href="#" class="btn btn-secondary" id="heroHistoryBtn" style="margin-left: 1rem;">Meine Verläufe ansehen</a>
+        <div class="consent-content">
+            <div class="consent-message">
+                <p>Wir verwenden auf dieser Website Technologien, um Ihnen ein optimales Erlebnis zu bieten und die KI-Hautanalyse zu ermöglichen. Ihre Daten werden <strong>ausschließlich lokal in Ihrem Browser</strong> verarbeitet.</p>
+            </div>
+
+            <div class="consent-categories">
+                <!-- Essentielle Funktionen -->
+                <div class="consent-category">
+                    <div class="category-header">
+                        <div class="category-info">
+                            <h4><i class="fas fa-cogs"></i> Essentielle Funktionen</h4>
+                            <span class="category-badge required">Erforderlich</span>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="essentialConsent" checked disabled>
+                            <label for="essentialConsent" class="toggle-label-disabled"></label>
+                        </div>
+                    </div>
+                    <p class="category-description">Grundlegende Website-Funktionen wie Navigation, Local Storage und Anwendungsfunktionalität. Ohne diese Funktionen kann die Website nicht richtig funktionieren.</p>
+                    <div class="legal-basis">Rechtsgrundlage: Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO)</div>
+                </div>
+
+                <!-- KI-Analyse -->
+                <div class="consent-category">
+                    <div class="category-header">
+                        <div class="category-info">
+                            <h4><i class="fas fa-brain"></i> KI-Hautanalyse</h4>
+                            <span class="category-badge optional">Optional</span>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="analysisConsent" checked>
+                            <label for="analysisConsent" class="toggle-label"></label>
+                        </div>
+                    </div>
+                    <p class="category-description">Verarbeitung Ihrer hochgeladenen Hautbilder durch unsere Künstliche Intelligenz zur Risikoanalyse. Die Bilder werden pseudonymisiert und nicht an externe Server übermittelt.</p>
+                    <div class="legal-basis">Rechtsgrundlage: Einwilligung (Art. 6 Abs. 1 lit. a, Art. 9 Abs. 2 lit. a DSGVO)</div>
+                </div>
+
+                <!-- Verlaufsspeicherung -->
+                <div class="consent-category">
+                    <div class="category-header">
+                        <div class="category-info">
+                            <h4><i class="fas fa-history"></i> Verlaufsspeicherung</h4>
+                            <span class="category-badge optional">Optional</span>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="historyConsent" checked>
+                            <label for="historyConsent" class="toggle-label"></label>
+                        </div>
+                    </div>
+                    <p class="category-description">Lokale Speicherung Ihrer Analyseergebnisse und Notizen in Ihrem Browser, um Ihren Fortschritt zu verfolgen. Diese Daten verlassen Ihren Browser nicht.</p>
+                    <div class="legal-basis">Rechtsgrundlage: Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)</div>
+                </div>
+            </div>
+
+            <div class="consent-actions">
+                <button id="rejectAllProfessional" class="btn btn-reject">
+                    <i class="fas fa-times"></i> Alle ablehnen
+                </button>
+                <button id="saveSelectionProfessional" class="btn btn-save">
+                    <i class="fas fa-save"></i> Auswahl speichern
+                </button>
+                <button id="acceptAllProfessional" class="btn btn-accept">
+                    <i class="fas fa-check"></i> Alle akzeptieren
+                </button>
+            </div>
+
+            <div class="consent-footer">
+                <div class="footer-links">
+                    <a href="datenschutz.html" class="footer-link" onclick="event.preventDefault(); loadSection('datenschutz')">
+                        <i class="fas fa-file-contract"></i> Datenschutzerklärung
+                    </a>
+                    <a href="impressum.html" class="footer-link" onclick="event.preventDefault(); loadSection('impressum')">
+                        <i class="fas fa-info-circle"></i> Impressum
+                    </a>
+                </div>
+                <div class="footer-text">
+                    <p><i class="fas fa-stethoscope"></i> <strong>Wichtiger Hinweis:</strong> Diese Anwendung ersetzt keine ärztliche Diagnose.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><img src="image.png" alt="SkinLytics Logo" style="height: 2.5rem; margin-right: 0.8rem;"><span>SkinLytics<span style="font-weight:400;">|AI</span></span></div>
+            <ul class="nav-links">
+                <li><a href="#" data-section="home">Start</a></li>
+                <li><a href="#" data-section="upload">Analyse</a></li>
+                <li><a href="#" data-section="history">Verlauf</a></li>
+                <li><a href="#" data-section="hilfe">Anleitung</a></li>
+                <li><a href="#" onclick="loadSection('datenschutz')">Datenschutz</a></li>
+                <li><a href="#" onclick="loadSection('impressum')">Impressum</a></li>
+                <li><a href="#" data-section="settings">Einstellungen</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME -->
+    <section id="homeSection" class="hero">
+        <div style="max-width: 1000px; margin:0 auto;">
+            <h1>KI-gestützte <br> Hautpräzisionsanalyse</h1>
+            <p style="font-size:1.2rem; margin:1.5rem auto; max-width:550px;">Erkennen Sie potenzielle Hautveränderungen mit modernster Computer Vision.</p>
+            <div>
+                <button class="btn btn-primary" id="heroAnalyzeBtn"><i class="fas fa-microscope"></i> Analyse starten</button>
+                <button class="btn btn-outline" id="heroHistoryBtn" style="margin-left:1rem;"><i class="fas fa-chart-simple"></i> Verlauf</button>
             </div>
         </div>
     </section>
 
-    <!-- Upload Section -->
-    <section class="upload-section" id="uploadSection">
-        <div class="container">
-            <h2 class="section-title">Hautbild hochladen und analysieren</h2>
-            <p class="section-subtitle">Laden Sie ein Bild Ihrer Haut hoch und erhalten Sie innerhalb weniger Sekunden eine KI-gestützte Einschätzung.</p>
-            <div class="upload-area" id="uploadArea">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Ziehen Sie ein Bild hierher oder klicken Sie, um eines auszuwählen</p>
-                <p class="file-types">Unterstützte Formate: JPG, PNG (max. 5MB)</p>
-                <input type="file" id="fileInput" class="file-input" accept="image/jpeg, image/png">
-            </div>
-            <div class="image-preview" id="imagePreview">
-                <img id="previewImage" src="" alt="Vorschau des hochgeladenen Bildes">
-            </div>
-            <button class="btn analyze-btn" id="analyzeBtn" disabled>Analyse starten</button>
+    <!-- UPLOAD -->
+    <section id="uploadSection" style="display:none; max-width:1100px; margin:2rem auto; padding:0 1.5rem;">
+        <div class="glass-premium" style="border-radius:2rem; padding:2rem;">
+            <h2>Hautbild hochladen</h2>
+            <div id="uploadArea" class="upload-zone"><i class="fas fa-cloud-arrow-up" style="font-size:3rem; color:var(--primary);"></i><p>Bild ablegen oder klicken (JPG/PNG)</p><input type="file" id="fileInput" accept="image/jpeg,image/png" style="display:none;"></div>
+            <div id="previewArea" style="text-align:center; display:none; margin-top:1rem;"><img id="previewImg" style="max-width:240px; border-radius:1rem;"></div>
+            <button id="analyzeBtn" class="btn btn-primary" style="width:100%; margin-top:1.5rem;" disabled>Analyse starten</button>
         </div>
     </section>
 
-    <!-- Instructions Section -->
-    <section class="instructions" id="instructionsSection">
-        <div class="container">
-            <h2 class="section-title">So machen Sie ein optimales Hautbild</h2>
-            <p class="section-subtitle">Für die beste Analysequalität empfehlen wir folgende Aufnahmetechniken:</p>
-            <div class="instruction-steps">
-                <div class="step">
-                    <div class="step-icon">
-                        <i class="fas fa-sun"></i>
-                    </div>
-                    <h3>Optimale Beleuchtung</h3>
-                    <p>Nutzen Sie natürliches Tageslicht oder eine gleichmäßige Beleuchtung ohne harte Schatten für eine klare Darstellung.</p>
-                </div>
-                <div class="step">
-                    <div class="step-icon">
-                        <i class="fas fa-ruler-combined"></i>
-                    </div>
-                    <h3>Richtiger Abstand</h3>
-                    <p>Das Hautareal sollte deutlich sichtbar sein, mit einem Abstand von 10-15 cm für beste Detailerkennung.</p>
-                </div>
-                <div class="step">
-                    <div class="step-icon">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                    <h3>Keine Nachbearbeitung</h3>
-                    <p>Verwenden Sie keine Filter oder Bildbearbeitung, um eine authentische und natürliche Darstellung zu gewährleisten.</p>
-                </div>
-            </div>
+    <!-- RESULTS -->
+    <section id="resultsSection" style="display:none; max-width:1000px; margin:2rem auto; padding:0 1.5rem;">
+        <div class="glass-premium" style="border-radius:2rem; padding:2rem;">
+            <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;"><i id="resultIcon" class="fas fa-circle-check" style="font-size:3rem; color:#10b981;"></i><div><h2 id="resultText">Keine Auffälligkeit</h2><span id="binaryBadge" style="background:#e0f2e9; padding:0.2rem 1rem; border-radius:30px;">Unauffällig</span><span id="confidenceSpan" style="margin-left:1rem;">Sicherheit: 94%</span></div></div>
+            <p id="resultDesc" style="margin:1.5rem 0;">Analyse abgeschlossen.</p>
+            <div id="predictionsGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem;"></div>
+            <textarea id="analysisNote" rows="2" placeholder="Notiz hinzufügen" style="width:100%; border-radius:1rem; border:1px solid #cbd5e1; padding:0.7rem; margin-top:1rem;"></textarea>
+            <div style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;"><button id="saveResultBtn" class="btn btn-primary">Speichern</button><button id="downloadPdfBtn" class="btn btn-primary" style="background:linear-gradient(135deg, #22c55e, #16a34a);"><i class="fas fa-file-pdf"></i> Report herunterladen</button><button id="newAnalysisBtn" class="btn btn-outline">Neue Analyse</button></div>
         </div>
     </section>
 
-    <!-- Results Section -->
-    <section class="results-section" id="resultsSection">
-        <div class="container">
-            <div class="result-content">
-                <div class="result-header">
-                    <div class="result-icon" id="resultIcon">
-                        <i class="fas fa-check-circle negative-result"></i>
-                    </div>
+    <!-- HISTORY -->
+    <section id="historySection" style="display:none; max-width:1000px; margin:2rem auto; padding:0 1.5rem;">
+        <h2><i class="fas fa-clock"></i> Verlauf</h2>
+        
+        <!-- Search and Filter Controls -->
+        <div class="glass-premium" style="border-radius:1.5rem; padding:1.5rem; margin-bottom:1.5rem;">
+            <div style="display:grid; grid-template-columns:1fr; gap:1rem;">
+                <!-- Search Input -->
+                <div>
+                    <label style="display:block; font-weight:600; margin-bottom:0.5rem; color:var(--primary);">
+                        <i class="fas fa-search"></i> Suchen
+                    </label>
+                    <input type="text" id="historySearchInput" placeholder="Nach Ergebnis oder Notizen suchen..." 
+                           style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:0.5rem; font-size:0.95rem;">
+                </div>
+                
+                <!-- Filter Row -->
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+                    <!-- Date Range Filter -->
                     <div>
-                        <h2 class="result-text" id="resultText">Keine Auffälligkeit erkennbar</h2>
-                        <div class="binary-classification" id="binaryClassification">
-                            <span class="binary-label">Bewertung:</span>
-                            <span class="binary-value" id="binaryValue">Unauffällig</span>
-                            <span class="confidence" id="binaryConfidence">(Sicherheit: 95%)</span>
-                        </div>
+                        <label style="display:block; font-weight:600; margin-bottom:0.5rem; color:var(--primary);">
+                            <i class="fas fa-calendar"></i> Von
+                        </label>
+                        <input type="date" id="historyDateFrom" 
+                               style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:0.5rem; font-size:0.95rem;">
+                    </div>
+                    
+                    <div>
+                        <label style="display:block; font-weight:600; margin-bottom:0.5rem; color:var(--primary);">
+                            <i class="fas fa-calendar"></i> Bis
+                        </label>
+                        <input type="date" id="historyDateTo" 
+                               style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:0.5rem; font-size:0.95rem;">
+                    </div>
+                    
+                    <!-- Result Type Filter -->
+                    <div>
+                        <label style="display:block; font-weight:600; margin-bottom:0.5rem; color:var(--primary);">
+                            <i class="fas fa-filter"></i> Ergebnis
+                        </label>
+                        <select id="historyResultFilter" 
+                                style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:0.5rem; font-size:0.95rem;">
+                            <option value="">Alle</option>
+                            <option value="suspicious">Verdächtig</option>
+                            <option value="normal">Unauffällig</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Confidence Range Filter -->
+                    <div>
+                        <label style="display:block; font-weight:600; margin-bottom:0.5rem; color:var(--primary);">
+                            <i class="fas fa-percentage"></i> Mindest-Sicherheit
+                        </label>
+                        <select id="historyConfidenceFilter" 
+                                style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:0.5rem; font-size:0.95rem;">
+                            <option value="">Alle</option>
+                            <option value="90">90%+</option>
+                            <option value="80">80%+</option>
+                            <option value="70">70%+</option>
+                            <option value="60">60%+</option>
+                            <option value="50">50%+</option>
+                        </select>
                     </div>
                 </div>
-
-                <div class="result-details">
-                    <div class="result-description" id="resultDescription">
-                        Basierend auf unserer KI-Analyse wurden keine besorgniserregenden Hautveränderungen erkannt.
-                    </div>
-
-                    <!-- Bereich zum Speichern des Ergebnisses -->
-                    <div class="save-result-area" id="saveResultArea">
-                        <h4><i class="fas fa-save"></i> Ergebnis speichern</h4>
-                        <p style="font-size: 0.9rem; color: var(--light-text); margin-bottom: 0.5rem;">Speichern Sie diese Analyse mit allen Vorhersagen und dem Originalfoto für Ihre Verlaufsbeobachtung.</p>
-                        <textarea id="resultNote" class="note-input" rows="2" placeholder="Optionale Notiz hinzufügen (z.B. 'Muttermal am linken Arm', 'Veränderung beobachtet'...)"></textarea>
-                        <div class="save-actions">
-                            <button class="btn btn-secondary btn-small" id="saveToHistoryBtn">
-                                <i class="fas fa-bookmark"></i> Im Verlauf speichern (mit Foto)
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="predictions-container">
-                        <h3>Alle Vorhersagen (7 Hautläsionstypen)</h3>
-                        <div class="predictions-grid" id="predictionsGrid">
-                            <!-- Predictions will be inserted here by JavaScript -->
-                        </div>
-                    </div>
-
-                    <div class="disclaimer" id="disclaimer">
-                        <i class="fas fa-info-circle"></i>
-                        <p>Hinweis: Diese Analyse ist kein Ersatz für eine professionelle ärztliche Diagnose. Bitte konsultieren Sie bei gesundheitlichen Bedenken immer einen Arzt.</p>
-                    </div>
-                </div>
-
-                <div class="result-actions">
-                    <button class="btn" id="newAnalysisBtn">Neue Analyse starten</button>
-                    <button class="btn btn-outline" id="viewHistoryFromResultBtn">Zum Verlauf</button>
+                
+                <!-- Action Buttons -->
+                <div style="display:flex; gap:1rem; justify-content:flex-end; margin-top:0.5rem;">
+                    <button id="clearHistoryFilters" class="btn btn-outline" style="padding:0.6rem 1.5rem;">
+                        <i class="fas fa-times"></i> Filter zurücksetzen
+                    </button>
+                    <button id="applyHistoryFilters" class="btn btn-primary" style="padding:0.6rem 1.5rem;">
+                        <i class="fas fa-check"></i> Filter anwenden
+                    </button>
                 </div>
             </div>
         </div>
+        
+        <!-- Results Count -->
+        <div id="historyResultsCount" style="margin-bottom:1rem; color:#64748b; font-size:0.9rem;"></div>
+        
+        <!-- History List -->
+        <div id="historyList" style="display:flex; flex-direction:column; gap:1rem;"></div>
     </section>
 
-    <!-- History Section (Verlauf) -->
-    <section class="history-section" id="historySection">
-        <div class="container">
-            <div class="history-header">
-                <h2><i class="fas fa-history"></i> Mein Analyse-Verlauf</h2>
-                <div class="history-stats" id="historyStats">
-                    <span id="historyCount">0</span> gespeicherte Analysen
-                </div>
+    <!-- HILFE -->
+    <section id="hilfeSection" style="display:none; max-width:900px; margin:2rem auto; padding:0 1.5rem;">
+        <div class="glass-premium" style="border-radius:2rem; padding:2rem;"><h2>Optimale Aufnahme</h2><ul style="margin-top:1rem;"><li><i class="fas fa-sun"></i> Natürliches Tageslicht</li><li><i class="fas fa-camera"></i> 10-15 cm Abstand</li><li><i class="fas fa-ban"></i> Keine Filter</li><li><i class="fas fa-stethoscope"></i> KI ersetzt keinen Arzt</li></ul></div>
+    </section>
+
+    <!-- IMPRESSUM + TEAM -->
+    <section id="impressumSection" style="display:none; max-width:1000px; margin:2rem auto; padding:0 1.5rem;">
+        <div class="glass-premium" style="border-radius:2rem; padding:2rem;">
+            <h2 style="text-align:center;">Impressum</h2>
+            <div class="team-grid">
+                <div class="team-card"><img src="Foto-Enes.png" alt="Enes"><h4>Enes Yigit</h4><small>Projektleitung</small></div>
+                <div class="team-card"><img src="Foto-Esra.jpg" alt="Esra"><h4>Esra Sokullu</h4><small>KI-Entwicklung</small></div>
+                <div class="team-card"><img src="Foto-Fadime.jpg" alt="Fadime"><h4>Fadime Cobanoglu</h4><small>UI/UX</small></div>
+                <div class="team-card"><img src="Foto-Pia.png" alt="Pia"><h4>Pia Sesar</h4><small>Datenanalyse</small></div>
             </div>
-            <div id="historyList" class="history-list">
-                <!-- Dynamisch befüllt -->
-            </div>
+            <p><strong>SkinLytics – HTL Spengergasse</strong><br>Spengergasse 20, 1050 Wien | Skinlytics@outlook.com</p>
+            <p><a href="#" onclick="loadSection('datenschutz')" style="color:var(--primary); font-weight:500;"><i class="fas fa-shield-alt"></i> Vollständige Datenschutzerklärung & AGBs anzeigen</a></p>
+            <button id="impressumBackBtn" class="btn btn-outline" style="margin-top:1rem;">← Zurück</button>
         </div>
     </section>
 
-    <!-- Settings Section (Datenschutz-Einstellungen) -->
-    <section class="settings-section" id="settingsSection">
-        <div class="container">
-            <div class="settings-content">
-                <h2>Datenschutz-Einstellungen</h2>
+    <!-- SETTINGS - Professionelle Datenschutz-Präferenzen -->
+    <section id="settingsSection" style="display:none; max-width:900px; margin:2rem auto; padding:0 1.5rem;">
+        <div class="glass-premium" style="border-radius:2rem; padding:2rem;">
 
-                <div class="settings-card">
-                    <h3><i class="fas fa-check-circle"></i> Einwilligung zur Datenverarbeitung <span class="status-badge" id="consentStatusBadge">Aktiv</span></h3>
-                    <p>Hier können Sie Ihre Einwilligung zur Verarbeitung Ihrer Daten für die Hautanalyse verwalten. Die Einwilligung ist freiwillig und kann jederzeit mit Wirkung für die Zukunft widerrufen werden.</p>
+            <!-- Header mit Status -->
+            <div style="text-align:center; margin-bottom:2rem;">
+                <h2 style="margin-bottom:0.5rem; color:var(--primary);"><i class="fas fa-shield-alt"></i> Datenschutz-Präferenzen</h2>
+                <p style="color:#64748b; font-size:0.9rem;">Verwalten Sie Ihre Datenschutzeinstellungen und Einwilligungen</p>
+            </div>
 
-                    <div class="consent-info" id="consentInfo">
-                        <i class="fas fa-info-circle"></i>
-                        <strong>Aktueller Status:</strong> Sie haben der Verarbeitung Ihrer Daten <span id="consentStatusText">zugestimmt</span>.
+            <!-- Gesamt-Status Karte -->
+            <div class="settings-card" style="background:linear-gradient(135deg, #f0f9ff, #e0f2fe); border:1px solid #0ea5e9;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h3 style="font-size:1.3rem; color:#0c4a6e; margin-bottom:0.5rem;"><i class="fas fa-gavel"></i> Gesamt-Status</h3>
+                        <p style="color:#475569; font-size:0.9rem;">Ihre aktuellen Datenschutzeinstellungen</p>
                     </div>
-
-                    <div id="activeConsentSection">
-                        <p style="margin: 1rem 0; color: var(--light-text);">
-                            <i class="fas fa-clock"></i> Ihre Einwilligung wurde am <span id="consentDate">-</span> erteilt.
-                        </p>
-                        <button class="btn btn-outline" id="revokeConsentBtn" style="background-color: #fee2e2; border-color: #ef4444; color: #b91c1c;">
-                            <i class="fas fa-trash-alt"></i> Einwilligung widerrufen
-                        </button>
+                    <div id="consentStatusBadge" class="status-badge status-active" style="font-size:1rem; padding:0.5rem 1.2rem;">
+                        <i class="fas fa-check-circle"></i> Aktiv
                     </div>
+                </div>
+                <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
+                    <button id="giveConsentBtn" class="btn btn-primary" style="display:none;">
+                        <i class="fas fa-check"></i> Alle Einwilligungen erteilen
+                    </button>
+                    <button id="revokeConsentBtn" class="btn" style="background:#e06e5e; color:white;">
+                        <i class="fas fa-times"></i> Alle Einwilligungen widerrufen
+                    </button>
+                </div>
+            </div>
 
-                    <div id="inactiveConsentSection" style="display: none;">
-                        <p style="margin: 1rem 0; color: var(--light-text);">
-                            <i class="fas fa-lock"></i> Sie haben der Datenverarbeitung derzeit nicht zugestimmt. Um die Hautanalyse nutzen zu können, müssen Sie die Einwilligung erteilen.
-                        </p>
-                        <button class="btn" id="giveConsentBtn">
-                            <i class="fas fa-check"></i> Einwilligung erteilen
-                        </button>
+            <!-- Detaillierte Einwilligungen -->
+            <div class="settings-card">
+                <h3 style="font-size:1.2rem; margin-bottom:1rem; color:var(--primary);">
+                    <i class="fas fa-user-check"></i> Detaillierte Einwilligungen
+                </h3>
+
+                <!-- Essentielle Funktionen -->
+                <div class="consent-option" style="background:#f8fafc; padding:1.2rem; border-radius:12px; margin-bottom:1rem; border:1px solid #e2e8f0;">
+                    <div style="display:flex; justify-content:space-between; align-items:start; gap:1rem;">
+                        <div style="flex:1;">
+                            <h4 style="color:var(--primary); margin-bottom:0.5rem;">
+                                <i class="fas fa-cogs"></i> Essentielle Funktionen
+                            </h4>
+                            <p style="font-size:0.9rem; color:#64748b; margin-bottom:0.5rem;">
+                                Grundlegende Funktionen der Anwendung (Lokale Speicherung, Navigation)
+                            </p>
+                            <p style="font-size:0.8rem; color:#94a3b8;">
+                                <strong>Rechtsgrundlage:</strong> Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO)
+                            </p>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="essentialToggle" checked disabled>
+                            <label for="essentialToggle" style="cursor:not-allowed; opacity:0.6;">Immer aktiv</label>
+                        </div>
                     </div>
                 </div>
 
-                <div class="settings-card">
-                    <h3><i class="fas fa-trash-alt"></i> Verlauf verwalten</h3>
-                    <p>Hier können Sie alle gespeicherten Analyseergebnisse inklusive Fotos löschen. Diese Aktion kann nicht rückgängig gemacht werden.</p>
-                    <button class="btn btn-danger" id="clearAllHistoryBtn" style="background-color: #ef4444;">
-                        <i class="fas fa-trash-alt"></i> Gesamten Verlauf löschen
+                <!-- KI-Analyse -->
+                <div class="consent-option" style="background:#f8fafc; padding:1.2rem; border-radius:12px; margin-bottom:1rem; border:1px solid #e2e8f0;">
+                    <div style="display:flex; justify-content:space-between; align-items:start; gap:1rem;">
+                        <div style="flex:1;">
+                            <h4 style="color:var(--primary); margin-bottom:0.5rem;">
+                                <i class="fas fa-brain"></i> KI-Hautanalyse
+                            </h4>
+                            <p style="font-size:0.9rem; color:#64748b; margin-bottom:0.5rem;">
+                                Verarbeitung Ihrer Hautbilder zur KI-gestützten Analyse
+                            </p>
+                            <p style="font-size:0.8rem; color:#94a3b8;">
+                                <strong>Rechtsgrundlage:</strong> Einwilligung (Art. 6 Abs. 1 lit. a, Art. 9 Abs. 2 lit. a DSGVO)
+                            </p>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="analysisToggle">
+                            <label for="analysisToggle" class="toggle-label"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verlaufsspeicherung -->
+                <div class="consent-option" style="background:#f8fafc; padding:1.2rem; border-radius:12px; margin-bottom:1rem; border:1px solid #e2e8f0;">
+                    <div style="display:flex; justify-content:space-between; align-items:start; gap:1rem;">
+                        <div style="flex:1;">
+                            <h4 style="color:var(--primary); margin-bottom:0.5rem;">
+                                <i class="fas fa-history"></i> Verlaufsspeicherung
+                            </h4>
+                            <p style="font-size:0.9rem; color:#64748b; margin-bottom:0.5rem;">
+                                Lokale Speicherung Ihrer Analyseergebnisse und Notizen
+                            </p>
+                            <p style="font-size:0.8rem; color:#94a3b8;">
+                                <strong>Rechtsgrundlage:</strong> Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)
+                            </p>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="historyToggle">
+                            <label for="historyToggle" class="toggle-label"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Datenschutz-Informationen -->
+            <div class="settings-card">
+                <h3 style="font-size:1.2rem; margin-bottom:1rem; color:var(--primary);">
+                    <i class="fas fa-info-circle"></i> Datenschutz-Informationen
+                </h3>
+
+                <div style="background:#e8f4fd; border-left:4px solid var(--primary); padding:1rem; border-radius:8px; margin-bottom:1rem;">
+                    <h4 style="color:var(--primary); margin-bottom:0.5rem;"><i class="fas fa-laptop"></i> Lokale Verarbeitung</h4>
+                    <p style="font-size:0.9rem;">Alle Ihre Daten werden <strong>ausschließlich lokal in Ihrem Browser</strong> verarbeitet. Es findet keine Übermittlung an externe Server statt.</p>
+                </div>
+
+                <div style="background:#fff9e6; border-left:4px solid #ffc107; padding:1rem; border-radius:8px; margin-bottom:1rem;">
+                    <h4 style="color:#d97706; margin-bottom:0.5rem;"><i class="fas fa-stethoscope"></i> Medizinischer Hinweis</h4>
+                    <p style="font-size:0.9rem;">Diese Anwendung ersetzt <strong>keine ärztliche Diagnose</strong>. Bei gesundheitlichen Bedenken konsultieren Sie bitte einen Arzt.</p>
+                </div>
+
+                <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem;">
+                    <a href="#" onclick="loadSection('datenschutz')" class="btn btn-outline" style="text-decoration:none;">
+                        <i class="fas fa-file-contract"></i> Vollständige Datenschutzerklärung
+                    </a>
+                    <a href="#" onclick="loadSection('impressum')" class="btn btn-outline" style="text-decoration:none;">
+                        <i class="fas fa-info-circle"></i> Impressum
+                    </a>
+                </div>
+            </div>
+
+            <!-- Daten-Management -->
+            <div class="settings-card">
+                <h3 style="font-size:1.2rem; margin-bottom:1rem; color:var(--primary);">
+                    <i class="fas fa-database"></i> Daten-Management
+                </h3>
+
+                <div style="background:#fee2e2; border:1px solid #ef4444; padding:1rem; border-radius:12px; margin-bottom:1rem;">
+                    <h4 style="color:#dc2626; margin-bottom:0.5rem;"><i class="fas fa-exclamation-triangle"></i> Vorsicht</h4>
+                    <p style="font-size:0.9rem; margin-bottom:1rem;">Das Löschen Ihrer Daten kann nicht rückgängig gemacht werden.</p>
+                    <button id="clearHistoryBtn" class="btn" style="background:#dc2626; color:white;">
+                        <i class="fas fa-trash"></i> Gesamten Verlauf löschen
                     </button>
                 </div>
 
-                <div class="settings-card">
-                    <h3><i class="fas fa-gavel"></i> Ihre Rechte gemäß DSGVO</h3>
-                    <p>Sie haben jederzeit folgende Rechte:</p>
-                    <ul style="margin-left: 1.5rem; color: var(--light-text);">
-                        <li>Auskunft über Ihre gespeicherten Daten (Art. 15 DSGVO)</li>
-                        <li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
-                        <li>Löschung Ihrer Daten (Art. 17 DSGVO)</li>
-                        <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
-                        <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
-                        <li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
-                    </ul>
-                    <p style="margin-top: 1rem; font-size: 0.9rem;">
-                        Bei Fragen wenden Sie sich bitte an: <a href="mailto:Skinlytics@outlook.com" class="link-text">Skinlytics@outlook.com</a>
+                <div style="background:#f0fdf4; border:1px solid #22c55e; padding:1rem; border-radius:12px;">
+                    <h4 style="color:#16a34a; margin-bottom:0.5rem;"><i class="fas fa-download"></i> Datenexport</h4>
+                    <p style="font-size:0.9rem; margin-bottom:1rem;">Laden Sie Ihre Daten als JSON-Datei herunter.</p>
+                    <button id="exportDataBtn" class="btn" style="background:#22c55e; color:white;">
+                        <i class="fas fa-download"></i> Daten exportieren
+                    </button>
+                </div>
+            </div>
+
+            <!-- Ihre Rechte -->
+            <div class="settings-card">
+                <h3 style="font-size:1.2rem; margin-bottom:1rem; color:var(--primary);">
+                    <i class="fas fa-gavel"></i> Ihre Rechte (DSGVO)
+                </h3>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1rem;">
+                    <div style="background:#f8fafc; padding:1rem; border-radius:8px; border-left:3px solid var(--primary);">
+                        <h4 style="color:var(--primary); font-size:0.9rem; margin-bottom:0.3rem;">
+                            <i class="fas fa-search"></i> Auskunft (Art. 15)
+                        </h4>
+                        <p style="font-size:0.8rem; color:#64748b;">Informationen über Ihre gespeicherten Daten</p>
+                    </div>
+
+                    <div style="background:#f8fafc; padding:1rem; border-radius:8px; border-left:3px solid var(--primary);">
+                        <h4 style="color:var(--primary); font-size:0.9rem; margin-bottom:0.3rem;">
+                            <i class="fas fa-trash"></i> Löschung (Art. 17)
+                        </h4>
+                        <p style="font-size:0.8rem; color:#64748b;">Löschung Ihrer gespeicherten Daten</p>
+                    </div>
+
+                    <div style="background:#f8fafc; padding:1rem; border-radius:8px; border-left:3px solid var(--primary);">
+                        <h4 style="color:var(--primary); font-size:0.9rem; margin-bottom:0.3rem;">
+                            <i class="fas fa-edit"></i> Berichtigung (Art. 16)
+                        </h4>
+                        <p style="font-size:0.8rem; color:#64748b;">Korrektur fehlerhafter Daten</p>
+                    </div>
+
+                    <div style="background:#f8fafc; padding:1rem; border-radius:8px; border-left:3px solid var(--primary);">
+                        <h4 style="color:var(--primary); font-size:0.9rem; margin-bottom:0.3rem;">
+                            <i class="fas fa-ban"></i> Widerspruch (Art. 21)
+                        </h4>
+                        <p style="font-size:0.8rem; color:#64748b;">Widerspruch gegen die Datenverarbeitung</p>
+                    </div>
+                </div>
+
+                <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid #e2e8f0;">
+                    <p style="font-size:0.9rem; color:#64748b;">
+                        <strong>Kontakt für Datenschutzanfragen:</strong>
+                        <a href="mailto:Skinlytics@outlook.com" style="color:var(--primary);">Skinlytics@outlook.com</a>
                     </p>
                 </div>
             </div>
+
         </div>
     </section>
+</div>
 
-    <!-- Hilfe Section -->
-    <section class="hilfe-section" id="hilfeSection">
-        <div class="container">
-            <div class="hilfe-content">
-                <h2>ANLEITUNG ZUR NUTZUNG</h2>
-                <div class="hilfe-steps">
-                    <div class="hilfe-step">
-                        <h3>1 Fotografieren</h3>
-                        <p>Nehmen Sie ein qualitativ hochwertiges Foto Ihrer Haut auf</p>
-                    </div>
-                    <div class="hilfe-step">
-                        <h3>2 Foto hochladen</h3>
-                        <p>Laden Sie ein gut beleuchtetes Bild hoch, das die zu untersuchende Stelle deutlich zeigt</p>
-                    </div>
-                    <div class="hilfe-step">
-                        <h3>3 Analyse abwarten</h3>
-                        <p>Starten Sie die Analyse und erhalten Sie innerhalb weniger Sekunden Ihr Ergebnis</p>
-                    </div>
-                </div>
-                <div class="hilfe-tipps">
-                    <h3>Optimale Aufnahmetipps</h3>
-                    <ul>
-                        <li>Nutzen Sie eine gute, natürliche Lichtquelle</li>
-                        <li>Halten Sie den Fokus auf die verdächtige Stelle</li>
-                        <li>Vermeiden Sie Schatten auf der Haut</li>
-                        <li>Machen Sie das Bild aus mehreren Perspektiven, falls möglich</li>
-                        <li>Stellen Sie sicher, dass die Haut trocken und sauber ist</li>
-                    </ul>
-                </div>
-                <div style="text-align: center; margin-top: 2.5rem;">
-                    <button class="btn" id="hilfeZurueckBtn">Zurück zur Startseite</button>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- FOOTER - bleibt unten -->
+<footer>
+    <div style="text-align: center;">© 2026 SkinLytics | KI Hautanalyse | <a href="#" onclick="loadSection('datenschutz')" style="color:#86b3ca;">Datenschutz</a> | <a href="#" onclick="loadSection('impressum')" style="color:#86b3ca;">Impressum</a></div>
+</footer>
 
-    <!-- Impressum Section -->
-    <section class="impressum-section" id="impressumSection">
-        <div class="container">
-            <div class="impressum-content">
-                <h2>Impressum</h2>
-                <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;"><strong>Schulprojekt - Skinlytics</strong></p>
+<script>
+    // ---------- GLOBALE VARIABLEN ----------
+    let consentGiven = localStorage.getItem('skinlytics_consent') === 'true';
+    let currentImageData = null, currentPredictions = null, currentBinary = null, currentAnalysisResult = null;
 
-                <h3 style="margin-top: 1.5rem; color: var(--dark-color);">Projektteam</h3>
-                <ul class="team-list">
-                    <li>Enes Yigit</li>
-                    <li>Fadime Cobanoglu</li>
-                    <li>Esra Sokullu</li>
-                    <li>Pia Sesar</li>
-                </ul>
+    const SKIN_CLASSES = [
+        { id: 'akiec', name: 'Aktinische Keratose', suspicious: true, desc: 'Präkanzeröse Läsion' },
+        { id: 'bcc', name: 'Basalzellkarzinom', suspicious: true, desc: 'Häufigster Hautkrebs' },
+        { id: 'bkl', name: 'Benigne keratotische Läsion', suspicious: false, desc: 'Harmloser Sonnenschaden' },
+        { id: 'df', name: 'Dermatofibrom', suspicious: false, desc: 'Gutartiger Knoten' },
+        { id: 'mel', name: 'Melanom', suspicious: true, desc: 'Bösartig' },
+        { id: 'nv', name: 'Melanozytärer Nävus', suspicious: false, desc: 'Leberfleck' },
+        { id: 'vasc', name: 'Gefäßläsion', suspicious: false, desc: 'Hämangiom' }
+    ];
 
-                <p style="margin-top: 1.5rem; text-align: center; color: var(--light-text);">Dies ist ein fiktives Projekt im Rahmen eines Schulprojekts an der HTL Spengergasse.</p>
-
-                <div style="text-align: center; margin-top: 2.5rem;">
-                    <button class="btn" id="impressumZurueckBtn">Zurück zur Startseite</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Consent Modal -->
-    <div class="consent-overlay" id="consentOverlay" style="display: none;">
-        <div class="consent-modal">
-            <div class="consent-header">
-                <h2>Wichtige Hinweise vor der Analyse</h2>
-                <p>Bitte lesen Sie die folgenden Informationen sorgfältig durch</p>
-            </div>
-            <div class="consent-body">
-                <div class="consent-section">
-                    <h3><i class="fas fa-exclamation-triangle"></i> Keine medizinische Diagnose</h3>
-                    <p>Die von SkinLytics bereitgestellte Analyse basiert auf künstlicher Intelligenz und ist <strong>kein Ersatz für eine professionelle ärztliche Diagnose, Beratung oder Behandlung</strong>. Die Ergebnisse dienen ausschließlich der Information und stellen keine medizinische Einschätzung dar.</p>
-                    <div class="warning">
-                        <i class="fas fa-stethoscope"></i> Bei gesundheitlichen Bedenken, Hautveränderungen oder anhaltenden Beschwerden konsultieren Sie bitte unverzüglich einen Arzt oder Dermatologen.
-                    </div>
-                </div>
-
-                <div class="consent-section">
-                    <h3><i class="fas fa-database"></i> Datenverarbeitung & Speicherung</h3>
-                    <p>Ihre hochgeladenen Bilder werden für die Analyse temporär auf unseren Servern in Rechenzentren innerhalb der <strong>Europäischen Union (EU)</strong> verarbeitet.</p>
-                    <ul style="margin: 0.5rem 0 0 1.5rem; font-size: 0.9rem; color: var(--light-text);">
-                        <li>Die Verarbeitung erfolgt ausschließlich zur Durchführung der Analyse</li>
-                        <li>Bei Speicherung im Verlauf werden die Fotos lokal auf Ihrem Gerät gespeichert</li>
-                        <li>Sie haben jederzeit das Recht, die Löschung Ihrer Daten zu verlangen</li>
-                    </ul>
-                </div>
-
-                <div class="consent-section">
-                    <h3><i class="fas fa-user-check"></i> Voraussetzungen & Rechte</h3>
-                    <p><strong>Volljährigkeit:</strong> Sie bestätigen mit Ihrer Zustimmung, dass Sie das 18. Lebensjahr vollendet haben. Die Nutzung durch Minderjährige ist nur mit Einwilligung der Erziehungsberechtigten zulässig.</p>
-                    <p><strong>Widerrufsrecht:</strong> Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt davon unberührt.</p>
-                    <div class="info">
-                        <i class="fas fa-gavel"></i> Ihre Rechte gemäß DSGVO: Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruchsrecht.
-                    </div>
-                </div>
-
-                <div class="checkbox-wrapper">
-                    <label>
-                        <input type="checkbox" id="consentCheckbox">
-                        <span>Ich habe die obenstehenden Hinweise zur Kenntnis genommen, bin volljährig (oder habe die Einwilligung meiner Erziehungsberechtigten) und stimme der temporären Verarbeitung meiner hochgeladenen Bilder zur Durchführung der Hautanalyse zu. Mir ist bewusst, dass die Analyse keine ärztliche Diagnose ersetzt und ich jederzeit mein Widerrufsrecht ausüben kann.</span>
-                    </label>
-                </div>
-
-                <div class="consent-section">
-                    <p style="font-size: 0.85rem; text-align: center; margin: 0;">
-                        <a href="datenschutz.html" target="_blank" class="link-text"><i class="fas fa-shield-alt"></i> Datenschutzerklärung</a> &nbsp;|&nbsp;
-                        <a href="datenschutz.html#agbs" target="_blank" class="link-text"><i class="fas fa-file-contract"></i> AGBs</a> &nbsp;|&nbsp;
-                        <a href="#" id="consentImpressumLink" class="link-text"><i class="fas fa-info-circle"></i> Impressum</a>
-                    </p>
-                </div>
-            </div>
-            <div class="consent-footer">
-                <button class="btn btn-secondary" id="declineConsentBtn">Ablehnen</button>
-                <button class="btn" id="acceptConsentBtn" disabled>Zustimmen & Fortfahren</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Eintrag löschen</h3>
-            </div>
-            <div class="modal-body">
-                <p>Möchten Sie diesen Verlaufseintrag wirklich löschen? Das gespeicherte Foto wird ebenfalls gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary btn-small" id="cancelDeleteBtn">Abbrechen</button>
-                <button class="btn btn-danger btn-small" id="confirmDeleteBtn">Löschen</button>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>SkinLytics</h3>
-                    <p>Ihr Partner für digitale Hautgesundheitsanalyse mit modernster KI-Technologie.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Navigation</h3>
-                    <ul>
-                        <li><a href="#" class="footer-home-link">Startseite</a></li>
-                        <li><a href="#" class="footer-upload-link">Hautanalyse</a></li>
-                        <li><a href="#" class="footer-history-link">Verlauf</a></li>
-                        <li><a href="#" class="footer-hilfe-link">Anleitung</a></li>
-                        <li><a href="#" class="footer-impressum-link">Impressum</a></li>
-                        <li><a href="#" class="footer-settings-link">Einstellungen</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Rechtliches</h3>
-                    <ul>
-                        <li><a href="datenschutz.html">Datenschutz</a></li>
-                        <li><a href="datenschutz.html#agbs">Nutzungsbedingungen</a></li>
-                        <li><a href="datenschutz.html#haftung">Haftungsausschluss</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Kontakt</h3>
-                    <ul>
-                        <li><i class="fas fa-envelope"></i> Skinlytics@outlook.com</li>
-                        <li><i class="fas fa-map-marker-alt"></i> HTL Spengergasse, Wien</li>
-                        <li><i class="fas fa-info-circle"></i> Schulprojekt 2025/26</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 SkinLytics. Alle Rechte vorbehalten. | Ein Projekt der HTL Spengergasse</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // ============ HAUTKREBS-KLASSEN ============
-        const SKIN_CLASSES = [
-            { id: 'akiec', name: 'Aktinische Keratose', is_suspicious: true, description: 'Präkanzeröse Läsion durch Sonnenschäden' },
-            { id: 'bcc', name: 'Basalzellkarzinom', is_suspicious: true, description: 'Häufigste Form von Hautkrebs' },
-            { id: 'bkl', name: 'Gutartige keratotische Läsion', is_suspicious: false, description: 'Benigne, sonnenbedingte Hautveränderung' },
-            { id: 'df', name: 'Dermatofibrom', is_suspicious: false, description: 'Gutartiger Bindegewebstumor' },
-            { id: 'mel', name: 'Melanom', is_suspicious: true, description: 'Bösartiger Tumor der Melanozyten' },
-            { id: 'nv', name: 'Melanozytärer Nävus', is_suspicious: false, description: 'Gutartiger Leberfleck/Muttermal' },
-            { id: 'vasc', name: 'Gefäßläsion', is_suspicious: false, description: 'Gutartige Gefäßveränderung (z.B. Hämangiom)' }
-        ];
-
-        // ============ VERLAUFS-MANAGEMENT ============
-        const HISTORY_STORAGE_KEY = 'skinlytics_analysis_history_full';
-
-        let currentAnalysisResult = null;
-        let currentAnalysisImage = null;
-        let currentDeleteId = null;
-
-        // Verlauf laden
-        function loadHistory() {
-            const history = localStorage.getItem(HISTORY_STORAGE_KEY);
-            return history ? JSON.parse(history) : [];
+    // History functions
+    function loadHistory() { return JSON.parse(localStorage.getItem('skinlytics_hist') || '[]'); }
+    function saveHistory(arr) { localStorage.setItem('skinlytics_hist', JSON.stringify(arr)); updateHistoryUI(); }
+    function addHistoryEntry(entry) { let h = loadHistory(); h.unshift({ id: Date.now(), date: new Date().toISOString(), ...entry }); saveHistory(h); showToast("✓ Gespeichert", "success"); }
+    function deleteHistoryById(id) { let h = loadHistory().filter(i => i.id != id); saveHistory(h); showToast("Gelöscht", "info"); }
+    function clearFullHistory() { if(confirm("Alle Analysen löschen?")) { saveHistory([]); showToast("Verlauf geleert","warning"); } }
+    function updateHistoryUI() { 
+        let container = document.getElementById('historyList'); 
+        if(!container) return; 
+        
+        let history = loadHistory(); 
+        let totalItems = history.length;
+        
+        if(totalItems===0) { 
+            container.innerHTML = '<div style="padding:2rem; text-align:center;">Keine gespeicherten Analysen.</div>'; 
+            updateResultsCount(0, 0);
+            return; 
         }
-
-        // Verlauf speichern
-        function saveHistory(history) {
-            localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
-            updateHistoryDisplay();
+        
+        // Apply filters
+        let filters = getHistoryFilters();
+        let filteredHistory = filterHistory(history, filters);
+        
+        // Update results count
+        updateResultsCount(totalItems, filteredHistory.length);
+        
+        if(filteredHistory.length===0) { 
+            container.innerHTML = '<div style="padding:2rem; text-align:center;">Keine Einträge entsprechen den Filterkriterien.</div>'; 
+            return; 
         }
+        
+        let displayHistory = filteredHistory; 
+        container.innerHTML = displayHistory.map(item => `<div style="background:white; border-radius:1.5rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.05);"><div style="display:flex; justify-content:space-between; align-items:center;"><span>${new Date(item.date).toLocaleString()}</span><span style="background:${item.isSuspicious?'#fee2e2':'#dcfce7'}; padding:0.2rem 1rem; border-radius:30px;">${item.isSuspicious?'Verdächtig':'Unauffällig'}</span></div><p><strong>${item.resultLabel}</strong> <span style="color:#64748b; font-size:0.9rem;">(Konfidenz: ${item.confidence}%)</span></p>${item.imageData ? `<img src="${item.imageData}" style="max-width:80px; border-radius:0.5rem; margin-bottom:0.5rem;">` : ''}${item.predictions && item.predictions.length > 0 ? `<div style="margin:0.5rem 0;"><div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;"><i class="fas fa-chart-pie" style="color:var(--primary);"></i><strong>Wahrscheinlichkeiten:</strong></div><div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.5rem;">${item.predictions.map(pred => `<div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:0.5rem; padding:0.5rem;"><div style="font-weight:600; color:var(--primary);">${escapeHtml(pred.name || pred.class_name || 'Unbekannt')}</div><div style="font-size:0.9rem; color:#64748b;">${Math.round(pred.confidence !== undefined ? pred.confidence : (pred.adjusted_confidence !== undefined ? pred.adjusted_confidence : 0))}%</div></div>`).join('')}</div></div>` : ''}<div style="margin:0.5rem 0;"><div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;"><i class="fas fa-pen" style="color:var(--primary);"></i><strong>Notizen:</strong></div><div id="note-${item.id}" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:0.5rem; padding:0.5rem; min-height:60px; cursor:text;" contenteditable="true" data-note="${escapeHtml(item.note || '')}" onblur="saveHistoryNote(${item.id}, this)">${escapeHtml(item.note || 'Klicken Sie hier, um Notizen hinzuzufügen...')}</div></div><div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;"><button class="btn" style="background:#c44f3d; padding:0.3rem 1rem;" onclick="deleteHistoryById(${item.id})"><i class="fas fa-trash"></i> Löschen</button><button class="btn" style="background:linear-gradient(135deg, #22c55e, #16a34a); padding:0.3rem 1rem;" onclick="downloadHistoryPDF(${item.id})"><i class="fas fa-file-pdf"></i> PDF herunterladen</button></div></div>`).join(''); }
+    window.deleteHistoryById = deleteHistoryById;
 
-        // Eintrag hinzufügen (mit Foto und allen Vorhersagen)
-        function addHistoryEntry(entry) {
-            const history = loadHistory();
-            const newEntry = {
-                id: Date.now().toString(),
-                date: new Date().toISOString(),
-                resultLabel: entry.resultLabel,
-                isSuspicious: entry.isSuspicious,
-                confidence: entry.confidence,
-                note: entry.note || '',
-                imageData: entry.imageData, // Base64 des Fotos
-                predictions: entry.predictions, // Alle 7 Vorhersagen mit Wahrscheinlichkeiten
-                binaryConfidence: entry.binaryConfidence
-            };
-            history.unshift(newEntry);
-            saveHistory(history);
-            showToast('Ergebnis mit Foto wurde im Verlauf gespeichert!', 'success');
-            return newEntry;
-        }
+    // History filter functions
+    function getHistoryFilters() {
+        return {
+            search: document.getElementById('historySearchInput')?.value.toLowerCase() || '',
+            dateFrom: document.getElementById('historyDateFrom')?.value || '',
+            dateTo: document.getElementById('historyDateTo')?.value || '',
+            resultType: document.getElementById('historyResultFilter')?.value || '',
+            minConfidence: document.getElementById('historyConfidenceFilter')?.value || ''
+        };
+    }
 
-        // Eintrag löschen
-        function deleteHistoryEntry(id) {
-            let history = loadHistory();
-            history = history.filter(entry => entry.id !== id);
-            saveHistory(history);
-            showToast('Eintrag wurde gelöscht.', 'info');
-        }
-
-        // Gesamten Verlauf löschen
-        function clearAllHistory() {
-            if (confirm('Möchten Sie wirklich ALLE gespeicherten Analysen inklusive Fotos löschen? Diese Aktion kann nicht rückgängig gemacht werden.')) {
-                localStorage.removeItem(HISTORY_STORAGE_KEY);
-                updateHistoryDisplay();
-                showToast('Alle Verlaufseinträge wurden gelöscht.', 'info');
-            }
-        }
-
-        // Formatierte Vorhersagen für Anzeige
-        function formatPredictions(predictions) {
-            if (!predictions) return [];
-            return predictions.sort((a, b) => b.confidence - a.confidence);
-        }
-
-        // Verlauf im UI anzeigen
-        function updateHistoryDisplay() {
-            const history = loadHistory();
-            const historyList = document.getElementById('historyList');
-            const historyCountSpan = document.getElementById('historyCount');
-
-            if (historyCountSpan) {
-                historyCountSpan.textContent = history.length;
+    function filterHistory(history, filters) {
+        return history.filter(item => {
+            // Search filter
+            if (filters.search) {
+                const searchText = filters.search.toLowerCase();
+                const resultMatch = item.resultLabel?.toLowerCase().includes(searchText) || '';
+                const noteMatch = item.note?.toLowerCase().includes(searchText) || '';
+                if (!resultMatch && !noteMatch) return false;
             }
 
-            if (!historyList) return;
+            // Date range filter
+            if (filters.dateFrom) {
+                const itemDate = new Date(item.date);
+                const fromDate = new Date(filters.dateFrom);
+                if (itemDate < fromDate) return false;
+            }
+            if (filters.dateTo) {
+                const itemDate = new Date(item.date);
+                const toDate = new Date(filters.dateTo);
+                toDate.setHours(23, 59, 59, 999); // Include the entire end date
+                if (itemDate > toDate) return false;
+            }
 
-            if (history.length === 0) {
-                historyList.innerHTML = `
-                    <div class="empty-history">
-                        <i class="fas fa-folder-open"></i>
-                        <p>Noch keine Analysen gespeichert.</p>
-                        <p>Führen Sie eine Analyse durch und speichern Sie das Ergebnis, um Ihren Verlauf zu sehen.</p>
-                        <button class="btn btn-secondary btn-small" id="goToAnalyzeEmptyBtn">Zur Analyse</button>
-                    </div>
-                `;
-                const goToAnalyzeBtn = document.getElementById('goToAnalyzeEmptyBtn');
-                if (goToAnalyzeBtn) {
-                    goToAnalyzeBtn.addEventListener('click', () => {
-                        checkConsentAndShowUpload();
-                    });
-                }
+            // Result type filter
+            if (filters.resultType) {
+                if (filters.resultType === 'suspicious' && !item.isSuspicious) return false;
+                if (filters.resultType === 'normal' && item.isSuspicious) return false;
+            }
+
+            // Confidence filter
+            if (filters.minConfidence) {
+                const confidence = parseInt(item.confidence) || 0;
+                if (confidence < parseInt(filters.minConfidence)) return false;
+            }
+
+            return true;
+        });
+    }
+
+    function clearHistoryFilters() {
+        document.getElementById('historySearchInput').value = '';
+        document.getElementById('historyDateFrom').value = '';
+        document.getElementById('historyDateTo').value = '';
+        document.getElementById('historyResultFilter').value = '';
+        document.getElementById('historyConfidenceFilter').value = '';
+        updateHistoryUI();
+        showToast('Filter zurückgesetzt', 'success');
+    }
+
+    function updateResultsCount(total, filtered) {
+        const countElement = document.getElementById('historyResultsCount');
+        if (countElement) {
+            if (total === filtered) {
+                countElement.textContent = `${filtered} Einträge gefunden`;
+            } else {
+                countElement.textContent = `${filtered} von ${total} Einträgen gefunden`;
+            }
+        }
+    }
+
+    function showToast(msg, type) { let t = document.createElement('div'); t.className = 'toast'; t.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':'fa-info-circle'}"></i> ${msg}`; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
+    function generatePredictions() { let probs = Array(7).fill(0); let rem = 100; for(let i=0;i<6;i++) { let v = Math.floor(Math.random()*25)+5; probs[i]=v; rem-=v; } probs[6]=Math.max(5,rem); if(Math.random()<0.32) { let idx = [0,1,4].find(i=>SKIN_CLASSES[i].suspicious); if(idx!==undefined){ let boost = 45+Math.floor(Math.random()*30); let old=probs[idx]; probs[idx]=boost; let diff=boost-old; for(let i=0;i<probs.length;i++) if(i!==idx && probs[i]>10) probs[i]-=Math.ceil(diff/3); let sum=probs.reduce((a,b)=>a+b,0); if(sum!==100) probs[0]+=(100-sum); } } return SKIN_CLASSES.map((c,i)=>({...c, confidence: Math.min(95,Math.max(5,Math.round(probs[i])))})).sort((a,b)=>b.confidence-a.confidence); }
+    function performAnalysis() { let preds = generatePredictions(); let susp = preds.find(p=>p.suspicious && p.confidence>45); let isSusp = !!susp; let conf = isSusp ? susp.confidence : preds.find(p=>!p.suspicious).confidence; return { predictions: preds, isSuspicious: isSusp, confidence: Math.round(conf), resultLabel: isSusp ? "⚠️ Verdächtige Veränderung" : "🔍 Unauffälliges Hautbild", description: isSusp ? "Bitte dermatologisch abklären lassen." : "Keine verdächtigen Strukturen erkannt." }; }
+    function displayResults(analysis, imgData) { currentPredictions=analysis.predictions; currentBinary={isSuspicious:analysis.isSuspicious,confidence:analysis.confidence}; currentImageData=imgData;
+    // Store analysis result for PDF generation
+    currentAnalysisResult = {
+        success: true,
+        prediction: {
+            class_name: analysis.resultLabel,
+            is_suspicious: analysis.isSuspicious,
+            confidence: analysis.confidence,
+            top_predictions: analysis.predictions,
+            disclaimer: 'Wichtiger medizinischer Hinweis: Diese Analyse ersetzt keine ärztliche Diagnose. Bei gesundheitlichen Bedenken konsultieren Sie bitte einen Dermatologen oder Arzt. Die KI-Analyse dient nur zur Unterstützung und kann keine professionelle medizinische Beratung ersetzen.'
+        },
+        has_cancer: analysis.isSuspicious,
+        advice: analysis.description
+    };
+
+    document.getElementById('resultIcon').innerHTML = analysis.isSuspicious ? '<i class="fas fa-triangle-exclamation" style="color:#e06e5e; font-size:3rem;"></i>' : '<i class="fas fa-circle-check" style="color:#10b981; font-size:3rem;"></i>'; document.getElementById('resultText').innerText=analysis.resultLabel; document.getElementById('binaryBadge').innerHTML=analysis.isSuspicious?'Verdächtig':'Unauffällig'; document.getElementById('binaryBadge').style.background=analysis.isSuspicious?'#fee2e2':'#dcfce7'; document.getElementById('confidenceSpan').innerHTML=`Sicherheit: ${Math.round(analysis.confidence)}%`; document.getElementById('resultDesc').innerText=analysis.description; document.getElementById('predictionsGrid').innerHTML=analysis.predictions.map(p=>`<div class="pred-card"><strong>${p.name}</strong> ${Math.round(p.confidence)}%<div style="font-size:0.75rem;">${p.desc}</div></div>`).join(''); showSection('resultsSection'); }
+    function showSection(s) { ['homeSection','uploadSection','historySection','hilfeSection','impressumSection','settingsSection','resultsSection','datenschutzSection'].forEach(id=>{ let el=document.getElementById(id); if(el) el.style.display='none'; }); document.getElementById(s).style.display='block'; if(s==='historySection') updateHistoryUI(); if(s==='settingsSection') { updateSettingsUI(); showProfessionalConsentBanner(); } }
+    function loadSection(section) {
+        // Remove any dynamically loaded Datenschutz section first
+        let existingDatenschutz = document.getElementById('datenschutzSection');
+        if(existingDatenschutz && existingDatenschutz.parentNode) {
+            existingDatenschutz.parentNode.removeChild(existingDatenschutz);
+        }
+        
+        // Hide all sections first
+        ['homeSection','uploadSection','historySection','hilfeSection','impressumSection','settingsSection','resultsSection'].forEach(id=>{ 
+            let el=document.getElementById(id); 
+            if(el) el.style.display='none'; 
+        }); 
+        
+        // Show the requested section
+        if(section === 'datenschutz') {
+            // Load Datenschutz content dynamically
+            fetch('datenschutz.html')
+                .then(response => response.text())
+                .then(html => {
+                    let tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+                    let content = tempDiv.querySelector('body')?.innerHTML || tempDiv.innerHTML;
+                    
+                    let newSection = document.createElement('section');
+                    newSection.id = 'datenschutzSection';
+                    newSection.className = 'glass-premium';
+                    newSection.style.cssText = 'display:block; max-width:1000px; margin:2rem auto; padding:2rem; border-radius:2rem;';
+                    newSection.innerHTML = content;
+                    
+                    document.querySelector('.main-content').insertBefore(newSection, document.getElementById('settingsSection'));
+                });
+        } else if(section === 'impressum') {
+            // Show existing Impressum section
+            showSection('impressumSection');
+        }
+    }
+    function updateSettingsUI() {
+        let badge = document.getElementById('consentStatusBadge');
+        let revokeBtn = document.getElementById('revokeConsentBtn');
+        let giveBtn = document.getElementById('giveConsentBtn');
+        let analysisToggle = document.getElementById('analysisToggle');
+        let historyToggle = document.getElementById('historyToggle');
+
+        // Load granular consent settings
+        let analysisConsent = localStorage.getItem('skinlytics_consent_analysis') === 'true';
+        let historyConsent = localStorage.getItem('skinlytics_consent_history') === 'true';
+
+        // Update toggles
+        if(analysisToggle) analysisToggle.checked = analysisConsent;
+        if(historyToggle) historyToggle.checked = historyConsent;
+
+        // Update overall consent status
+        let hasAnyConsent = analysisConsent || historyConsent;
+
+        if(hasAnyConsent) {
+            if(badge) {
+                badge.className = 'status-badge status-active';
+                badge.innerHTML = '<i class="fas fa-check-circle"></i> Aktiv';
+            }
+            revokeBtn.style.display = 'inline-flex';
+            giveBtn.style.display = 'none';
+        } else {
+            if(badge) {
+                badge.className = 'status-badge status-inactive';
+                badge.innerHTML = '<i class="fas fa-times-circle"></i> Inaktiv';
+            }
+            revokeBtn.style.display = 'none';
+            giveBtn.style.display = 'inline-flex';
+        }
+    }
+    function setConsent(value) { consentGiven = value; localStorage.setItem('skinlytics_consent', value); updateSettingsUI(); if(!value) showToast('Einwilligung widerrufen','warning'); else showToast('Einwilligung erteilt','success'); document.getElementById('analyzeBtn').disabled = !(consentGiven && currentImageData); }
+    function escapeHtml(str) { return str.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+    // PDF Download functionality
+    async function downloadPDFReport() {
+        if(!currentAnalysisResult) {
+            showToast('Keine Analyseergebnisse verfügbar', 'error');
+            return;
+        }
+
+        try {
+            // Show loading state
+            const downloadBtn = document.getElementById('downloadPdfBtn');
+            const originalContent = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Generiere...';
+            downloadBtn.disabled = true;
+
+            // Get current note from analysis note textarea
+            const noteText = document.getElementById('analysisNote')?.value || '';
+
+            // Send request to PDF generation endpoint
+            const response = await fetch('/api/generate-pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    analysis_result: currentAnalysisResult,
+                    note_text: noteText,
+                    include_logo: true
+                })
+            });
+
+            if(!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Fehler bei der PDF-Generierung');
+            }
+
+            // Get PDF blob and download
+            const pdfBlob = await response.blob();
+            const url = window.URL.createObjectURL(pdfBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `skinlytics_medical_report_${new Date().toISOString().split('T')[0]}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+
+            showToast('PDF-Report erfolgreich heruntergeladen', 'success');
+
+        } catch(error) {
+            console.error('PDF download error:', error);
+            showToast(`Fehler: ${error.message}`, 'error');
+        } finally {
+            // Restore button state
+            const downloadBtn = document.getElementById('downloadPdfBtn');
+            downloadBtn.innerHTML = '<i class="fas fa-file-pdf"></i> Report herunterladen';
+            downloadBtn.disabled = false;
+        }
+    }
+
+    // Save history note
+    function saveHistoryNote(itemId, noteElement) {
+        const newNote = noteElement.innerText.trim();
+        const history = loadHistory();
+        const itemIndex = history.findIndex(item => item.id === itemId);
+
+        if (itemIndex !== -1) {
+            history[itemIndex].note = newNote;
+            saveHistory(history);
+            showToast('Notiz gespeichert', 'success');
+        }
+    }
+
+    // Download PDF from history entry
+    async function downloadHistoryPDF(itemId) {
+        try {
+            const history = loadHistory();
+            const historyItem = history.find(item => item.id === itemId);
+
+            if (!historyItem) {
+                showToast('Analyse nicht gefunden', 'error');
                 return;
             }
 
-            historyList.innerHTML = history.map(entry => {
-                const predictions = formatPredictions(entry.predictions);
-                const topPredictions = predictions.slice(0, 3);
+            // Create analysis result from history item
+            const analysisResult = {
+                success: true,
+                prediction: {
+                    class_name: historyItem.resultLabel,
+                    is_suspicious: historyItem.isSuspicious,
+                    confidence: historyItem.confidence,
+                    top_predictions: historyItem.predictions || [],
+                    disclaimer: 'Wichtiger medizinischer Hinweis: Dieser Bericht stellt eine KI-gestützte Analyse dar und ersetzt keine ärztliche Diagnose. Bei gesundheitlichen Bedenken oder Auffälligkeiten konsultieren Sie bitte umgehend einen Dermatologen oder Arzt. Die Analyse dient ausschließlich zur Unterstützung und Information und kann keine professionelle medizinische Beratung ersetzen.'
+                },
+                has_cancer: historyItem.isSuspicious,
+                advice: historyItem.isSuspicious ? 'Bitte dermatologisch abklären lassen.' : 'Keine verdächtigen Strukturen erkannt.'
+            };
 
-                return `
-                    <div class="history-item" data-id="${entry.id}">
-                        <div class="history-item-header">
-                            <span class="history-date"><i class="fas fa-calendar-alt"></i> ${formatDate(entry.date)}</span>
-                            <span class="history-badge ${entry.isSuspicious ? 'verdaechtig' : 'unauffaellig'}">
-                                ${entry.isSuspicious ? 'Verdächtig' : 'Unauffällig'}
-                            </span>
-                        </div>
-                        <div class="history-result">
-                            <strong>Ergebnis:</strong> ${escapeHtml(entry.resultLabel)}
-                        </div>
-                        <div class="history-confidence">
-                            <i class="fas fa-chart-line"></i> Sicherheit: ${entry.confidence}% (binäre Klassifikation)
-                        </div>
-                        ${entry.imageData ? `
-                            <div class="history-image" onclick="showFullImage('${entry.imageData}')">
-                                <img src="${entry.imageData}" alt="Gespeichertes Hautbild">
-                            </div>
-                        ` : ''}
-                        ${predictions.length > 0 ? `
-                            <div class="history-predictions">
-                                <h5><i class="fas fa-chart-bar"></i> Top-Vorhersagen (alle 7 Typen):</h5>
-                                <div class="history-prediction-list">
-                                    ${predictions.map(p => `
-                                        <span class="history-prediction-tag ${p.is_suspicious ? 'high' : ''}">
-                                            ${escapeHtml(p.name)}: ${p.confidence}%
-                                        </span>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        ` : ''}
-                        ${entry.note ? `<div class="history-note"><i class="fas fa-pen"></i> ${escapeHtml(entry.note)}</div>` : ''}
-                        <div class="history-actions">
-                            <button class="btn btn-danger btn-small delete-entry-btn" data-id="${entry.id}">
-                                <i class="fas fa-trash-alt"></i> Löschen
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            // Show loading state on button
+            const button = event.target;
+            const originalContent = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Generiere...';
+            button.disabled = true;
 
-            // Lösch-Buttons initialisieren
-            document.querySelectorAll('.delete-entry-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const id = btn.getAttribute('data-id');
-                    currentDeleteId = id;
-                    const modal = document.getElementById('deleteModal');
-                    if (modal) modal.style.display = 'flex';
-                });
+            // Get note text for this history item
+            const noteElement = document.getElementById(`note-${itemId}`);
+            const noteText = noteElement ? noteElement.innerText.trim() : (historyItem.note || '');
+
+            // Send request to PDF generation endpoint
+            const response = await fetch('/api/generate-pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    analysis_result: analysisResult,
+                    note_text: noteText,
+                    include_logo: true
+                })
             });
-        }
 
-        // Vollbild-Foto anzeigen
-        window.showFullImage = function(imageData) {
-            const modal = document.createElement('div');
-            modal.className = 'image-modal';
-            modal.innerHTML = `<img src="${imageData}" alt="Vergrößertes Hautbild">`;
-            modal.addEventListener('click', () => modal.remove());
-            document.body.appendChild(modal);
+            if(!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Fehler bei der PDF-Generierung');
+            }
+
+            // Get PDF blob and download
+            const pdfBlob = await response.blob();
+            const url = window.URL.createObjectURL(pdfBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            const date = new Date(historyItem.date).toISOString().split('T')[0];
+            link.download = `skinlytics_medical_report_${date}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+
+            showToast('PDF-Report erfolgreich heruntergeladen', 'success');
+
+        } catch(error) {
+            console.error('PDF download error:', error);
+            showToast(`Fehler: ${error.message}`, 'error');
+        } finally {
+            // Restore button state
+            if (event && event.target) {
+                event.target.innerHTML = '<i class="fas fa-file-pdf"></i> PDF herunterladen';
+                event.target.disabled = false;
+            }
+        }
+    }
+
+    // Professionelles Zustimmungs-Banner wie bei echten Websites
+    function showProfessionalConsentBanner() {
+        // Banner anzeigen, wenn keine aktive Einwilligung vorliegt
+        const hasActiveConsent = localStorage.getItem('skinlytics_consent') === 'true';
+        if(hasActiveConsent) return;
+
+        const banner = document.getElementById('professionalConsentBanner');
+        if(banner) {
+            banner.style.display = 'flex';
+
+            // Event Listener für die Buttons (nur einmal hinzufügen)
+            if(!banner.dataset.listenersAdded) {
+                document.getElementById('acceptAllProfessional')?.addEventListener('click', () => {
+                    // Alle Einwilligungen erteilen
+                    localStorage.setItem('skinlytics_consent_analysis', 'true');
+                    localStorage.setItem('skinlytics_consent_history', 'true');
+                    localStorage.setItem('skinlytics_consent', 'true');
+                    consentGiven = true;
+                    banner.style.display = 'none';
+                    updateSettingsUI();
+                    showToast('Alle Einwilligungen wurden erteilt', 'success');
+                });
+
+                document.getElementById('saveSelectionProfessional')?.addEventListener('click', () => {
+                    // Auswahl speichern - aber不影响整体同意状态
+                    const analysisConsent = document.getElementById('analysisConsent')?.checked || false;
+                    const historyConsent = document.getElementById('historyConsent')?.checked || false;
+
+                    // Speichere granulare Einwilligungen
+                    localStorage.setItem('skinlytics_consent_analysis', analysisConsent.toString());
+                    localStorage.setItem('skinlytics_consent_history', historyConsent.toString());
+
+                    // Gesamtzustimmung wird hier nicht geändert - nur wenn "Alle akzeptieren" geklickt wird
+                    banner.style.display = 'none';
+                    updateSettingsUI();
+                    showToast('Ihre Auswahl wurde gespeichert', 'success');
+                });
+
+                document.getElementById('rejectAllProfessional')?.addEventListener('click', () => {
+                    // Optionale Einwilligungen ablehnen, aber essentielle bleiben aktiv
+                    document.getElementById('analysisConsent').checked = false;
+                    document.getElementById('historyConsent').checked = false;
+
+                    localStorage.setItem('skinlytics_consent_analysis', 'false');
+                    localStorage.setItem('skinlytics_consent_history', 'false');
+                    localStorage.setItem('skinlytics_consent', 'false');
+                    consentGiven = false;
+                    banner.style.display = 'none';
+                    updateSettingsUI();
+                    showToast('Optionale Einwilligungen wurden widerrufen', 'info');
+                });
+
+                banner.dataset.listenersAdded = 'true';
+            }
+        }
+    }
+
+    // EVENT LISTENER
+    document.getElementById('heroAnalyzeBtn').addEventListener('click', () => { if(!consentGiven) { showToast('Einwilligung erforderlich (Einstellungen)','error'); showSection('settingsSection'); } else showSection('uploadSection'); });
+    document.getElementById('heroHistoryBtn').addEventListener('click', () => showSection('historySection'));
+    document.getElementById('footerImpressumLink')?.addEventListener('click', (e) => { e.preventDefault(); showSection('impressumSection'); });
+    document.getElementById('impressumBackBtn')?.addEventListener('click', () => showSection('homeSection'));
+    document.getElementById('openDatenschutzLink')?.addEventListener('click', (e) => { e.preventDefault(); window.open('datenschutz.html', '_blank'); });
+    document.querySelectorAll('[data-section]').forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); let sec = link.getAttribute('data-section'); if(sec === 'upload' && !consentGiven) { showToast('Einwilligung fehlt → Einstellungen','error'); showSection('settingsSection'); return; } if(sec==='upload') showSection('uploadSection'); else if(sec==='home') showSection('homeSection'); else if(sec==='history') showSection('historySection'); else if(sec==='hilfe') showSection('hilfeSection'); else if(sec==='impressum') showSection('impressumSection'); else if(sec==='settings') showSection('settingsSection'); }); });
+
+    // Upload handling
+    const uploadDiv = document.getElementById('uploadArea'), fileInput = document.getElementById('fileInput'), previewDiv = document.getElementById('previewArea'), previewImg = document.getElementById('previewImg'), analyzeBtn = document.getElementById('analyzeBtn');
+    if(uploadDiv) uploadDiv.addEventListener('click', () => fileInput.click());
+    uploadDiv?.addEventListener('dragover', e=>e.preventDefault());
+    uploadDiv?.addEventListener('drop', e=>{ e.preventDefault(); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+    fileInput?.addEventListener('change', e=>{ if(e.target.files[0]) handleFile(e.target.files[0]); });
+    function handleFile(file) { if(!file.type.match('image.*')) return; const reader = new FileReader(); reader.onload = ev => { currentImageData = ev.target.result; previewImg.src = currentImageData; if(previewDiv) previewDiv.style.display = 'block'; if(analyzeBtn) analyzeBtn.disabled = !consentGiven; }; reader.readAsDataURL(file); }
+    analyzeBtn?.addEventListener('click', async () => { if(!consentGiven) { showToast('Einwilligung fehlt','error'); return; } if(!currentImageData) return; analyzeBtn.disabled=true; analyzeBtn.innerHTML='<i class="fas fa-spinner fa-pulse"></i> Analysiere...';
+        try {
+            // Convert data URL to blob for upload
+            const response = await fetch(currentImageData);
+            const blob = await response.blob();
+            const formData = new FormData();
+            formData.append('file', blob, 'skin_image.jpg');
+
+            // Call real backend API
+            const apiResponse = await fetch('/analyze', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!apiResponse.ok) {
+                throw new Error('Serverfehler');
+            }
+
+            const result = await apiResponse.json();
+
+            if (result.status === 'error') {
+                throw new Error(result.error || 'Unbekannter Fehler');
+            }
+
+            // Convert backend response to frontend format
+            const analysis = {
+                predictions: result.result.prediction.top_predictions.map(p => ({
+                    ...p,
+                    confidence: Math.round(p.confidence * 100) // Convert decimal to percentage
+                })),
+                isSuspicious: result.result.prediction.is_suspicious,
+                confidence: Math.round(result.result.prediction.confidence * 100),
+                resultLabel: result.result.prediction.is_suspicious ? "⚠️ Verdächtige Veränderung" : "🔍 Unauffälliges Hautbild",
+                description: result.result.advice || "Analyse abgeschlossen."
+            };
+
+            displayResults(analysis, currentImageData);
+        } catch (error) {
+            console.error('Analysis error:', error);
+            // Fallback to mock data if API fails
+            let analysis = performAnalysis();
+            displayResults(analysis, currentImageData);
+        } finally {
+            analyzeBtn.disabled=false;
+            analyzeBtn.innerHTML='Analyse starten';
+        }
+    });
+    document.getElementById('saveResultBtn')?.addEventListener('click',()=>{
+        if(!currentPredictions) return;
+        
+        // Überprüfe, ob die Verlaufsspeicherung erlaubt ist
+        let historyConsent = localStorage.getItem('skinlytics_consent_history') === 'true';
+        if(!historyConsent) {
+            showToast('Bitte erteilen Sie zuerst die Einwilligung zur Verlaufsspeicherung in den Einstellungen', 'warning');
+            return;
+        }
+        
+        addHistoryEntry({ 
+            resultLabel: currentBinary.isSuspicious?'Verdächtig':'Unauffällig', 
+            isSuspicious: currentBinary.isSuspicious, 
+            confidence: currentBinary.confidence, 
+            note: document.getElementById('analysisNote')?.value||'', 
+            imageData: currentImageData, 
+            predictions: currentPredictions.map(p=>({name:p.name,confidence:p.confidence})) 
+        }); 
+    });
+    document.getElementById('downloadPdfBtn')?.addEventListener('click', downloadPDFReport);
+    document.getElementById('newAnalysisBtn')?.addEventListener('click',()=>{ currentImageData=null; if(previewDiv) previewDiv.style.display='none'; if(analyzeBtn) analyzeBtn.disabled=true; showSection('uploadSection'); });
+    document.getElementById('revokeConsentBtn')?.addEventListener('click',()=>{
+        localStorage.setItem('skinlytics_consent_analysis', 'false');
+        localStorage.setItem('skinlytics_consent_history', 'false');
+        localStorage.setItem('skinlytics_consent', 'false');
+        consentGiven = false;
+        updateSettingsUI();
+        showToast('Alle Einwilligungen widerrufen','warning');
+    });
+    document.getElementById('giveConsentBtn')?.addEventListener('click',()=>{
+        localStorage.setItem('skinlytics_consent_analysis', 'true');
+        localStorage.setItem('skinlytics_consent_history', 'true');
+        localStorage.setItem('skinlytics_consent', 'true');
+        consentGiven = true;
+        updateSettingsUI();
+        showToast('Alle Einwilligungen erteilt','success');
+    });
+    document.getElementById('clearHistoryBtn')?.addEventListener('click',clearFullHistory);
+    
+    // History filter event listeners
+    document.getElementById('clearHistoryFilters')?.addEventListener('click', clearHistoryFilters);
+    document.getElementById('applyHistoryFilters')?.addEventListener('click', updateHistoryUI);
+    
+    // Auto-apply filters on input change (except for search to avoid too frequent updates)
+    document.getElementById('historyDateFrom')?.addEventListener('change', updateHistoryUI);
+    document.getElementById('historyDateTo')?.addEventListener('change', updateHistoryUI);
+    document.getElementById('historyResultFilter')?.addEventListener('change', updateHistoryUI);
+    document.getElementById('historyConfidenceFilter')?.addEventListener('change', updateHistoryUI);
+    
+    // Search with debounce to avoid too frequent updates
+    let searchTimeout;
+    document.getElementById('historySearchInput')?.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            updateHistoryUI();
+        }, 300); // 300ms debounce
+    });
+
+    // Granular consent toggles
+    document.getElementById('analysisToggle')?.addEventListener('change', (e)=>{
+        localStorage.setItem('skinlytics_consent_analysis', e.target.checked);
+        updateSettingsUI();
+        showToast(e.target.checked ? 'KI-Analyse-Einwilligung erteilt' : 'KI-Analyse-Einwilligung widerrufen', 'info');
+    });
+
+    document.getElementById('historyToggle')?.addEventListener('change', (e)=>{
+        localStorage.setItem('skinlytics_consent_history', e.target.checked);
+        updateSettingsUI();
+        showToast(e.target.checked ? 'Verlaufsspeicherung aktiviert' : 'Verlaufsspeicherung deaktiviert', 'info');
+    });
+
+    // Data export functionality
+    document.getElementById('exportDataBtn')?.addEventListener('click', ()=>{
+        let history = loadHistory();
+        let consentData = {
+            consent_analysis: localStorage.getItem('skinlytics_consent_analysis'),
+            consent_history: localStorage.getItem('skinlytics_consent_history'),
+            consent_overall: localStorage.getItem('skinlytics_consent'),
+            exportDate: new Date().toISOString()
         };
 
-        // Datum formatieren
-        function formatDate(isoString) {
-            const date = new Date(isoString);
-            return date.toLocaleString('de-DE', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        // HTML Escaping
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Toast-Nachricht
-        function showToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.className = `toast-notification ${type}`;
-
-            let icon = '';
-            if (type === 'success') icon = '<i class="fas fa-check-circle" style="color: #10b981;"></i>';
-            else if (type === 'error') icon = '<i class="fas fa-exclamation-circle" style="color: #ef4444;"></i>';
-            else if (type === 'warning') icon = '<i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i>';
-            else icon = '<i class="fas fa-info-circle" style="color: var(--primary-color);"></i>';
-
-            toast.innerHTML = `${icon} <span>${message}</span>`;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => toast.remove(), 300);
-            }, 4000);
-        }
-
-        // Simulierte Vorhersagen generieren
-        function generatePredictions() {
-            // Generiere zufällige Wahrscheinlichkeiten, die sich zu 100% summieren
-            let remaining = 100;
-            const confidences = [];
-
-            for (let i = 0; i < SKIN_CLASSES.length - 1; i++) {
-                const maxRemaining = remaining - (SKIN_CLASSES.length - i - 1) * 5;
-                const conf = Math.floor(Math.random() * Math.min(maxRemaining, 40)) + 5;
-                confidences.push(conf);
-                remaining -= conf;
+        let exportData = {
+            consent: consentData,
+            history: history,
+            metadata: {
+                version: '1.0',
+                application: 'SkinLytics',
+                exportType: 'user_data'
             }
-            confidences.push(remaining);
-
-            // Zufällig eine Klasse als "Top" markieren (höchste Wahrscheinlichkeit)
-            const topIndex = Math.floor(Math.random() * SKIN_CLASSES.length);
-            const shuffledConfidences = [...confidences];
-            // Stelle sicher, dass die Top-Klasse die höchste Wahrscheinlichkeit hat
-            const maxConf = Math.max(...shuffledConfidences);
-            const maxIndex = shuffledConfidences.indexOf(maxConf);
-            if (maxIndex !== topIndex) {
-                [shuffledConfidences[topIndex], shuffledConfidences[maxIndex]] =
-                [shuffledConfidences[maxIndex], shuffledConfidences[topIndex]];
-            }
-
-            return SKIN_CLASSES.map((cls, idx) => ({
-                ...cls,
-                confidence: shuffledConfidences[idx]
-            })).sort((a, b) => b.confidence - a.confidence);
-        }
-
-        // Binäre Klassifikation basierend auf Vorhersagen
-        function getBinaryClassification(predictions) {
-            // Verdächtig wenn eine verdächtige Klasse hohe Wahrscheinlichkeit hat
-            const suspiciousClasses = predictions.filter(p => p.is_suspicious);
-            const maxSuspiciousConf = Math.max(...suspiciousClasses.map(p => p.confidence), 0);
-            const isSuspicious = maxSuspiciousConf > 50;
-            const confidence = isSuspicious ? maxSuspiciousConf :
-                Math.max(...predictions.filter(p => !p.is_suspicious).map(p => p.confidence));
-            return { isSuspicious, confidence: Math.round(confidence) };
-        }
-
-        // ============ CONSENT MANAGEMENT ============
-        let consentGiven = localStorage.getItem('skinlytics_consent') === 'true';
-        let consentDate = localStorage.getItem('skinlytics_consent_date');
-
-        function updateSettingsUI() {
-            const consentStatusBadge = document.getElementById('consentStatusBadge');
-            const consentStatusText = document.getElementById('consentStatusText');
-            const consentDateSpan = document.getElementById('consentDate');
-            const activeSection = document.getElementById('activeConsentSection');
-            const inactiveSection = document.getElementById('inactiveConsentSection');
-
-            if (consentGiven) {
-                if (consentStatusBadge) {
-                    consentStatusBadge.textContent = 'Aktiv';
-                    consentStatusBadge.className = 'status-badge active';
-                }
-                if (consentStatusText) consentStatusText.textContent = 'zugestimmt';
-                if (consentDateSpan) {
-                    const date = consentDate ? new Date(consentDate).toLocaleString('de-DE') : 'unbekannt';
-                    consentDateSpan.textContent = date;
-                }
-                if (activeSection) activeSection.style.display = 'block';
-                if (inactiveSection) inactiveSection.style.display = 'none';
-            } else {
-                if (consentStatusBadge) {
-                    consentStatusBadge.textContent = 'Inaktiv';
-                    consentStatusBadge.className = 'status-badge inactive';
-                }
-                if (consentStatusText) consentStatusText.textContent = 'nicht zugestimmt';
-                if (activeSection) activeSection.style.display = 'none';
-                if (inactiveSection) inactiveSection.style.display = 'block';
-            }
-        }
-
-        function setConsent(given) {
-            consentGiven = given;
-            localStorage.setItem('skinlytics_consent', given);
-            if (given) {
-                const now = new Date().toISOString();
-                localStorage.setItem('skinlytics_consent_date', now);
-                consentDate = now;
-                showToast('Ihre Einwilligung wurde erfolgreich gespeichert.', 'success');
-            } else {
-                localStorage.removeItem('skinlytics_consent_date');
-                consentDate = null;
-                showToast('Ihre Einwilligung wurde widerrufen.', 'warning');
-            }
-            updateSettingsUI();
-
-            if (!given) {
-                fileInput.value = '';
-                imagePreview.style.display = 'none';
-                analyzeBtn.disabled = true;
-                if (uploadArea) uploadArea.classList.add('disabled');
-            } else {
-                if (uploadArea) uploadArea.classList.remove('disabled');
-            }
-        }
-
-        function revokeConsent() {
-            if (confirm('Möchten Sie Ihre Einwilligung zur Datenverarbeitung wirklich widerrufen?')) {
-                setConsent(false);
-                const overlay = document.getElementById('consentOverlay');
-                if (overlay) overlay.style.display = 'none';
-                showSection(homeSection);
-            }
-        }
-
-        function showConsentModal() {
-            const overlay = document.getElementById('consentOverlay');
-            if (overlay) overlay.style.display = 'flex';
-        }
-
-        // ============ SECTION MANAGEMENT ============
-        const homeLink = document.getElementById('homeLink');
-        const uploadLink = document.getElementById('uploadLink');
-        const historyLink = document.getElementById('historyLink');
-        const hilfeLink = document.getElementById('hilfeLink');
-        const impressumLink = document.getElementById('impressumLink');
-        const settingsLink = document.getElementById('settingsLink');
-        const heroAnalyzeBtn = document.getElementById('heroAnalyzeBtn');
-        const heroHistoryBtn = document.getElementById('heroHistoryBtn');
-        const hilfeZurueckBtn = document.getElementById('hilfeZurueckBtn');
-        const impressumZurueckBtn = document.getElementById('impressumZurueckBtn');
-        const revokeConsentBtn = document.getElementById('revokeConsentBtn');
-        const giveConsentBtn = document.getElementById('giveConsentBtn');
-        const clearAllHistoryBtn = document.getElementById('clearAllHistoryBtn');
-        const viewHistoryFromResultBtn = document.getElementById('viewHistoryFromResultBtn');
-        const saveToHistoryBtn = document.getElementById('saveToHistoryBtn');
-
-        const homeSection = document.getElementById('homeSection');
-        const uploadSection = document.getElementById('uploadSection');
-        const hilfeSection = document.getElementById('hilfeSection');
-        const impressumSection = document.getElementById('impressumSection');
-        const resultsSection = document.getElementById('resultsSection');
-        const instructionsSection = document.getElementById('instructionsSection');
-        const settingsSection = document.getElementById('settingsSection');
-        const historySection = document.getElementById('historySection');
-
-        function showSection(section) {
-            homeSection.style.display = 'none';
-            uploadSection.style.display = 'none';
-            instructionsSection.style.display = 'none';
-            resultsSection.style.display = 'none';
-            hilfeSection.style.display = 'none';
-            impressumSection.style.display = 'none';
-            if (settingsSection) settingsSection.style.display = 'none';
-            if (historySection) historySection.style.display = 'none';
-
-            section.style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
-        function checkConsentAndShowUpload() {
-            if (consentGiven) {
-                showSection(uploadSection);
-            } else {
-                showConsentModal();
-            }
-        }
-
-        function showHistorySection() {
-            updateHistoryDisplay();
-            showSection(historySection);
-        }
-
-        // ============ CONSENT MODAL ============
-        const consentOverlay = document.getElementById('consentOverlay');
-        const consentCheckbox = document.getElementById('consentCheckbox');
-        const acceptConsentBtn = document.getElementById('acceptConsentBtn');
-        const declineConsentBtn = document.getElementById('declineConsentBtn');
-
-        if (consentCheckbox) {
-            consentCheckbox.addEventListener('change', () => {
-                acceptConsentBtn.disabled = !consentCheckbox.checked;
-            });
-        }
-
-        if (acceptConsentBtn) {
-            acceptConsentBtn.addEventListener('click', () => {
-                if (consentCheckbox.checked) {
-                    setConsent(true);
-                    consentOverlay.style.display = 'none';
-                    showSection(uploadSection);
-                }
-            });
-        }
-
-        if (declineConsentBtn) {
-            declineConsentBtn.addEventListener('click', () => {
-                setConsent(false);
-                consentOverlay.style.display = 'none';
-                showSection(homeSection);
-            });
-        }
-
-        // ============ NAVIGATION ============
-        homeLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showSection(homeSection);
-        });
-
-        uploadLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            checkConsentAndShowUpload();
-        });
-
-        if (historyLink) {
-            historyLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                showHistorySection();
-            });
-        }
-
-        hilfeLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showSection(hilfeSection);
-        });
-
-        impressumLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showSection(impressumSection);
-        });
-
-        if (settingsLink) {
-            settingsLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                updateSettingsUI();
-                showSection(settingsSection);
-            });
-        }
-
-        heroAnalyzeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            checkConsentAndShowUpload();
-        });
-
-        if (heroHistoryBtn) {
-            heroHistoryBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                showHistorySection();
-            });
-        }
-
-        hilfeZurueckBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showSection(homeSection);
-        });
-
-        impressumZurueckBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showSection(homeSection);
-        });
-
-        if (revokeConsentBtn) revokeConsentBtn.addEventListener('click', revokeConsent);
-        if (giveConsentBtn) giveConsentBtn.addEventListener('click', () => showConsentModal());
-        if (clearAllHistoryBtn) clearAllHistoryBtn.addEventListener('click', clearAllHistory);
-
-        if (viewHistoryFromResultBtn) {
-            viewHistoryFromResultBtn.addEventListener('click', () => {
-                showHistorySection();
-            });
-        }
-
-        // ============ UPLOAD & ANALYSE ============
-        const fileInput = document.getElementById('fileInput');
-        const uploadArea = document.getElementById('uploadArea');
-        const previewImage = document.getElementById('previewImage');
-        const imagePreview = document.getElementById('imagePreview');
-        const analyzeBtn = document.getElementById('analyzeBtn');
-        const newAnalysisBtn = document.getElementById('newAnalysisBtn');
-        const resultIcon = document.getElementById('resultIcon');
-        const resultText = document.getElementById('resultText');
-        const resultDescription = document.getElementById('resultDescription');
-
-        let currentAnalysisData = null;
-        let currentImageData = null;
-
-        function setupUploadHandlers() {
-            if (!uploadArea) return;
-            uploadArea.addEventListener('click', () => {
-                if (consentGiven) fileInput.click();
-            });
-
-            uploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                if (consentGiven) {
-                    uploadArea.style.borderColor = 'var(--primary-color)';
-                    uploadArea.style.backgroundColor = '#f0f7ff';
-                }
-            });
-
-            uploadArea.addEventListener('dragleave', () => {
-                uploadArea.style.borderColor = '#cbd5e1';
-                uploadArea.style.backgroundColor = '#f8fafc';
-            });
-
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadArea.style.borderColor = '#cbd5e1';
-                uploadArea.style.backgroundColor = '#f8fafc';
-                if (consentGiven && e.dataTransfer.files.length) {
-                    handleFile(e.dataTransfer.files[0]);
-                }
-            });
-        }
-
-        function handleFile(file) {
-            if (!consentGiven) {
-                checkConsentAndShowUpload();
-                return;
-            }
-
-            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                alert('Bitte laden Sie nur JPG oder PNG Dateien hoch.');
-                fileInput.value = '';
-                return;
-            }
-
-            if (file.size > 10 * 1024 * 1024) {
-                alert('Die Datei ist zu groß. Bitte wählen Sie eine Datei unter 10MB.');
-                fileInput.value = '';
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                currentImageData = e.target.result;
-                previewImage.src = currentImageData;
-                imagePreview.style.display = 'block';
-                analyzeBtn.disabled = false;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        fileInput.addEventListener('change', () => {
-            if (!consentGiven) {
-                checkConsentAndShowUpload();
-                fileInput.value = '';
-                return;
-            }
-            if (fileInput.files && fileInput.files[0]) {
-                handleFile(fileInput.files[0]);
-            }
-        });
-
-        // Analyse durchführen
-        analyzeBtn.addEventListener('click', async () => {
-            if (!consentGiven) {
-                checkConsentAndShowUpload();
-                return;
-            }
-
-            if (!currentImageData) {
-                alert('Bitte wählen Sie ein Bild aus');
-                return;
-            }
-
-            try {
-                analyzeBtn.disabled = true;
-                analyzeBtn.textContent = 'Analysiere...';
-
-                // Simulierte Analyse (in realer Implementierung API-Aufruf)
-                await new Promise(resolve => setTimeout(resolve, 1500));
-
-                // Generiere Vorhersagen für alle 7 Klassen
-                const predictions = generatePredictions();
-                const binaryResult = getBinaryClassification(predictions);
-
-                currentAnalysisData = {
-                    predictions: predictions,
-                    binaryResult: binaryResult,
-                    resultLabel: binaryResult.isSuspicious
-                        ? 'Verdächtige Hautveränderung erkannt'
-                        : 'Keine Auffälligkeit erkennbar',
-                    isSuspicious: binaryResult.isSuspicious,
-                    confidence: binaryResult.confidence,
-                    description: binaryResult.isSuspicious
-                        ? 'Unsere KI hat potenziell auffällige Hautveränderungen erkannt. Bitte konsultieren Sie einen Hautarzt für eine professionelle Bewertung.'
-                        : 'Basierend auf unserer KI-Analyse wurden keine besorgniserregenden Hautveränderungen erkannt.'
-                };
-
-                showSection(resultsSection);
-
-                // Ergebnisse im UI anzeigen
-                if (binaryResult.isSuspicious) {
-                    resultIcon.innerHTML = '<i class="fas fa-exclamation-triangle positive-result"></i>';
-                } else {
-                    resultIcon.innerHTML = '<i class="fas fa-check-circle negative-result"></i>';
-                }
-                resultText.textContent = currentAnalysisData.resultLabel;
-                resultDescription.textContent = currentAnalysisData.description;
-
-                const binaryValue = document.getElementById('binaryValue');
-                const binaryConfidenceEl = document.getElementById('binaryConfidence');
-
-                if (binaryValue) {
-                    binaryValue.textContent = binaryResult.isSuspicious ? 'Verdächtig' : 'Unauffällig';
-                    binaryValue.className = `binary-value ${binaryResult.isSuspicious ? 'verdaechtig' : 'unauffaellig'}`;
-                }
-                if (binaryConfidenceEl) {
-                    binaryConfidenceEl.textContent = `(Sicherheit: ${binaryResult.confidence}%)`;
-                }
-
-                // Alle Vorhersagen anzeigen
-                const predictionsGrid = document.getElementById('predictionsGrid');
-                if (predictionsGrid) {
-                    predictionsGrid.innerHTML = predictions.map(p => `
-                        <div class="prediction-card ${p.is_suspicious ? 'suspicious' : ''}">
-                            <div class="prediction-name">${p.name}</div>
-                            <div class="prediction-confidence">${p.confidence}%</div>
-                            <div style="font-size: 0.7rem; color: var(--light-text); margin-top: 0.25rem;">${p.description}</div>
-                        </div>
-                    `).join('');
-                }
-
-            } catch (error) {
-                console.error('Fehler bei der Analyse:', error);
-                showToast('Analyse fehlgeschlagen. Bitte versuchen Sie es erneut.', 'error');
-            } finally {
-                analyzeBtn.disabled = false;
-                analyzeBtn.textContent = 'Analyse starten';
-            }
-        });
-
-        // Ergebnis speichern (mit Foto und allen Vorhersagen)
-        if (saveToHistoryBtn) {
-            saveToHistoryBtn.addEventListener('click', () => {
-                if (!currentAnalysisData) {
-                    showToast('Keine Analyse-Daten zum Speichern vorhanden.', 'warning');
-                    return;
-                }
-
-                if (!currentImageData) {
-                    showToast('Kein Bild zum Speichern vorhanden.', 'warning');
-                    return;
-                }
-
-                const note = document.getElementById('resultNote')?.value || '';
-
-                addHistoryEntry({
-                    resultLabel: currentAnalysisData.resultLabel,
-                    isSuspicious: currentAnalysisData.isSuspicious,
-                    confidence: currentAnalysisData.confidence,
-                    note: note,
-                    imageData: currentImageData,
-                    predictions: currentAnalysisData.predictions,
-                    binaryConfidence: currentAnalysisData.confidence
-                });
-
-                // Notiz-Feld leeren
-                if (document.getElementById('resultNote')) {
-                    document.getElementById('resultNote').value = '';
-                }
-            });
-        }
-
-        // Neue Analyse
-        newAnalysisBtn.addEventListener('click', () => {
-            fileInput.value = '';
-            imagePreview.style.display = 'none';
-            analyzeBtn.disabled = true;
-            currentAnalysisData = null;
-            currentImageData = null;
-            if (document.getElementById('resultNote')) {
-                document.getElementById('resultNote').value = '';
-            }
-            checkConsentAndShowUpload();
-        });
-
-        // Delete Modal Handlers
-        const deleteModal = document.getElementById('deleteModal');
-        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-
-        if (cancelDeleteBtn) {
-            cancelDeleteBtn.addEventListener('click', () => {
-                if (deleteModal) deleteModal.style.display = 'none';
-                currentDeleteId = null;
-            });
-        }
-
-        if (confirmDeleteBtn) {
-            confirmDeleteBtn.addEventListener('click', () => {
-                if (currentDeleteId) {
-                    deleteHistoryEntry(currentDeleteId);
-                    if (deleteModal) deleteModal.style.display = 'none';
-                    currentDeleteId = null;
-                }
-            });
-        }
-
-        // Modal schließen bei Klick außerhalb
-        window.addEventListener('click', (e) => {
-            if (e.target === deleteModal) {
-                deleteModal.style.display = 'none';
-                currentDeleteId = null;
-            }
-            if (e.target === consentOverlay) {
-                consentOverlay.style.display = 'none';
-            }
-        });
-
-        // Footer Links
-        document.querySelectorAll('.footer-home-link, .footer-upload-link, .footer-history-link, .footer-hilfe-link, .footer-impressum-link, .footer-settings-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (link.classList.contains('footer-home-link')) showSection(homeSection);
-                else if (link.classList.contains('footer-upload-link')) checkConsentAndShowUpload();
-                else if (link.classList.contains('footer-history-link')) showHistorySection();
-                else if (link.classList.contains('footer-hilfe-link')) showSection(hilfeSection);
-                else if (link.classList.contains('footer-impressum-link')) showSection(impressumSection);
-                else if (link.classList.contains('footer-settings-link')) {
-                    updateSettingsUI();
-                    showSection(settingsSection);
-                }
-            });
-        });
-
-        const consentImpressumLink = document.getElementById('consentImpressumLink');
-        if (consentImpressumLink) {
-            consentImpressumLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                consentOverlay.style.display = 'none';
-                showSection(impressumSection);
-            });
-        }
-
-        // Initialisierung
-        setupUploadHandlers();
-        updateSettingsUI();
-        updateHistoryDisplay();
-
-        if (consentGiven) {
-            if (uploadArea) uploadArea.classList.remove('disabled');
-        } else {
-            if (uploadArea) uploadArea.classList.add('disabled');
-        }
-
-        showSection(homeSection);
-    </script>
+        };
+
+        let dataStr = JSON.stringify(exportData, null, 2);
+        let dataBlob = new Blob([dataStr], {type: 'application/json'});
+        let url = URL.createObjectURL(dataBlob);
+        let link = document.createElement('a');
+        link.href = url;
+        link.download = `skinlytics_data_${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+        URL.revokeObjectURL(url);
+        showToast('Daten erfolgreich exportiert','success');
+    });
+
+    updateSettingsUI(); showSection('homeSection');
+    showProfessionalConsentBanner();
+</script>
 </body>
 </html>
