@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SkinLytics | Impressum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 0% 20%, #f0f6fe, #e9f0f8);
+            color: #0a1c2a;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        :root {
+            --primary: #0f5b7a;
+            --primary-dark: #0a3f57;
+            --accent: #e06e5e;
+            --accent-dark: #c44f3d;
+            --gray-800: #1f2a3e;
+            --shadow-xl: 0 25px 40px -12px rgba(0,0,0,0.2);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-premium {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 12px 28px -8px rgba(0,0,0,0.08);
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 110;
+            background: rgba(255,255,255,0.78);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(15,91,122,0.12);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(125deg, #0f5b7a, #3596b9);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #1f2a3e;
+            transition: all 0.25s ease;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2.5px;
+            background: linear-gradient(95deg, var(--primary), var(--accent));
+            border-radius: 3px;
+            transition: width 0.35s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(125deg, #0a3f57, #2a7f9c, #e06e5e);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: shimmer 6s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s var(--ease-out-expo);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(105deg, var(--primary), #3285a3);
+            color: white;
+            box-shadow: 0 12px 18px -10px rgba(15,91,122,0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--primary);
+            color: var(--primary-dark);
+        }
+
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .team-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+        .team-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 0.8rem;
+            border: 3px solid var(--primary);
+        }
+        .team-card:hover { transform: translateY(-5px); }
+
+        footer {
+            background: #0f1a24;
+            color: #b3c7d6;
+            padding: 2rem 2rem 1.5rem;
+            margin-top: 3rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (max-width: 800px) {
+            .hero h1 { font-size: 2.2rem; }
+            .nav-container { flex-direction: column; gap: 1rem; }
+            .nav-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="main-content">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><i class="fas fa-brain"></i><span>SkinLytics<span style="font-weight:400;">|AI</span></span></div>
+            <ul class="nav-links">
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div style="max-width: 1000px; margin:0 auto;">
+            <h1>Impressum</h1>
+        </div>
+    </section>
+
+    <section style="max-width:1000px; margin:2rem auto; padding:0 1.5rem;">
+        <div class="glass-premium" style="border-radius:2rem; padding:2rem;">
+            
+            <h2 style="text-align:center; margin-bottom:2rem;">Projektteam SkinLytics</h2>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="Foto-Enes.png" alt="Enes Yigit">
+                    <h4>Enes Yigit</h4>
+                    <small>PTM</small>
+                </div>
+                <div class="team-card">
+                    <img src="Foto-Esra.jpg" alt="Esra Sokullu">
+                    <h4>Esra Sokullu</h4>
+                    <small>Projektleitung</small>
+                </div>
+                <div class="team-card">
+                    <img src="Foto-Fadime.jpg" alt="Fadime Cobanoglu">
+                    <h4>Fadime Cobanoglu</h4>
+                    <small>PTM</small>
+                </div>
+                <div class="team-card">
+                    <img src="Foto-Pia.png" alt="Pia Sesar">
+                    <h4>Pia Sesar</h4>
+                    <small>PTM</small>
+                </div>
+            </div>
+
+            <div style="margin-top:3rem; padding-top:2rem; border-top:1px solid #e2e8f0;">
+                <h3 style="margin-bottom:1.5rem; color:var(--primary);"><i class="fas fa-school"></i> Bildungseinrichtung</h3>
+                <div style="background:#f8fafc; padding:1.5rem; border-radius:1rem; margin-bottom:1.5rem;">
+                    <p><strong>HTL Spengergasse</strong><br>
+                    Spengergasse 20<br>
+                    1050 Wien<br>
+                    Österreich</p>
+                </div>
+
+                <h3 style="margin-bottom:1.5rem; color:var(--primary);"><i class="fas fa-envelope"></i> Kontakt</h3>
+                <div style="background:#f8fafc; padding:1.5rem; border-radius:1rem; margin-bottom:1.5rem;">
+                    <p><strong>E-Mail:</strong> <a href="mailto:Skinlytics@outlook.com" style="color:var(--primary);">Skinlytics@outlook.com</a></p>
+                    <p><strong>Projekttyp:</strong> Schulprojekt im Rahmen der HTL-Ausbildung</p>
+                </div>
+
+                <h3 style="margin-bottom:1.5rem; color:var(--primary);"><i class="fas fa-info-circle"></i> Haftungsausschluss</h3>
+                <div style="background:#fff9e6; border-left:4px solid #ffc107; padding:1rem; border-radius:12px; margin-bottom:1.5rem;">
+                    <p><strong>Wichtiger Hinweis:</strong> SkinLytics ist ein Schulprojekt und dient ausschließlich zu Bildungszwecken. Die KI-Analyse ersetzt keine professionelle medizinische Beratung oder ärztliche Diagnose. Bei gesundheitlichen Bedenken konsultieren Sie bitte einen Arzt.</p>
+                </div>
+
+                <h3 style="margin-bottom:1.5rem; color:var(--primary);"><i class="fas fa-gavel"></i> Rechtliche Hinweise</h3>
+                <div style="background:#f8fafc; padding:1.5rem; border-radius:1rem; margin-bottom:1.5rem;">
+                    <p><strong>Urheberrecht:</strong> Alle Inhalte und Bilder wurden von den Projektteilnehmern erstellt oder stehen unter entsprechender Lizenz.</p>
+                    <p><strong>Technologie:</strong> Die Anwendung verwendet moderne Web-Technologien und verarbeitet Daten ausschließlich lokal im Browser.</p>
+                    <p><strong>Stand:</strong> April 2026</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<footer>
+    <div style="text-align: center;">
+        © 2026 SkinLytics – HTL Spengergasse
+    </div>
+</footer>
+
+</body>
+</html>
